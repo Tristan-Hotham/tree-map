@@ -7,8 +7,8 @@
 <meta name="description" content="An interactive map of the trees of Great Britain and the world: every National Forest Inventory woodland by type, Forestry England species and planting years, and GBIF records of 88 tree genera worldwide.">
 <meta property="og:title" content="What grows where: the trees of Britain and the world">
 <meta property="og:description" content="Woodland covers 13.7% of Great Britain's land: 19.1% of Scotland, 15.0% of Wales and 10.3% of England. Explore every wood by type, and the recorded trees of the world.">
-<meta property="og:image" content="https://tristan-hotham.github.io/tree-map/header.png">
-<meta property="og:url" content="https://tristan-hotham.github.io/tree-map/">
+<meta property="og:image" content="https://maps.tristanhotham.com/tree-map/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/tree-map/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -178,7 +178,7 @@ footer p{margin:0 0 10px}
   <svg class="mark" viewBox="0 0 120 120" aria-hidden="true"><g id="heroMark"></g></svg>
   <p class="dek">Is there a map of tree types across the UK, and the world, that you can simply explore? This is my attempt: every mapped wood in Great Britain by type, the species and planting years of England's public forests, and where 88 tree genera turn up in the world's plant records.</p>
 </header>
-<div class="byline">Dr Tristan Hotham, Independent researcher · October 2026 · Data: National Forest Inventory and Forestry England (Forestry Commission, Open Government Licence); GBIF.org (CC BY 4.0); OS Open Names; GeoNames; Natural Earth</div>
+<div class="byline">Dr Tristan Hotham, Independent researcher · 2026 · Data: National Forest Inventory and Forestry England (Forestry Commission, Open Government Licence); GBIF.org (CC BY 4.0); OS Open Names; GeoNames; Natural Earth</div>
 
 <div class="stats">
   <div><b class="l">13.7%</b><span>of Great Britain's land is woodland of half a hectare or more (3,153 thousand hectares)</span></div>
@@ -303,14 +303,14 @@ footer p{margin:0 0 10px}
 <div class="cta">
   <a class="p" href="https://github.com/Tristan-Hotham/tree-map">Data and code</a>
   <a href="https://doi.org/10.5281/zenodo.23739845">Paper (Zenodo)</a>
-  <a href="https://tristan-hotham.github.io/ancient-trees/">Ancient trees</a>
+  <a href="https://maps.tristanhotham.com/ancient-trees/">Ancient trees</a>
   <a href="https://blog.tristanhotham.com/">Blog</a>
 </div>
 <footer>
   <p>Dr Tristan Hotham, Independent researcher. ORCID 0000-0003-4931-9349. Cite as: Hotham, T. (2026) What grows where: the trees of Britain and the world. https://doi.org/10.5281/zenodo.23739845</p>
   <p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
   <p>Woodland: National Forest Inventory GB 2024 and Forestry England subcompartments, © Forestry Commission copyright. Contains Ordnance Survey data © Crown copyright and database right 2025. Open Government Licence v3. Records: GBIF.org (28 October 2026) GBIF occurrence density maps, https://www.gbif.org, records under CC0, CC BY 4.0 and CC BY-NC 4.0 from the publishing institutions; derived grids shared under CC BY 4.0. Boundaries: Office for National Statistics, contains OS data © Crown copyright and database right (Open Government Licence v3). Places: OS Open Names, contains OS data © Crown copyright and database right 2026 (Open Government Licence v3); GeoNames (CC BY 4.0). Elevation for hill shading: Terrain Tiles (Mapzen/Tilezen, from SRTM and other public sources). Countries and land: Natural Earth (public domain). Base map tiles © Esri. Postcode lookups: postcodes.io. Map library: Leaflet.</p>
-  <p>Data files: Open Government Licence v3 for those derived from Forestry Commission and OS data; CC BY 4.0 for the GBIF grids. Text and figures: CC BY 4.0. Code: MIT. Other studies: <a href="https://tristan-hotham.github.io/ancient-trees/">Ancient trees</a>, <a href="https://tristan-hotham.github.io/sun-and-rain-uk/">Sun and rain in the UK</a>, <a href="https://blog.tristanhotham.com/">all posts</a>.</p>
+  <p>Data files: Open Government Licence v3 for those derived from Forestry Commission and OS data; CC BY 4.0 for the GBIF grids. Text and figures: CC BY 4.0. Code: MIT. Other studies: <a href="https://maps.tristanhotham.com/ancient-trees/">Ancient trees</a>, <a href="https://maps.tristanhotham.com/sun-and-rain-uk/">Sun and rain in the UK</a>, <a href="https://blog.tristanhotham.com/">all posts</a>.</p>
 </footer>
 </div>
 <div class="tip" id="tip"></div>
@@ -795,5 +795,6 @@ resp(document.getElementById("effChart"), (w, sm) => {
   for (const v of [10, 100, 1000, 10000, 100000]) lbl(svg, sx(v), H - 4, fmt(v), "lab m s", "middle");
 });
 </script>
+<script src="/assets/site-nav.js" defer></script>
 </body>
 </html>
