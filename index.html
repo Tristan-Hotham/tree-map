@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>What Grows Where</title>
+<meta name="description" content="An interactive map of the trees of Great Britain and the world: every National Forest Inventory woodland by type, Forestry England species and planting years, and GBIF records of 88 tree genera worldwide.">
+<meta property="og:title" content="What grows where: the trees of Britain and the world">
+<meta property="og:description" content="Woodland covers 13.7% of Great Britain's land: 19.1% of Scotland, 15.0% of Wales and 10.3% of England. Explore every wood by type, and the recorded trees of the world.">
+<meta property="og:image" content="https://tristan-hotham.github.io/tree-map/header.png">
+<meta property="og:url" content="https://tristan-hotham.github.io/tree-map/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Paper, leaf green, conifer teal and bark. */
+:root{
+  --bg:#F6F3EA; --panel:#ECE8DB; --fg:#1B231F; --muted:#5F6760; --rule:#DCD6C6; --card:#FBFAF5; --border:#CBC4B0;
+  --leaf:#3E8E3A; --con:#1D5C5E; --bark:#8A5A22; --hot:#B4495A; --sea:#DCE5E6; --ctx:#EFEBE0;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141916; --panel:#1E2420; --fg:#E8ECE6; --muted:#A1AAA2; --rule:#313A34; --card:#1B211D; --border:#46504A;
+  --leaf:#73C267; --con:#5FB3B0; --bark:#D2A266; --hot:#E58A9B; --sea:#1A2124; --ctx:#262D29; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141916; --panel:#1E2420; --fg:#E8ECE6; --muted:#A1AAA2; --rule:#313A34; --card:#1B211D; --border:#46504A;
+  --leaf:#73C267; --con:#5FB3B0; --bark:#D2A266; --hot:#E58A9B; --sea:#1A2124; --ctx:#262D29; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:680px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1180px,calc(100vw - 32px));margin-left:calc((100% - min(1180px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--leaf);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--con);color:#fff;padding:5px 8px;font-weight:500}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kicker b{color:#141916}}
+:root[data-theme="dark"] .kicker b{color:#141916}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(46px,11.5vw,96px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 .l{color:var(--leaf)} h1 .c{color:var(--con)}
+.mark{width:clamp(78px,17vw,132px);height:auto;display:block}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:50ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:52px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--leaf);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--leaf)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(26px,5.6vw,38px)/1 var(--display);color:var(--fg)}
+.stats b.l{color:var(--leaf)} .stats b.c{color:var(--con)} .stats b.k{color:var(--bark)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:280px;z-index:1000;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+.controls label.l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:3px;overflow:hidden;max-width:100%;flex-wrap:wrap}
+.seg .btn{border:0;border-radius:0;border-right:1px solid var(--border)}
+.seg .btn:last-child{border-right:0}
+.seg.big .btn{font-size:13px;padding:10px 14px}
+select{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 8px;min-height:36px;max-width:100%}
+.searchbox{position:relative;flex:1 1 240px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+@media (max-width:900px){.mapgrid{grid-template-columns:minmax(0,1fr)}}
+#lmap{height:780px;border:1px solid var(--border);background:var(--sea);border-radius:2px}
+@media (max-width:900px){#lmap{height:620px}}
+@media (max-width:600px){#lmap{height:540px}}
+.leaflet-container{font:400 12px/1.4 var(--mono);background:var(--sea)}
+.leaflet-image-layer.px,.px img.leaflet-tile{image-rendering:pixelated;image-rendering:crisp-edges}
+.leaflet-bar a,.leaflet-bar a:hover{background:var(--card);color:var(--fg);border-bottom-color:var(--border)}
+@media (max-width:600px){.leaflet-control-attribution{font-size:10px;line-height:1.25}}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.leaflet-control-attribution a{color:var(--fg)}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--fg);border-radius:3px}
+.city{font:500 11px/1 var(--mono);color:var(--fg);white-space:nowrap;text-shadow:0 0 3px var(--bg),0 0 3px var(--bg),0 0 2px var(--bg);pointer-events:none}
+.city.r1{font-size:10px;font-weight:400}.city.r0{font-size:9.5px;font-weight:400;opacity:.85}
+.city i{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--fg);margin-right:4px;vertical-align:1px}
+.city.r0 i,.city.r1 i{width:4px;height:4px}
+.city.w{font:italic 400 10.5px/1 var(--body);color:var(--leaf)}
+.city.w i{display:none}
+.lyrBtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:8px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;margin-top:6px;width:244px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono)}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{display:grid;grid-template-columns:auto 1fr;gap:4px 8px;align-items:center;margin:0 0 9px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel select{font:400 12px var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:2px;padding:2px 4px;width:100%;min-height:0}
+.lyrPanel .sub{grid-column:1/-1;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px}
+.lyrPanel .sub span{flex:0 0 58px}
+.lyrPanel .reset{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.pin{width:18px;height:18px;border:3px solid var(--fg);border-radius:50%;background:transparent;box-shadow:0 0 0 2px var(--bg)}
+.side{background:var(--card);border:1px solid var(--border);padding:14px 14px 10px}
+.side h4{font:500 11px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.key{display:grid;grid-template-columns:16px minmax(0,1fr) auto;gap:5px 8px;align-items:center;font:400 12px/1.25 var(--mono);margin-bottom:6px}
+.key .sw{width:16px;height:14px;border:1px solid var(--border);display:block;margin:0}
+.key .v{color:var(--muted);text-align:right}
+.key div.k{cursor:pointer}
+.key div.k.on{font-weight:500;text-decoration:underline}
+.ramp{height:12px;border:1px solid var(--border);margin:4px 0 2px}
+.rampl{display:flex;justify-content:space-between;font:400 11px/1.2 var(--mono);color:var(--muted)}
+.mixkey{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin:4px 0}
+.mixkey div{height:18px;border:1px solid transparent}
+#info{font:400 12.5px/1.5 var(--mono);border-top:1px solid var(--rule);padding-top:8px;margin-top:8px;min-height:60px}
+#info b{font-weight:500}
+#info .big{font:800 20px/1.15 var(--display);margin:2px 0 6px}
+#info .bar{display:flex;height:12px;border:1px solid var(--border);margin:4px 0 6px;overflow:hidden}
+#info .bar span{display:block;height:100%}
+#info .gl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px}
+#info .gl span:nth-child(2n){text-align:right;color:var(--muted)}
+.sw{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:6px;border:1px solid var(--border)}
+.finder{background:var(--card);border:1px solid var(--border);border-top:6px solid var(--leaf);padding:16px 16px 10px;margin:20px 0 14px}
+#answer .big{font:800 clamp(22px,4.6vw,30px)/1.15 var(--display);margin:10px 0 8px;text-wrap:balance}
+#answer .pn{font:400 12px/1.45 var(--mono);color:var(--muted);margin:8px 0 6px}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:10px 0}
+.kv div{background:var(--bg);padding:8px 10px;font:400 11.5px/1.3 var(--mono);color:var(--muted)}
+.kv b{display:block;font:800 20px/1.1 var(--display);color:var(--fg)}
+@media (max-width:600px){.kv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--leaf);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+table.t{width:100%;border-collapse:collapse;font:400 13px/1.35 var(--mono)}
+table.t th{text-align:left;font-weight:500;color:var(--muted);border-bottom:2px solid var(--fg);padding:6px 8px 6px 0}
+table.t td{border-bottom:1px solid var(--rule);padding:7px 8px 7px 0;vertical-align:top}
+table.t td.num,table.t th.num{text-align:right;white-space:nowrap}
+table.t td small{color:var(--muted);display:block}
+table.t tr.go{cursor:pointer}
+table.t tr.go:hover td{background:var(--panel)}
+.tablewrap{overflow-x:auto}
+@media (max-width:600px){table.t .wide{display:none}}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+@media (max-width:700px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--border);border-left:10px solid var(--con);padding:12px 14px;font:400 13px/1.5 var(--mono);cursor:pointer}
+.card b{font:600 19px/1.2 var(--display);display:block;margin-bottom:2px}
+.card .big{font:900 30px/1.05 var(--display);margin:6px 0 2px}
+.card .big span{color:var(--muted);font:400 13px/1 var(--mono)}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--con);border-color:var(--con);color:#fff}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+.loading{font:400 12px/1.4 var(--mono);color:var(--muted)}
+.hide{display:none!important}
+@media print{.theme,.controls{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>Trees and woodland</span><span>Great Britain and the world</span></div>
+<header class="hero">
+  <h1>What <span class="l">grows</span> <span class="c">where</span></h1>
+  <svg class="mark" viewBox="0 0 120 120" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">Is there a map of tree types across the UK, and the world, that you can simply explore? This is my attempt: every mapped wood in Great Britain by type, the species and planting years of England's public forests, and where 88 tree genera turn up in the world's plant records.</p>
+</header>
+<div class="byline">Dr Tristan Hotham, Independent researcher · October 2026 · Data: National Forest Inventory and Forestry England (Forestry Commission, Open Government Licence); GBIF.org (CC BY 4.0); OS Open Names; GeoNames; Natural Earth</div>
+
+<div class="stats">
+  <div><b class="l">13.7%</b><span>of Great Britain's land is woodland of half a hectare or more (3,153 thousand hectares)</span></div>
+  <div><b class="c">19.1%</b><span>of Scotland is woodland, against 10.3% of England and 15.0% of Wales</span></div>
+  <div><b class="c">71%</b><span>of Scotland's broadleaf and conifer woodland is conifer; in England it is 25%</span></div>
+  <div><b class="k">26%</b><span>of the stocked public forest estate in England is Sitka spruce, the biggest single species</span></div>
+</div>
+
+<p class="lede">Trees are everywhere in Britain and yet surprisingly hard to see as a whole. The Forestry Commission maps every wood of half a hectare or more from aerial photographs, the National Forest Inventory, and publishes it as open data. I took all 641,642 of its 2024 map polygons, the species and planting year of every one of the 73,109 compartments in England's public forests, and the records of 88 tree genera from GBIF, the world's largest open archive of where living things have been seen. Then I put them on one map.</p>
+<p>Start with Great Britain: zoom in until you can see single woods, switch to the summary of cover and mix, or pick a tree and see where it is recorded. Then switch to the world. Use "Map layers" to change the base map, add hills, place names and borders, and turn the colours up or down so you can always see where you are.</p>
+
+<h2><span class="n">01 · The map</span>Every wood in Great Britain, and the world's recorded trees</h2>
+<div class="figure bleed">
+  <div class="controls">
+    <div class="seg big" role="group" aria-label="View" id="viewBtns"><button class="btn" data-v="gb" aria-pressed="true">Great Britain</button><button class="btn" data-v="world" aria-pressed="false">The world</button></div>
+    <span class="loading" id="loadMsg"></span>
+  </div>
+  <div class="controls" id="gbCtl">
+    <label class="l">Show</label>
+    <div class="seg" role="group" aria-label="Great Britain layer" id="gbLay"><button class="btn" data-l="wood" aria-pressed="true">Woodland type</button><button class="btn" data-l="mix1" aria-pressed="false">Cover and mix, 1 km</button><button class="btn" data-l="mix5" aria-pressed="false">Cover and mix, 5 km</button><button class="btn" data-l="gbif" aria-pressed="false">Recorded trees</button></div>
+    <label class="btn" style="display:inline-flex;gap:6px;align-items:center"><input type="checkbox" id="feOn"> Public forest species</label>
+  </div>
+  <div class="controls hide" id="worldCtl">
+    <label class="l">Show</label>
+    <div class="seg" role="group" aria-label="World layer" id="wLay"><button class="btn" data-l="dom" aria-pressed="false">Most recorded genus</button><button class="btn" data-l="typ" aria-pressed="true">Most typical genus</button><button class="btn" data-l="one" aria-pressed="false">One genus</button><button class="btn" data-l="effort" aria-pressed="false">Recording effort</button></div>
+  </div>
+  <div class="controls hide" id="genusCtl">
+    <label class="l" for="genus">Tree</label>
+    <select id="genus" aria-label="Pick a tree genus"></select>
+  </div>
+  <div class="mapgrid">
+    <div id="lmap" role="region" aria-label="Map of woodland in Great Britain and recorded tree genera in the world"></div>
+    <div class="side">
+      <h4 id="keyTitle">Key</h4>
+      <div id="legend"></div>
+      <div class="src" id="keyNote"></div>
+      <div id="info">Click or tap the map to see what grows there.</div>
+    </div>
+  </div>
+  <div class="src" id="mapSrc">Great Britain: National Forest Inventory 2024 woodland map (Forestry Commission). Each polygon is drawn as a disc of its own area at its centre, on a 100 m grid, so shapes are approximate though areas are right. World and "Recorded trees": GBIF occurrence records, shown as each genus's share of all vascular plant records in a cell, which measures recording, not forest cover.</div>
+</div>
+
+<h2><span class="n">02 · Near you</span>What trees grow near me?</h2>
+<p>Type a town, village, wood or postcode in Great Britain, or any city of 15,000 people or more anywhere in the world, or use your location. You get the woodland around you and the trees most often recorded there; the map follows.</p>
+<div class="finder">
+  <div class="controls">
+    <div class="searchbox">
+      <input type="search" id="q" placeholder="Town, wood, postcode or world city" aria-label="Find a place" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sug">
+      <ul class="suggest" id="sug" role="listbox"></ul>
+    </div>
+    <button class="btn" id="geo">Use my location</button>
+  </div>
+  <div id="answer"><div class="pn">Try Kielder, Thetford, Aviemore, Savernake Forest, Canberra or Madrid. Place names are looked up on this page (OS Open Names in Great Britain; GeoNames elsewhere). Postcodes are looked up with postcodes.io, a free service built on Office for National Statistics and Ordnance Survey open data.</div></div>
+</div>
+
+<h2><span class="n">03 · Three countries</span>Scotland's conifers, England's broadleaves</h2>
+<p>Woodland covers 13.7% of Great Britain's land, 3,153 thousand hectares of it. The three countries are very different. Scotland has 48% of Britain's woodland on a third of its land, and 71% of its broadleaf and conifer woodland is conifer. England's woods are mostly broadleaved: only 25% is conifer. Wales sits between, at 41%.</p>
+<div class="figure">
+  <div class="fig-h">Woodland as a share of land, by type</div>
+  <div class="fig-sub">National Forest Inventory 2024, woodland of 0.5 ha or more. Land area from ONS boundaries.</div>
+  <div class="chart" id="natChart"></div>
+  <div class="src">Hover a block for its area. "Felled and restocking" is woodland mapped as felled, being prepared for planting, windblown or failed when the photographs were taken.</div>
+</div>
+<p>About a fifth of all woodland (19%) was mapped as felled or being prepared for replanting, most of it in Scotland, where it is 29% of the woodland. That is the plantation cycle at work: conifer crops are clear-felled and replanted, and newly planted ground can look bare from the air for some years, so some of this land has probably been replanted already.</p>
+
+<h2><span class="n">04 · The wooded and the bare</span>Moray to Shetland, Kielder to the Fens</h2>
+<p>Of the 87 counties and council areas, Moray is the most wooded, at 30.8%, closely followed by South Ayrshire, Argyll and Bute, and Dumfries and Galloway, all around 30% and all mostly conifer. England's most wooded county is Surrey (25.2%), and its woods are 20% conifer. In Wales it is West Glamorgan (27.2%). The barest are the islands: Shetland has 0.04% woodland, Orkney 0.21% and the Western Isles 1.1%. In England, Cambridgeshire (3.6%) and the East Riding of Yorkshire are the least wooded.</p>
+<div class="figure">
+  <div class="fig-h">The most and least wooded counties</div>
+  <div class="fig-sub">Woodland as a share of land. Bars split into broadleaf (green) and conifer (teal), with the rest of the woodland (young, felled and other) in pale grey.</div>
+  <div class="chart" id="ctyChart"></div>
+</div>
+<p>The great plantations stand out on the map at once. The most wooded 10 km square in Britain is NY68 in Kielder Forest, Northumberland: 81% woodland, 98% of it conifer. Within 10 km of the middle of Kielder Forest, 63% of the land is woodland and 96% of that is conifer; around Glentrool in Galloway the figures are 61% and 91%; around Thetford, in the Breckland pine forest, 42% and 70%. Compare the New Forest around Lyndhurst (42% woodland, 28% conifer) and the Chilterns around High Wycombe (22%, 17%).</p>
+<div class="figure">
+  <div class="fig-h">The ten 10 km squares with the most conifer woodland</div>
+  <div class="fig-sub">Click a row to fly there. Named forest: the nearest OS Open Names feature called a forest, within 12 km.</div>
+  <div class="tablewrap"><table class="t" id="sqTable"></table></div>
+</div>
+<p>At the other end, 100 of the 2,303 10 km squares with at least 50 km² of land have less than 1% woodland. The Western Isles hold 22 of them, Shetland 11 and Orkney 8; Highland has 16; and the open farmland of Lincolnshire (16), Cambridgeshire (10) and Norfolk (4) most of the rest. 60 squares are more than half woodland.</p>
+
+<h2><span class="n">05 · What the records say</span>Pine by the Spey, beech at Savernake</h2>
+<p>The National Forest Inventory says what kind of wood is where, but not which trees. For that I turned to GBIF, which gathers records of where species were seen or collected, from herbarium sheets to phone apps and national surveys. In Great Britain there are 77,858,769 records of vascular plants in the grid I used (0.09 degree cells, about 10 by 6 km). Pick "Recorded trees" on the map and choose a tree.</p>
+<p>The patterns are recognisable. The share of records that are pines is highest in Strathspey and the northern Cairngorms, in the cell about 12 km south east of Nethy Bridge (7.5% of all its plant records). This is the country of Abernethy and Rothiemurchus, the largest remnants of the native Caledonian pinewood. Juniper, a shrub of those pinewoods, peaks in the next cell to the south west (17.4%), and birch in the cell south of that, towards Braemar (11.5%). Beech peaks at Wootton Rivers beside Savernake Forest in Wiltshire (3.3%), ash on the edge of Swindon, and oak in the cell around Long Ditton in Surrey. Within 10 km of Abernethy Forest, 44% of the land is woodland, 84% of it conifer.</p>
+<p>Records are not trees, and the map shows it. Willows are the most recorded tree genus in most British cells (2,863 of 4,089 cells with 500 or more records), because there are many willow species and botanists record them carefully, not because willow is our commonest tree. And where one big survey has been shared, it can swamp a cell: around Bala in Gwynedd, spruce makes up 28% of all plant records. That is why I map shares of plant records, not counts, and fade cells with few records; even so, read the "Recorded trees" layer as a map of what botanists have noted, not a census.</p>
+
+<h2><span class="n">06 · The public forests</span>What was planted when</h2>
+<p>Forestry England manages the public forests of England, and it publishes every compartment with its main species and the year the current trees were planted. Its 73,109 compartments cover 254,585 hectares, of which 185,816 carry a recorded species. 67% of that is conifer: Sitka spruce alone is 25.8%, Corsican pine 12.7% and Scots pine 9.9%. Oak is the biggest broadleaf, at 9.0%, then beech at 7.5%. Tick "Public forest species" on the map and zoom in to see each compartment as a dot.</p>
+<div class="figure">
+  <div class="fig-h">Planting year of the trees standing today, England's public forests</div>
+  <div class="fig-sub">Hectares by decade of planting, 1900s to 2020s, conifer and broadleaf. A compartment counts once, under the year its current crop was planted.</div>
+  <div class="chart" id="decChart"></div>
+  <div class="src">Forestry England subcompartments. 18% of planting years end in 0, so many are rounded; decades smooth that out. 79 compartments carry the placeholder year 1500.</div>
+</div>
+<p>This is not the history of planting, because when a crop is felled and replanted, its compartment takes the new date. So the trees standing today were mostly planted from the 1950s on, and conifer planting peaks in the 1990s, the restocking of the great post-war plantations. What the chart does show is the change in what goes in: broadleaves were 47% of the area planted in the 1950s that still stands, 22% in the 1960s and 18% in the 1990s, then 26% in the 2000s and 24% in the 2010s. Sitka spruce is 42% of the area standing from plantings in 1980 to 1999 and 41% of plantings since 2000.</p>
+
+<h2><span class="n">07 · The world</span>Pines, oaks, figs and eucalypts</h2>
+<p>Switch the map to "The world". GBIF holds 526,962,197 records of vascular plants, and I fetched the records of 88 tree genera, from oaks and pines to baobabs, mahoganies and mangroves. The first map asks which of those genera is most recorded in each 0.35 degree cell with at least 200 plant records. It is dominated by big, much-recorded genera: figs over 14% of the qualifying land, mostly in the tropics; willows over 13%, mostly in northern Europe; oaks over 10%.</p>
+<p>So the default map asks a fairer question: which genus is most typical of each cell, recorded far more often there than across the world as a whole? Then the continents come alive. In Oceania it is acacias, bloodwoods and eucalypts; in Africa figs, thorn acacias and bushwillows; in South America the ice-cream bean trees (Inga) of the rainforest and its edges; in Europe willows, spruces and birches; in North America oaks, willows, pines and junipers.</p>
+<div class="figure">
+  <div class="fig-h">Most recorded tree genus, by continent</div>
+  <div class="fig-sub">Share of each continent's qualifying cells (by area) where each genus is the most recorded of the 88 genera.</div>
+  <div class="tablewrap"><table class="t" id="contTable"></table></div>
+</div>
+<p>Pick a genus to see its own map. Pines are the most recorded of these genera in 21% of Spain's qualifying land and around 12% of Poland's and the United States'. Oaks lead in 62% of Spain and 41% of Mexico, which has more kinds of oak than any other country. Eucalypts lead in 38% of Australia, sharing it with the acacias (54%).</p>
+
+<h2><span class="n">08 · Who records where</span>A map of botanists as well as trees</h2>
+<p>Recording effort shapes every world map here. Europe and North America hold 86% of all the plant records on land but only 32% of the land. The tropics are 34% of the land and hold 6.6% of the records, though they are home to most of the world's tree species. Europe has 16,081 records per 1,000 km²; Africa has 289.</p>
+<div class="figure">
+  <div class="fig-h">Plant records per 1,000 km² of land, by continent</div>
+  <div class="fig-sub">All GBIF vascular plant records (Tracheophyta), log scale.</div>
+  <div class="chart" id="effChart"></div>
+</div>
+<p>So I keep a cell only when it has 200 or more plant records, and fade it when it has fewer than ten times that. That leaves 32% of the world's land, and 20% of Africa. Switch to "Recording effort" to see the gaps. In the heart of the Congo basin only 10% of cells pass, with a median of 6 records; in the inner Amazon 19%; in central Siberia 1.2%. These are some of the most forested places on Earth, and the emptiest on this map.</p>
+
+<div class="note" id="method">
+  <h3>How I did this</h3>
+  <p><b>Woodland.</b> The National Forest Inventory (NFI) GB 2024 woodland map, layer NFI_GB_IFT_Data_20250826, has 641,642 polygons (611,229 woodland, the rest open ground inside woods). I had each polygon's centroid, interpreted forest type, country and area, from two downloads that together give the full count with no duplicates. I group the fourteen woodland types into seven: broadleaved; mixed, mainly broadleaved; mixed, mainly conifer; conifer; young trees; felled and restocking (felled, ground prepared, windblow, failed); and other (low density, shrub, coppice, assumed woodland). "Conifer share" is conifer and mixed mainly conifer over those plus broadleaved and mixed mainly broadleaved. For the map I draw each polygon as a disc of its own area at its centroid on a 100 m grid; county and country totals use the exact polygon areas, assigned to counties by centroid. Land areas come from ONS boundaries of ceremonial counties (England), preserved counties (Wales) and council areas (Scotland).</p>
+  <p><b>Public forests.</b> Forestry England's 73,109 subcompartments, with main species, land use and planting year, as centroids. I class each species as conifer or broadleaf (yew and juniper as conifers).</p>
+  <p><b>Records.</b> GBIF occurrence density maps for 88 tree genera and for all vascular plants, conifers and dicots, at about 0.088 degree resolution, retrieved on 28 October 2026. Two genera (Cedrus and Washingtonia) were matched by GBIF only to all vascular plants, so I dropped them. Each genus is mapped as its share of all vascular plant records in the cell; the world map adds cells into 0.35 degree squares. "Most typical" is the genus whose share in the cell is highest relative to its share of all the world's records (at least 20 records of it). Species level grids for Britain were planned but were not in the download, so the British "Recorded trees" layer shows genera.</p>
+  <p><b>Limits.</b> The NFI maps woodland of 0.5 ha and over from aerial imagery, so hedgerows, small copses and lone trees are missing, and types are interpreted from the air. It covers Great Britain, not Northern Ireland. The disc drawing places area correctly to within a polygon's size but not its shape. Forestry England covers only the public estate in England, and planting years are of the current crop. GBIF counts records, not trees: it follows where people look and record, it mixes planted, garden and wild trees, and a single large survey can dominate a cell.</p>
+</div>
+<div class="cta">
+  <a class="p" href="https://github.com/Tristan-Hotham/tree-map">Data and code</a>
+  <a href="https://doi.org/10.5281/zenodo.23739845">Paper (Zenodo)</a>
+  <a href="https://tristan-hotham.github.io/ancient-trees/">Ancient trees</a>
+  <a href="https://blog.tristanhotham.com/">Blog</a>
+</div>
+<footer>
+  <p>Dr Tristan Hotham, Independent researcher. ORCID 0000-0003-4931-9349. Cite as: Hotham, T. (2026) What grows where: the trees of Britain and the world. https://doi.org/10.5281/zenodo.23739845</p>
+  <p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+  <p>Woodland: National Forest Inventory GB 2024 and Forestry England subcompartments, © Forestry Commission copyright. Contains Ordnance Survey data © Crown copyright and database right 2025. Open Government Licence v3. Records: GBIF.org (28 October 2026) GBIF occurrence density maps, https://www.gbif.org, records under CC0, CC BY 4.0 and CC BY-NC 4.0 from the publishing institutions; derived grids shared under CC BY 4.0. Boundaries: Office for National Statistics, contains OS data © Crown copyright and database right (Open Government Licence v3). Places: OS Open Names, contains OS data © Crown copyright and database right 2026 (Open Government Licence v3); GeoNames (CC BY 4.0). Elevation for hill shading: Terrain Tiles (Mapzen/Tilezen, from SRTM and other public sources). Countries and land: Natural Earth (public domain). Base map tiles © Esri. Postcode lookups: postcodes.io. Map library: Leaflet.</p>
+  <p>Data files: Open Government Licence v3 for those derived from Forestry Commission and OS data; CC BY 4.0 for the GBIF grids. Text and figures: CC BY 4.0. Code: MIT. Other studies: <a href="https://tristan-hotham.github.io/ancient-trees/">Ancient trees</a>, <a href="https://tristan-hotham.github.io/sun-and-rain-uk/">Sun and rain in the UK</a>, <a href="https://blog.tristanhotham.com/">all posts</a>.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const R = {"gb":{"land_km2":229968.0,"woodland_ha":3152516.4,"woodland_pct":13.71,"groups_ha":{"broadleaved":1125138.1,"mixed_broad":51099.8,"mixed_conifer":49655.4,"conifer":861042.1,"young":188851.4,"felled":613368.4,"other":263362.0},"groups_pct_of_woodland":{"broadleaved":35.69,"mixed_broad":1.62,"mixed_conifer":1.58,"conifer":27.31,"young":5.99,"felled":19.46,"other":8.35},"conifer_share_pct":43.6,"broadleaf_share_pct":56.4,"woodland_kha":3153},"nations":{"England":{"land_km2":130481.4,"woodland_ha":1338932.8,"woodland_pct":10.26,"conifer_share_pct":25.1,"broadleaf_share_pct":74.9,"share_of_gb_woodland_pct":42.5,"groups_ha":{"broadleaved":802808.1,"mixed_broad":25358.7,"mixed_conifer":28744.0,"conifer":248770.7,"young":58676.9,"felled":111263.9,"other":63311.0},"felled_pct_of_woodland":8.3},"Scotland":{"land_km2":78703.8,"woodland_ha":1501200.6,"woodland_pct":19.07,"conifer_share_pct":71.0,"broadleaf_share_pct":29.0,"share_of_gb_woodland_pct":47.6,"groups_ha":{"broadleaved":205062.8,"mixed_broad":19192.7,"mixed_conifer":15047.5,"conifer":533084.4,"young":105347.9,"felled":434576.3,"other":188889.2},"felled_pct_of_woodland":28.9},"Wales":{"land_km2":20782.8,"woodland_ha":312383.0,"woodland_pct":15.03,"conifer_share_pct":40.7,"broadleaf_share_pct":59.3,"share_of_gb_woodland_pct":9.9,"groups_ha":{"broadleaved":117267.2,"mixed_broad":6548.4,"mixed_conifer":5863.9,"conifer":79187.0,"young":24826.6,"felled":67528.2,"other":11161.8},"felled_pct_of_woodland":21.6}},"counties":{"n":87,"most":[{"county":"Moray","nation":"Scotland","woodland_pct":30.8,"conifer_share_pct":81.7,"land_km2":2238.8,"woodland_ha":68956.7,"bl_land_pct":3.55,"cf_land_pct":15.85},{"county":"South Ayrshire","nation":"Scotland","woodland_pct":30.71,"conifer_share_pct":80.4,"land_km2":1224.4,"woodland_ha":37598.0,"bl_land_pct":3.28,"cf_land_pct":13.48},{"county":"Argyll and Bute","nation":"Scotland","woodland_pct":30.41,"conifer_share_pct":72.9,"land_km2":6982.5,"woodland_ha":212353.0,"bl_land_pct":4.55,"cf_land_pct":12.23},{"county":"Dumfries and Galloway","nation":"Scotland","woodland_pct":28.98,"conifer_share_pct":76.8,"land_km2":6435.9,"woodland_ha":186514.0,"bl_land_pct":2.9,"cf_land_pct":9.61},{"county":"West Glamorgan","nation":"Wales","woodland_pct":27.25,"conifer_share_pct":46.2,"land_km2":821.6,"woodland_ha":22389.4,"bl_land_pct":9.51,"cf_land_pct":8.17},{"county":"Stirling","nation":"Scotland","woodland_pct":26.3,"conifer_share_pct":63.6,"land_km2":2255.0,"woodland_ha":59313.4,"bl_land_pct":4.7,"cf_land_pct":8.24},{"county":"Surrey","nation":"England","woodland_pct":25.2,"conifer_share_pct":20.2,"land_km2":1670.2,"woodland_ha":42096.8,"bl_land_pct":18.42,"cf_land_pct":4.65},{"county":"North Lanarkshire","nation":"Scotland","woodland_pct":23.09,"conifer_share_pct":39.6,"land_km2":471.7,"woodland_ha":10891.7,"bl_land_pct":7.23,"cf_land_pct":4.74},{"county":"East Ayrshire","nation":"Scotland","woodland_pct":23.06,"conifer_share_pct":76.9,"land_km2":1271.3,"woodland_ha":29315.6,"bl_land_pct":2.51,"cf_land_pct":8.36},{"county":"Mid Glamorgan","nation":"Wales","woodland_pct":22.29,"conifer_share_pct":43.9,"land_km2":785.7,"woodland_ha":17516.4,"bl_land_pct":8.27,"cf_land_pct":6.48}],"least":[{"county":"Shetland Islands","nation":"Scotland","woodland_pct":0.04,"conifer_share_pct":24.2,"land_km2":1451.0,"woodland_ha":55.6,"bl_land_pct":0.0,"cf_land_pct":0.0},{"county":"Orkney Islands","nation":"Scotland","woodland_pct":0.21,"conifer_share_pct":24.7,"land_km2":1008.0,"woodland_ha":216.5,"bl_land_pct":0.05,"cf_land_pct":0.02},{"county":"Na h-Eileanan Siar","nation":"Scotland","woodland_pct":1.12,"conifer_share_pct":88.7,"land_km2":3064.4,"woodland_ha":3427.8,"bl_land_pct":0.04,"cf_land_pct":0.29},{"county":"Cambridgeshire","nation":"England","woodland_pct":3.61,"conifer_share_pct":9.6,"land_km2":3400.3,"woodland_ha":12273.8,"bl_land_pct":2.85,"cf_land_pct":0.3},{"county":"East Riding of Yorkshire","nation":"England","woodland_pct":3.86,"conifer_share_pct":23.1,"land_km2":2478.1,"woodland_ha":9569.8,"bl_land_pct":2.39,"cf_land_pct":0.71},{"county":"Lincolnshire","nation":"England","woodland_pct":4.29,"conifer_share_pct":21.8,"land_km2":6976.3,"woodland_ha":29953.9,"bl_land_pct":2.86,"cf_land_pct":0.8}],"by_nation":{"England":{"most":{"county":"Surrey","nation":"England","woodland_pct":25.2,"conifer_share_pct":20.2,"land_km2":1670.2,"woodland_ha":42096.8,"bl_land_pct":18.42,"cf_land_pct":4.65},"least":{"county":"Cambridgeshire","nation":"England","woodland_pct":3.61,"conifer_share_pct":9.6,"land_km2":3400.3,"woodland_ha":12273.8,"bl_land_pct":2.85,"cf_land_pct":0.3}},"Scotland":{"most":{"county":"Moray","nation":"Scotland","woodland_pct":30.8,"conifer_share_pct":81.7,"land_km2":2238.8,"woodland_ha":68956.7,"bl_land_pct":3.55,"cf_land_pct":15.85},"least":{"county":"Shetland Islands","nation":"Scotland","woodland_pct":0.04,"conifer_share_pct":24.2,"land_km2":1451.0,"woodland_ha":55.6,"bl_land_pct":0.0,"cf_land_pct":0.0}},"Wales":{"most":{"county":"West Glamorgan","nation":"Wales","woodland_pct":27.25,"conifer_share_pct":46.2,"land_km2":821.6,"woodland_ha":22389.4,"bl_land_pct":9.51,"cf_land_pct":8.17},"least":{"county":"South Glamorgan","nation":"Wales","woodland_pct":9.01,"conifer_share_pct":8.6,"land_km2":474.1,"woodland_ha":4272.8,"bl_land_pct":7.67,"cf_land_pct":0.72}}},"most_conifer":[{"county":"Moray","nation":"Scotland","woodland_pct":30.8,"conifer_share_pct":81.7,"land_km2":2238.8,"woodland_ha":68956.7,"bl_land_pct":3.55,"cf_land_pct":15.85},{"county":"South Ayrshire","nation":"Scotland","woodland_pct":30.71,"conifer_share_pct":80.4,"land_km2":1224.4,"woodland_ha":37598.0,"bl_land_pct":3.28,"cf_land_pct":13.48},{"county":"East Ayrshire","nation":"Scotland","woodland_pct":23.06,"conifer_share_pct":76.9,"land_km2":1271.3,"woodland_ha":29315.6,"bl_land_pct":2.51,"cf_land_pct":8.36},{"county":"Dumfries and Galloway","nation":"Scotland","woodland_pct":28.98,"conifer_share_pct":76.8,"land_km2":6435.9,"woodland_ha":186514.0,"bl_land_pct":2.9,"cf_land_pct":9.61},{"county":"Scottish Borders","nation":"Scotland","woodland_pct":22.01,"conifer_share_pct":75.9,"land_km2":4740.9,"woodland_ha":104354.9,"bl_land_pct":2.07,"cf_land_pct":6.51}],"most_broadleaf":[{"county":"Essex","nation":"England","woodland_pct":6.67,"conifer_share_pct":7.6,"land_km2":3672.1,"woodland_ha":24510.6,"bl_land_pct":5.66,"cf_land_pct":0.46},{"county":"Kent","nation":"England","woodland_pct":13.15,"conifer_share_pct":11.8,"land_km2":3741.9,"woodland_ha":49196.7,"bl_land_pct":10.24,"cf_land_pct":1.37},{"county":"East Sussex","nation":"England","woodland_pct":19.13,"conifer_share_pct":14.3,"land_km2":1797.5,"woodland_ha":34392.9,"bl_land_pct":15.35,"cf_land_pct":2.56},{"county":"Buckinghamshire","nation":"England","woodland_pct":11.7,"conifer_share_pct":16.5,"land_km2":1874.6,"woodland_ha":21935.3,"bl_land_pct":8.82,"cf_land_pct":1.74},{"county":"Cornwall","nation":"England","woodland_pct":9.43,"conifer_share_pct":17.2,"land_km2":3567.1,"woodland_ha":33620.3,"bl_land_pct":6.99,"cf_land_pct":1.45}],"england_top5":[{"county":"Surrey","nation":"England","woodland_pct":25.2,"conifer_share_pct":20.2,"land_km2":1670.2,"woodland_ha":42096.8,"bl_land_pct":18.42,"cf_land_pct":4.65},{"county":"West Sussex","nation":"England","woodland_pct":21.4,"conifer_share_pct":17.3,"land_km2":1992.3,"woodland_ha":42630.2,"bl_land_pct":16.03,"cf_land_pct":3.36},{"county":"Hampshire","nation":"England","woodland_pct":19.53,"conifer_share_pct":22.4,"land_km2":3771.1,"woodland_ha":73641.6,"bl_land_pct":13.69,"cf_land_pct":3.96},{"county":"East Sussex","nation":"England","woodland_pct":19.13,"conifer_share_pct":14.3,"land_km2":1797.5,"woodland_ha":34392.9,"bl_land_pct":15.35,"cf_land_pct":2.56},{"county":"Northumberland","nation":"England","woodland_pct":18.0,"conifer_share_pct":71.1,"land_km2":5026.5,"woodland_ha":90458.1,"bl_land_pct":2.73,"cf_land_pct":6.73}]},"squares10":{"n":2303,"most_wooded":[{"ref":"NY68","county":"Northumberland","woodland_pct":81.1,"conifer_share_pct":98.0,"conifer_ha":4519.0,"broadleaf_ha":92.6,"forest":"Kielder Forest","lat":55.1581,"lon":-2.5508,"place":"Falstone","km":7.7},{"ref":"NX38","county":"Dumfries and Galloway","woodland_pct":79.4,"conifer_share_pct":98.4,"conifer_ha":4911.6,"broadleaf_ha":77.9,"forest":"Dornal Forest","lat":55.1318,"lon":-4.5897,"place":"Glentrool Village","km":6.6},{"ref":"NY58","county":"Scottish Borders","woodland_pct":79.2,"conifer_share_pct":99.3,"conifer_ha":2965.6,"broadleaf_ha":20.2,"forest":"Kershope Forest","lat":55.1573,"lon":-2.7078,"place":"Copshaw Holm","km":7.2},{"ref":"NY77","county":"Northumberland","woodland_pct":77.2,"conifer_share_pct":99.2,"conifer_ha":3309.8,"broadleaf_ha":26.9,"forest":"Wark Forest","lat":55.0688,"lon":-2.393,"place":"Redburn","km":10.6},{"ref":"NR88","county":"Argyll and Bute","woodland_pct":75.4,"conifer_share_pct":91.2,"conifer_ha":2954.3,"broadleaf_ha":285.8,"forest":"Achnaba Forest","lat":56.0096,"lon":-5.4504,"place":"Ardrishaig","km":0.8},{"ref":"NT20","county":"Dumfries and Galloway","woodland_pct":72.8,"conifer_share_pct":99.1,"conifer_ha":1153.3,"broadleaf_ha":10.6,"forest":"Eskdalemuir Forest","lat":55.3333,"lon":-3.1838,"place":"Eskdalemuir","km":6.6},{"ref":"NT30","county":"Dumfries and Galloway","woodland_pct":72.0,"conifer_share_pct":98.4,"conifer_ha":1459.5,"broadleaf_ha":23.8,"forest":"Craik Forest","lat":55.3347,"lon":-3.0262,"place":"Eskdalemuir","km":12.0},{"ref":"NX57","county":"Dumfries and Galloway","woodland_pct":68.7,"conifer_share_pct":98.9,"conifer_ha":2166.4,"broadleaf_ha":24.3,"forest":"","lat":55.0483,"lon":-4.2711,"place":"New Galloway","km":8.9},{"ref":"NG72","county":"Highland","woodland_pct":66.3,"conifer_share_pct":56.2,"conifer_ha":339.4,"broadleaf_ha":264.6,"forest":"","lat":57.2601,"lon":-5.7325,"place":"Kyleakin","km":1.6},{"ref":"NS50","county":"East Ayrshire","woodland_pct":65.9,"conifer_share_pct":99.0,"conifer_ha":2470.9,"broadleaf_ha":24.4,"forest":"","lat":55.3176,"lon":-4.2865,"place":"Dalmellington","km":7.0}],"most_conifer":[{"ref":"NX38","county":"Dumfries and Galloway","woodland_pct":79.4,"conifer_share_pct":98.4,"conifer_ha":4911.6,"broadleaf_ha":77.9,"forest":"Dornal Forest","lat":55.1318,"lon":-4.5897,"place":"Glentrool Village","km":6.6},{"ref":"NY68","county":"Northumberland","woodland_pct":81.1,"conifer_share_pct":98.0,"conifer_ha":4519.0,"broadleaf_ha":92.6,"forest":"Kielder Forest","lat":55.1581,"lon":-2.5508,"place":"Falstone","km":7.7},{"ref":"TL88","county":"Norfolk","woodland_pct":61.6,"conifer_share_pct":83.6,"conifer_ha":4444.5,"broadleaf_ha":869.7,"forest":"The Forest","lat":52.4317,"lon":0.7198,"place":"Thetford","km":2.9},{"ref":"NR74","county":"Argyll and Bute","woodland_pct":60.1,"conifer_share_pct":95.0,"conifer_ha":3581.9,"broadleaf_ha":187.8,"forest":"","lat":55.6463,"lon":-5.5773,"place":"Tayinloan","km":5.5},{"ref":"NN94","county":"Perth and Kinross","woodland_pct":58.8,"conifer_share_pct":94.2,"conifer_ha":3519.4,"broadleaf_ha":215.8,"forest":"","lat":56.5851,"lon":-3.7111,"place":"Dalguise","km":4.9},{"ref":"NH91","county":"Highland","woodland_pct":60.6,"conifer_share_pct":76.9,"conifer_ha":3398.9,"broadleaf_ha":1021.6,"forest":"The Queen's Forest","lat":57.2137,"lon":-3.7401,"place":"Boat of Garten","km":4.0},{"ref":"NO59","county":"Aberdeenshire","woodland_pct":47.9,"conifer_share_pct":86.9,"conifer_ha":3392.0,"broadleaf_ha":510.9,"forest":"Slewdrum Forest","lat":57.0439,"lon":-2.7433,"place":"Birse","km":2.1},{"ref":"NX39","county":"South Ayrshire","woodland_pct":57.0,"conifer_share_pct":97.4,"conifer_ha":3329.6,"broadleaf_ha":89.5,"forest":"","lat":55.2216,"lon":-4.5955,"place":"Barr","km":7.6},{"ref":"NY77","county":"Northumberland","woodland_pct":77.2,"conifer_share_pct":99.2,"conifer_ha":3309.8,"broadleaf_ha":26.9,"forest":"Wark Forest","lat":55.0688,"lon":-2.393,"place":"Redburn","km":10.6},{"ref":"NJ35","county":"Moray","woodland_pct":49.8,"conifer_share_pct":89.1,"conifer_ha":3275.3,"broadleaf_ha":400.9,"forest":"","lat":57.5804,"lon":-3.0886,"place":"Fochabers","km":3.7}],"most_broadleaf":[{"ref":"SU91","county":"West Sussex","woodland_pct":45.7,"conifer_share_pct":16.5,"conifer_ha":697.8,"broadleaf_ha":3534.6,"forest":"Charlton Forest","lat":50.9266,"lon":-0.6497,"place":"Duncton","km":2.6},{"ref":"SU93","county":"Surrey","woodland_pct":42.8,"conifer_share_pct":17.6,"conifer_ha":685.0,"broadleaf_ha":3218.5,"forest":"","lat":51.1064,"lon":-0.6444,"place":"Chiddingfold","km":1.4},{"ref":"SU30","county":"Hampshire","woodland_pct":45.8,"conifer_share_pct":26.9,"conifer_ha":1124.1,"broadleaf_ha":3054.3,"forest":"New Forest","lat":50.8435,"lon":-1.5043,"place":"Furzey Lodge","km":3.8},{"ref":"SU21","county":"Hampshire","woodland_pct":42.1,"conifer_share_pct":26.3,"conifer_ha":1023.6,"broadleaf_ha":2874.8,"forest":"New Forest","lat":50.9339,"lon":-1.6456,"place":"Fritham","km":1.4},{"ref":"SU20","county":"Hampshire","woodland_pct":48.4,"conifer_share_pct":35.6,"conifer_ha":1584.9,"broadleaf_ha":2868.2,"forest":"New Forest","lat":50.844,"lon":-1.6463,"place":"Bank","km":4.2},{"ref":"TQ43","county":"East Sussex","woodland_pct":35.9,"conifer_share_pct":17.8,"conifer_ha":605.2,"broadleaf_ha":2791.4,"forest":"Ashdown Forest","lat":51.096,"lon":0.0694,"place":"Coleman's Hatch","km":1.2},{"ref":"TQ33","county":"West Sussex","woodland_pct":34.5,"conifer_share_pct":15.9,"conifer_ha":521.6,"broadleaf_ha":2753.4,"forest":"Worthlodge Forest","lat":51.0984,"lon":-0.0734,"place":"Turners Hill","km":1.0},{"ref":"SU83","county":"Hampshire","woodland_pct":43.1,"conifer_share_pct":29.7,"conifer_ha":1148.2,"broadleaf_ha":2723.5,"forest":"Stream Forest","lat":51.108,"lon":-0.7872,"place":"Headley Down","km":2.0},{"ref":"TQ14","county":"Surrey","woodland_pct":36.6,"conifer_share_pct":25.7,"conifer_ha":875.8,"broadleaf_ha":2529.9,"forest":"Winterfold Forest","lat":51.1927,"lon":-0.3557,"place":"Coldharbour","km":1.2},{"ref":"TQ71","county":"East Sussex","woodland_pct":30.7,"conifer_share_pct":13.6,"conifer_ha":391.8,"broadleaf_ha":2486.7,"forest":"Vinehall Forest","lat":50.9079,"lon":0.4878,"place":"Battle","km":1.2}],"under1pct":100,"over50pct":60,"under1_by_county":{"Na h-Eileanan Siar":22,"Lincolnshire":16,"Highland":16,"Shetland Islands":11,"Cambridgeshire":10,"Orkney Islands":8,"Norfolk":4,"Kent":2,"Somerset":2,"Perth and Kinross":2,"Aberdeenshire":2,"East Riding of Yorkshire":1,"North Yorkshire":1,"Cumbria":1,"Argyll and Bute":1,"Moray":1},"note":"10 km squares of the British National Grid with at least 50 km2 of land"},"gbif_gb":{"min_records":500,"cells_land":4098,"cells_ok":4089,"cell_deg":0.0879,"plant_records":77858769,"median_records":13374,"genus_records_rank":[["Salix",937226],["Prunus",686724],["Acer",653930],["Quercus",516973],["Fraxinus",434049],["Betula",357520],["Ilex",318976],["Ulmus",287317],["Alnus",264950],["Fagus",250775],["Sorbus",248060],["Populus",225677]],"dominant_cells":[["Salix",2863],["Prunus",613],["Acer",293],["Quercus",112],["Betula",74],["Juniperus",45],["Sorbus",28],["Pinus",21],["Fraxinus",16],["Picea",14],["Ulmus",2],["Alnus",2]],"genera":{"Quercus":{"records":516973,"share_pct":0.664,"cells_dominant":112,"top":[{"lat":51.37,"lon":-0.31,"records":45494,"place":"Long Ditton","county":"Surrey","km":1.6,"share_pct":3.86},{"lat":52.87,"lon":-3.91,"records":3985,"place":"Trawsfynydd","county":"Gwynedd","km":4.1,"share_pct":3.36},{"lat":51.37,"lon":-1.71,"records":27416,"place":"Wootton Rivers","county":"Wiltshire","km":0.9,"share_pct":3.06}]},"Fraxinus":{"records":434049,"share_pct":0.557,"cells_dominant":16,"top":[{"lat":51.64,"lon":-1.71,"records":19312,"place":"Highworth","county":"Swindon","km":0.6,"share_pct":5.14},{"lat":52.6,"lon":-0.83,"records":42123,"place":"Belton-in-Rutland","county":"Rutland","km":2.6,"share_pct":2.79},{"lat":51.37,"lon":0.04,"records":27956,"place":"Keston","county":"Greater London","km":1.6,"share_pct":2.36}]},"Fagus":{"records":250775,"share_pct":0.322,"cells_dominant":2,"top":[{"lat":51.37,"lon":-1.71,"records":27416,"place":"Wootton Rivers","county":"Wiltshire","km":0.9,"share_pct":3.34},{"lat":55.59,"lon":-4.53,"records":4185,"place":"Gatehead","county":"East Ayrshire","km":1.9,"share_pct":2.32},{"lat":53.48,"lon":-1.54,"records":22497,"place":"Wortley","county":"Barnsley","km":0.7,"share_pct":1.6}]},"Betula":{"records":357520,"share_pct":0.459,"cells_dominant":74,"top":[{"lat":57.0,"lon":-3.65,"records":4460,"place":"Braemar","county":"Aberdeenshire","km":15.0,"share_pct":11.5},{"lat":55.42,"lon":-4.35,"records":2065,"place":"Ochiltree","county":"East Ayrshire","km":5.2,"share_pct":5.96},{"lat":57.26,"lon":-4.79,"records":1506,"place":"Tomich","county":"Highland","km":4.9,"share_pct":5.58}]},"Pinus":{"records":188212,"share_pct":0.242,"cells_dominant":21,"top":[{"lat":57.17,"lon":-3.56,"records":8570,"place":"Nethy Bridge","county":"Highland","km":11.8,"share_pct":7.49},{"lat":57.0,"lon":-2.86,"records":763,"place":"Birsemore","county":"Aberdeenshire","km":8.9,"share_pct":6.82},{"lat":57.17,"lon":-3.65,"records":17460,"place":"Duackbridge","county":"Highland","km":10.1,"share_pct":6.51}]},"Picea":{"records":96860,"share_pct":0.124,"cells_dominant":14,"top":[{"lat":52.87,"lon":-3.56,"records":9940,"place":"Y Bala","county":"Gwynedd","km":5.6,"share_pct":28.28},{"lat":52.78,"lon":-3.74,"records":9023,"place":"Brithdir","county":"Gwynedd","km":6.6,"share_pct":25.73},{"lat":52.95,"lon":-3.82,"records":12853,"place":"Cwm Penmachno","county":"Conwy","km":6.7,"share_pct":23.18}]},"Larix":{"records":95559,"share_pct":0.123,"cells_dominant":0,"top":[{"lat":56.56,"lon":-2.94,"records":1213,"place":"Tealing","county":"Angus","km":2.9,"share_pct":0.91},{"lat":53.48,"lon":-1.54,"records":22497,"place":"Wortley","county":"Barnsley","km":0.7,"share_pct":0.88},{"lat":57.17,"lon":-2.68,"records":4137,"place":"Muir of Fowlis","county":"Aberdeenshire","km":3.5,"share_pct":0.82}]},"Taxus":{"records":120302,"share_pct":0.155,"cells_dominant":0,"top":[{"lat":51.37,"lon":0.04,"records":27956,"place":"Keston","county":"Greater London","km":1.6,"share_pct":1.14},{"lat":51.37,"lon":0.13,"records":16541,"place":"Chelsfield","county":"Greater London","km":1.7,"share_pct":0.75},{"lat":53.39,"lon":-1.1,"records":16194,"place":"Oldcotes","county":"Nottinghamshire","km":0.7,"share_pct":0.69}]},"Ilex":{"records":318976,"share_pct":0.41,"cells_dominant":2,"top":[{"lat":55.59,"lon":-4.53,"records":4185,"place":"Gatehead","county":"East Ayrshire","km":1.9,"share_pct":2.46},{"lat":53.48,"lon":-1.54,"records":22497,"place":"Wortley","county":"Barnsley","km":0.7,"share_pct":2.17},{"lat":51.37,"lon":0.04,"records":27956,"place":"Keston","county":"Greater London","km":1.6,"share_pct":1.97}]},"Sorbus":{"records":248060,"share_pct":0.319,"cells_dominant":28,"top":[{"lat":57.17,"lon":-3.56,"records":8570,"place":"Nethy Bridge","county":"Highland","km":11.8,"share_pct":4.95},{"lat":57.17,"lon":-3.65,"records":17460,"place":"Duackbridge","county":"Highland","km":10.1,"share_pct":4.89},{"lat":53.57,"lon":-1.89,"records":5289,"place":"Meltham","county":"Kirklees","km":3.6,"share_pct":3.38}]},"Alnus":{"records":264950,"share_pct":0.34,"cells_dominant":2,"top":[{"lat":53.39,"lon":-2.68,"records":50011,"place":"Bold Heath","county":"St. Helens","km":1.7,"share_pct":1.39},{"lat":53.22,"lon":-2.24,"records":19163,"place":"Marton","county":"Cheshire East","km":1.3,"share_pct":1.27},{"lat":53.48,"lon":-2.77,"records":40918,"place":"Crank","county":"St. Helens","km":1.8,"share_pct":1.26}]},"Castanea":{"records":72884,"share_pct":0.094,"cells_dominant":0,"top":[{"lat":53.48,"lon":-1.54,"records":22497,"place":"Wortley","county":"Barnsley","km":0.7,"share_pct":1.31},{"lat":51.46,"lon":0.13,"records":15012,"place":"North Cray","county":"Greater London","km":3.2,"share_pct":1.03},{"lat":53.22,"lon":-1.1,"records":27144,"place":"Meden Vale","county":"Nottinghamshire","km":2.1,"share_pct":0.77}]},"Acer":{"records":653930,"share_pct":0.84,"cells_dominant":293,"top":[{"lat":55.59,"lon":-4.53,"records":4185,"place":"Gatehead","county":"East Ayrshire","km":1.9,"share_pct":5.42},{"lat":51.64,"lon":-1.71,"records":19312,"place":"Highworth","county":"Swindon","km":0.6,"share_pct":4.2},{"lat":51.46,"lon":0.13,"records":15012,"place":"North Cray","county":"Greater London","km":3.2,"share_pct":4.16}]},"Salix":{"records":937226,"share_pct":1.204,"cells_dominant":2863,"top":[{"lat":57.0,"lon":-3.65,"records":4460,"place":"Braemar","county":"Aberdeenshire","km":15.0,"share_pct":11.43},{"lat":57.08,"lon":-4.35,"records":1731,"place":"Newtonmore","county":"Highland","km":14.0,"share_pct":7.86},{"lat":57.0,"lon":-3.82,"records":4266,"place":"Insh","county":"Highland","km":13.3,"share_pct":6.19}]},"Juniperus":{"records":46152,"share_pct":0.059,"cells_dominant":45,"top":[{"lat":57.08,"lon":-3.65,"records":11893,"place":"Inverdruie","county":"Highland","km":14.6,"share_pct":17.43},{"lat":57.08,"lon":-3.56,"records":7138,"place":"Braemar","county":"Aberdeenshire","km":13.0,"share_pct":15.65},{"lat":57.0,"lon":-3.65,"records":4460,"place":"Braemar","county":"Aberdeenshire","km":15.0,"share_pct":8.79}]},"Ulmus":{"records":287317,"share_pct":0.369,"cells_dominant":2,"top":[{"lat":55.59,"lon":-4.53,"records":4185,"place":"Gatehead","county":"East Ayrshire","km":1.9,"share_pct":7.98},{"lat":51.28,"lon":-2.59,"records":78977,"place":"Litton","county":"Somerset","km":0.9,"share_pct":1.55},{"lat":53.39,"lon":-1.19,"records":98366,"place":"Firbeck","county":"Rotherham","km":2.2,"share_pct":1.48}]},"Carpinus":{"records":61074,"share_pct":0.078,"cells_dominant":0,"top":[{"lat":51.64,"lon":0.04,"records":16182,"place":"Sewardstonebury","county":"Essex","km":2.4,"share_pct":1.22},{"lat":50.93,"lon":0.57,"records":14823,"place":"Cackle Street","county":"East Sussex","km":1.5,"share_pct":0.94},{"lat":51.64,"lon":-0.13,"records":43086,"place":"Botany Bay","county":"Greater London","km":4.6,"share_pct":0.75}]},"Tilia":{"records":137650,"share_pct":0.177,"cells_dominant":0,"top":[{"lat":51.37,"lon":-0.31,"records":45494,"place":"Long Ditton","county":"Surrey","km":1.6,"share_pct":2.79},{"lat":51.55,"lon":-0.22,"records":75902,"place":"London","county":"Greater London","km":7.8,"share_pct":2.43},{"lat":51.46,"lon":-0.22,"records":66239,"place":"City of Westminster","county":"Greater London","km":7.9,"share_pct":2.23}]},"Prunus":{"records":686724,"share_pct":0.882,"cells_dominant":613,"top":[{"lat":55.59,"lon":-4.53,"records":4185,"place":"Gatehead","county":"East Ayrshire","km":1.9,"share_pct":3.78},{"lat":51.46,"lon":0.04,"records":20995,"place":"North Cray","county":"Greater London","km":7.4,"share_pct":3.14},{"lat":51.55,"lon":-0.22,"records":75902,"place":"London","county":"Greater London","km":7.8,"share_pct":3.1}]},"Populus":{"records":225677,"share_pct":0.29,"cells_dominant":1,"top":[{"lat":51.64,"lon":-1.71,"records":19312,"place":"Highworth","county":"Swindon","km":0.6,"share_pct":2.02},{"lat":51.64,"lon":-1.36,"records":12559,"place":"East Hanney","county":"Oxfordshire","km":2.6,"share_pct":1.65},{"lat":60.42,"lon":-1.45,"records":869,"place":"Hillswick","county":"Shetland Islands","km":5.8,"share_pct":1.38}]}},"conifer_share_pct":0.86},"groups":{"names":["Broadleaved","Mixed, mainly broadleaved","Mixed, mainly conifer","Conifer","Young trees","Felled and restocking","Other and assumed woodland"],"keys":["broadleaved","mixed_broad","mixed_conifer","conifer","young","felled","other"],"cols":["#3E8E3A","#86A845","#4E8F7A","#1D5C5E","#BFD47E","#CDB78C","#A9B7A0"]},"mix_key":{"cover_breaks":[5,15,30,50],"share_breaks":[20,40,60,80],"cols":["#3C8F35","#5E9B47","#6E9A7C","#3A7A7E","#1C4F66"],"alpha":[70,120,170,215,255]},"common":{"Quercus":"oak","Fraxinus":"ash","Fagus":"beech","Betula":"birch","Pinus":"pine","Picea":"spruce","Larix":"larch","Taxus":"yew","Ilex":"holly","Sorbus":"rowan and whitebeam","Alnus":"alder","Castanea":"sweet chestnut","Acer":"maple and sycamore","Salix":"willow","Prunus":"cherry and blackthorn","Ulmus":"elm","Populus":"poplar and aspen","Tilia":"lime","Carpinus":"hornbeam","Juniperus":"juniper","Aesculus":"horse chestnut","Abies":"fir","Pseudotsuga":"Douglas fir","Eucalyptus":"eucalyptus","Acacia":"acacia","Ficus":"fig","Adansonia":"baobab","Cupressus":"cypress","Platanus":"plane","Juglans":"walnut","Tsuga":"hemlock","Thuja":"thuja (red cedar)","Sequoia":"coast redwood","Nothofagus":"southern beech","Araucaria":"araucaria","Podocarpus":"podocarp","Ginkgo":"ginkgo","Magnolia":"magnolia","Liquidambar":"sweetgum","Liriodendron":"tulip tree","Carya":"hickory","Olea":"olive","Prosopis":"mesquite","Vachellia":"thorn acacia (Vachellia)","Senegalia":"Senegalia","Casuarina":"she-oak","Melaleuca":"paperbark","Banksia":"banksia","Callitris":"cypress pine","Agathis":"kauri","Shorea":"meranti (Shorea)","Dipterocarpus":"keruing","Tectona":"teak","Swietenia":"mahogany","Ceiba":"kapok","Hevea":"rubber tree","Cecropia":"cecropia","Inga":"ice-cream bean (Inga)","Rhizophora":"red mangrove","Avicennia":"black mangrove","Mangifera":"mango","Syzygium":"Syzygium","Brachystegia":"miombo (Brachystegia)","Julbernardia":"Julbernardia","Isoberlinia":"doka (Isoberlinia)","Terminalia":"Terminalia","Combretum":"bushwillow","Colophospermum":"mopane","Cryptomeria":"Japanese cedar","Chamaecyparis":"false cypress","Cinnamomum":"camphor and cinnamon","Castanopsis":"chinquapin","Lithocarpus":"stone oak","Eschweilera":"Eschweilera","Bertholletia":"Brazil nut","Hymenaea":"jatoba","Handroanthus":"ipe","Dalbergia":"rosewood","Pterocarpus":"padauk","Khaya":"African mahogany","Entandrophragma":"sapele","Milicia":"iroko","Sabal":"palmetto","Phoenix":"date palm","Nyssa":"tupelo","Robinia":"black locust","Dacrydium":"rimu (Dacrydium)","Corymbia":"bloodwood (Corymbia)"},"genus_cols":{"Quercus":"#8A5A22","Pinus":"#1F6F78","Picea":"#2C4F6B","Abies":"#3E6F96","Larix":"#6FA3A0","Betula":"#A9C46A","Fagus":"#B9803A","Acer":"#C5562F","Fraxinus":"#6F9A7A","Tilia":"#C98E3B","Ulmus":"#6F8F4E","Carpinus":"#86A35E","Castanea":"#A86B3C","Populus":"#9DB04A","Salix":"#C4C948","Alnus":"#6E9E52","Juniperus":"#5B7F45","Cupressus":"#4F6B3A","Taxus":"#24502F","Tsuga":"#2E6E73","Pseudotsuga":"#2E6E73","Thuja":"#4F6B3A","Sequoia":"#4F6B3A","Eucalyptus":"#6F8FB0","Corymbia":"#8BA6C0","Acacia":"#E2B323","Ficus":"#7E4A86","Shorea":"#A3423A","Dipterocarpus":"#A3423A","Tectona":"#8E8A80","Swietenia":"#A3423A","Ceiba":"#C98E3B","Hevea":"#8E8A80","Cecropia":"#8E8A80","Inga":"#E09A3E","Nothofagus":"#B0844A","Araucaria":"#56794E","Podocarpus":"#56794E","Ginkgo":"#9C9A3C","Magnolia":"#8E8A80","Liquidambar":"#C7633F","Liriodendron":"#8E8A80","Prunus":"#D27C93","Sorbus":"#B4495A","Juglans":"#7B5B3A","Carya":"#8E8A80","Olea":"#7C9A6A","Ilex":"#2F7D4E","Adansonia":"#C2412D","Brachystegia":"#D9A520","Julbernardia":"#D9A520","Isoberlinia":"#D9A520","Terminalia":"#9C7A3A","Combretum":"#B9893F","Colophospermum":"#D9A520","Prosopis":"#B87C2E","Vachellia":"#C9902A","Senegalia":"#D8B04E","Casuarina":"#6E8A80","Melaleuca":"#93A3B5","Banksia":"#C47A52","Callitris":"#5E7F70","Agathis":"#56794E","Dacrydium":"#56794E","Cryptomeria":"#4F6B3A","Chamaecyparis":"#4F6B3A","Cinnamomum":"#8E8A80","Castanopsis":"#9A6A2E","Lithocarpus":"#9A6A2E","Rhizophora":"#2D7F9A","Avicennia":"#3E9AB0","Mangifera":"#8E8A80","Syzygium":"#7F95A8","Eschweilera":"#A3423A","Bertholletia":"#A3423A","Hymenaea":"#D9A520","Handroanthus":"#8E8A80","Dalbergia":"#D9A520","Pterocarpus":"#D9A520","Khaya":"#A3423A","Entandrophragma":"#A3423A","Milicia":"#7E4A86","Sabal":"#C46FA0","Phoenix":"#C46FA0","Nyssa":"#8E8A80","Platanus":"#8F8A55","Aesculus":"#B5673A","Robinia":"#C6A44A"},"fe":{"subcompartments":73109,"area_ha":254585.1,"with_species":58778,"species_ha":185816.2,"species_n":110,"conifer_pct":67.1,"top_species":[["Sitka spruce",47919.5,25.8,"conifer"],["Corsican pine",23660.2,12.7,"conifer"],["Scots pine",18355.0,9.9,"conifer"],["Oak (robur/petraea)",16806.3,9.0,"broadleaf"],["Beech",13931.3,7.5,"broadleaf"],["Douglas fir",12381.3,6.7,"conifer"],["Birch (downy/silver)",10702.1,5.8,"broadleaf"],["Norway spruce",6679.9,3.6,"conifer"],["Mixed broadleaves",4584.9,2.5,"broadleaf"],["Japanese larch",3909.1,2.1,"conifer"],["European Ash",3565.9,1.9,"broadleaf"],["Hybrid larch",2419.6,1.3,"conifer"]],"land_use":{"High Forest":182063.1,"Open":51667.2,"Felled":7447.4,"Agricultural land":6729.3,"Windblow":1290.3,"Worked Coppice":1103.9},"with_year":58752,"year_ha":185708.5,"before_1900_ha":10733.1,"year_1500_n":79,"year_round_decade_pct":17.7,"decades":[[1900,164.1,1280.0,88.6],[1910,111.4,697.2,86.2],[1920,2575.3,2187.4,45.9],[1930,3199.5,5149.4,61.7],[1940,4023.3,5579.3,58.1],[1950,11771.7,10453.7,47.0],[1960,14404.1,4100.8,22.2],[1970,12699.7,2172.4,14.6],[1980,17963.6,2891.5,13.9],[1990,19664.9,4318.6,18.0],[2000,16599.3,5714.8,25.6],[2010,12638.1,4069.8,24.4],[2020,8308.7,2236.8,21.2]],"conifer_peak_decade":1990,"conifer_peak_ha":19664.9,"share_1950_1979_conifer_pct":31.2,"broadleaf_pct_1950s":47.0,"broadleaf_pct_1960s":22.2,"broadleaf_pct_1990s":18.0,"broadleaf_pct_2000s":25.6,"broadleaf_pct_2010s":24.4,"pre1920_ha":2252.8,"after1919_conifer_pct":67.2,"periods":{"1920_1949":[["Oak (robur/petraea)",22.8],["Scots pine",21.1],["Beech",19.8],["Corsican pine",6.4]],"1950_1979":[["Corsican pine",15.6],["Sitka spruce",14.6],["Beech",12.8],["Scots pine",11.9]],"1980_1999":[["Sitka spruce",41.7],["Corsican pine",25.0],["Birch (downy/silver)",7.2],["Douglas fir",6.7]],"2000_2029":[["Sitka spruce",40.9],["Scots pine",10.0],["Birch (downy/silver)",9.2],["Douglas fir",6.4]]},"districts":{"North England":53420.3,"West England":34224.6,"East England":30185.8,"South England":27694.1,"Central England":22915.4,"Yorkshire":17287.5,"Westonbirt":88.5}},"world":{"dominant_area":[["Ficus",7180259,13.9],["Salix",6544836,12.6],["Quercus",5365859,10.4],["Acacia",3797917,7.3],["Acer",3064905,5.9],["Prunus",2408446,4.6],["Pinus",2389357,4.6],["Eucalyptus",2254860,4.4],["Vachellia",1856965,3.6],["Inga",1358194,2.6],["Combretum",1316623,2.5],["Ilex",1286146,2.5],["Juniperus",1256824,2.4],["Prosopis",1033536,2.0],["Terminalia",895585,1.7]],"typical_area":[["Ficus",2137744,4.1],["Acacia",2097066,4.0],["Salix",1786294,3.4],["Quercus",1018894,2.0],["Juniperus",979554,1.9],["Pinus",793845,1.5],["Picea",790108,1.5],["Corymbia",679853,1.3],["Vachellia",655988,1.3],["Betula",622809,1.2],["Acer",577892,1.1],["Eucalyptus",572474,1.1],["Ilex",553812,1.1],["Inga",524952,1.0],["Abies",469456,0.9]],"by_continent":{"Europe":{"ok_km2":9212734,"top":[["Salix",35.7],["Prunus",12.8],["Quercus",11.8],["Acer",11.6],["Pinus",7.1]]},"North America":{"ok_km2":11714029,"top":[["Quercus",25.5],["Salix",15.1],["Pinus",11.5],["Acer",11.3],["Juniperus",6.2]]},"Asia":{"ok_km2":6721507,"top":[["Ficus",30.9],["Quercus",11.2],["Salix",10.1],["Acer",8.2],["Prunus",7.8]]},"Africa":{"ok_km2":5861883,"top":[["Ficus",26.8],["Vachellia",17.1],["Combretum",14.8],["Acacia",5.7],["Terminalia",5.4]]},"South America":{"ok_km2":7561497,"top":[["Ficus",23.8],["Inga",15.3],["Ilex",8.6],["Senegalia",5.3],["Prosopis",5.2]]},"Oceania":{"ok_km2":5774185,"top":[["Acacia",48.7],["Eucalyptus",34.1],["Ficus",5.1],["Avicennia",2.0],["Nothofagus",1.9]]}},"continents":{"Europe":{"land_km2":22914320,"records":368484203,"records_per_1000km2":16081,"cells_ok_pct":40.3},"North America":{"land_km2":24216636,"records":50626538,"records_per_1000km2":2091,"cells_ok_pct":48.5},"Asia":{"land_km2":31232424,"records":15271988,"records_per_1000km2":489,"cells_ok_pct":22.0},"Africa":{"land_km2":30077408,"records":8697066,"records_per_1000km2":289,"cells_ok_pct":20.0},"South America":{"land_km2":17703554,"records":15126626,"records_per_1000km2":854,"cells_ok_pct":44.5},"Oceania":{"land_km2":8523291,"records":27271700,"records_per_1000km2":3200,"cells_ok_pct":67.8}},"min_records":200,"genus_records_top":[["Quercus",6561919],["Salix",4535931],["Acer",4011833],["Prunus",3646631],["Pinus",3410213],["Betula",2086229],["Fraxinus",1960553],["Eucalyptus",1882228],["Fagus",1655878],["Populus",1579202]]}};
+const TILEIDX = {"wood":{"5":[1500009,1500010,1600010],"6":[3000019,3000020,3000021,3100018,3100019,3100020,3100021,3200020,3200021],"7":[6100038,6100039,6100040,6100043,6200037,6200038,6200039,6200040,6200041,6200042,6200043,6300036,6300037,6300038,6300039,6300040,6300041,6300042,6300043,6400041,6400042],"8":[12200076,12200077,12200078,12300076,12300077,12300078,12300079,12300080,12300086,12400076,12400077,12400078,12400079,12400080,12400081,12400082,12400083,12400084,12400085,12400086,12500075,12500076,12500077,12500078,12500079,12500080,12500081,12500082,12500083,12500084,12500085,12500086,12600073,12600074,12600075,12600077,12600078,12600079,12600080,12600081,12600082,12600083,12600084,12600085,12600086,12700073,12700074,12700081,12700082,12700083,12700084,12700085,12700086,12800082,12800083,12800084,12800085,12900083,12900084,12900085],"9":[24500153,24500154,24500155,24500156,24600153,24600154,24600155,24600156,24600157,24600158,24600159,24600160,24600173,24700152,24700153,24700154,24700155,24700156,24700157,24700158,24700159,24700160,24700161,24700173,24800152,24800153,24800154,24800155,24800156,24800157,24800158,24800159,24800160,24800161,24800162,24800169,24800170,24800172,24800173,24900152,24900153,24900154,24900155,24900156,24900157,24900158,24900159,24900160,24900161,24900162,24900165,24900166,24900167,24900168,24900169,24900170,24900171,24900172,24900173,25000152,25000153,25000154,25000155,25000156,25000157,25000158,25000159,25000160,25000161,25000162,25000163,25000165,25000166,25000167,25000168,25000169,25000170,25000171,25000172,25000173,25100150,25100151,25100152,25100153,25100154,25100155,25100156,25100157,25100158,25100159,25100160,25100161,25100162,25100163,25100164,25100165,25100166,25100167,25100168,25100169,25100170,25100171,25100172,25200150,25200151,25200155,25200156,25200157,25200158,25200159,25200160,25200161,25200162,25200163,25200164,25200165,25200166,25200167,25200168,25200169,25200170,25200171,25200172,25300147,25300148,25300155,25300156,25300159,25300160,25300161,25300162,25300163,25300164,25300165,25300166,25300167,25300168,25300169,25300170,25300171,25300172,25400146,25400147,25400148,25400162,25400163,25400164,25400165,25400166,25400167,25400168,25400169,25400170,25400171,25400172,25500163,25500164,25500165,25500166,25500167,25500168,25500169,25500170,25500171,25600165,25600166,25600167,25600168,25600169,25600170,25600171,25700166,25700167,25700168,25700169,25700170,25700171,25800167,25800168,25800169,25800170],"10":[49000310,49000313,49100307,49100308,49100309,49100310,49100311,49100312,49100313,49200306,49200307,49200308,49200309,49200311,49300306,49300307,49300308,49300310,49300311,49300312,49300313,49300315,49300317,49300319,49300320,49300347,49400305,49400306,49400307,49400310,49400311,49400312,49400313,49400314,49400315,49400316,49400317,49400318,49400319,49400320,49400347,49500308,49500309,49500310,49500311,49500312,49500313,49500314,49500315,49500316,49500317,49500318,49500319,49500320,49500321,49500322,49500346,49500347,49600307,49600308,49600309,49600310,49600311,49600312,49600313,49600314,49600315,49600316,49600317,49600318,49600319,49600320,49600321,49600322,49600338,49600346,49600347,49700305,49700306,49700307,49700308,49700309,49700310,49700311,49700312,49700313,49700314,49700315,49700316,49700317,49700318,49700319,49700320,49700321,49700323,49700324,49700325,49700338,49700339,49700340,49700344,49700345,49700346,49700347,49800305,49800306,49800307,49800308,49800309,49800310,49800311,49800312,49800313,49800314,49800315,49800316,49800317,49800318,49800319,49800320,49800321,49800322,49800323,49800324,49800325,49800332,49800333,49800334,49800337,49800338,49800339,49800340,49800343,49800344,49800345,49800346,49900305,49900306,49900307,49900308,49900309,49900310,49900311,49900312,49900313,49900314,49900315,49900316,49900317,49900318,49900319,49900320,49900321,49900322,49900323,49900324,49900325,49900331,49900332,49900333,49900334,49900337,49900338,49900339,49900340,49900342,49900343,49900344,49900345,50000305,50000306,50000307,50000308,50000309,50000310,50000311,50000312,50000313,50000314,50000315,50000316,50000317,50000318,50000319,50000320,50000321,50000322,50000323,50000324,50000325,50000332,50000333,50000334,50000335,50000336,50000337,50000338,50000339,50000340,50000341,50000342,50000343,50000344,50000345,50000346,50100305,50100306,50100307,50100308,50100309,50100310,50100311,50100312,50100313,50100314,50100315,50100316,50100317,50100318,50100319,50100320,50100321,50100322,50100323,50100324,50100325,50100326,50100331,50100332,50100333,50100334,50100335,50100336,50100337,50100338,50100339,50100340,50100341,50100342,50100343,50100344,50100345,50100346,50200302,50200303,50200304,50200305,50200306,50200307,50200309,50200310,50200311,50200312,50200313,50200314,50200315,50200316,50200317,50200318,50200319,50200320,50200321,50200322,50200323,50200324,50200325,50200326,50200327,50200328,50200331,50200332,50200333,50200334,50200335,50200336,50200337,50200338,50200339,50200340,50200341,50200342,50200343,50200344,50200345,50300301,50300302,50300303,50300304,50300305,50300306,50300310,50300311,50300312,50300313,50300314,50300315,50300316,50300317,50300318,50300319,50300320,50300321,50300322,50300323,50300324,50300325,50300326,50300327,50300328,50300329,50300330,50300331,50300332,50300333,50300334,50300335,50300336,50300337,50300338,50300339,50300340,50300341,50300342,50300343,50300344,50400301,50400302,50400303,50400310,50400311,50400312,50400313,50400314,50400315,50400316,50400317,50400318,50400319,50400320,50400321,50400322,50400323,50400324,50400325,50400326,50400327,50400328,50400329,50400330,50400331,50400332,50400333,50400334,50400335,50400336,50400337,50400338,50400339,50400340,50400341,50400342,50400343,50400344,50500310,50500311,50500312,50500313,50500314,50500315,50500318,50500319,50500320,50500321,50500322,50500323,50500324,50500325,50500326,50500327,50500328,50500329,50500330,50500331,50500332,50500333,50500334,50500335,50500336,50500337,50500338,50500339,50500340,50500341,50500342,50500343,50500344,50600310,50600311,50600312,50600313,50600319,50600320,50600321,50600322,50600323,50600324,50600325,50600326,50600327,50600328,50600329,50600330,50600331,50600332,50600333,50600334,50600335,50600336,50600337,50600338,50600339,50600340,50600341,50600342,50600343,50600344,50700294,50700295,50700296,50700320,50700321,50700322,50700323,50700324,50700325,50700326,50700327,50700328,50700329,50700330,50700331,50700332,50700333,50700334,50700335,50700336,50700337,50700338,50700339,50700340,50700341,50700342,50700343,50700344,50800293,50800294,50800295,50800296,50800324,50800325,50800326,50800327,50800328,50800329,50800330,50800331,50800332,50800333,50800334,50800335,50800336,50800337,50800338,50800339,50800340,50800341,50800342,50800343,50800344,50900292,50900294,50900295,50900325,50900326,50900327,50900328,50900329,50900330,50900331,50900332,50900333,50900334,50900335,50900336,50900337,50900338,50900339,50900340,50900341,50900342,50900343,51000326,51000327,51000328,51000329,51000330,51000331,51000332,51000333,51000334,51000335,51000336,51000337,51000338,51000339,51000340,51000341,51000342,51000343,51100327,51100328,51100329,51100330,51100331,51100332,51100333,51100334,51100335,51100336,51100337,51100338,51100339,51100340,51100341,51100342,51100343,51200330,51200331,51200332,51200333,51200334,51200335,51200336,51200337,51200338,51200339,51200340,51200341,51200342,51200343,51300333,51300334,51300335,51300336,51300337,51300338,51300339,51300340,51300341,51300342,51300343,51400333,51400334,51400335,51400336,51400337,51400338,51400339,51400340,51400341,51400342,51400343,51500333,51500334,51500335,51500336,51500337,51500338,51500339,51500341,51500342,51600334,51600335,51600336,51600337,51600338,51600341]},"mix1":{"5":[1500009,1500010,1600010],"6":[3000019,3000020,3000021,3100018,3100019,3100020,3100021,3200020,3200021],"7":[6100038,6100039,6100040,6100043,6200037,6200038,6200039,6200040,6200041,6200042,6200043,6300036,6300037,6300038,6300039,6300040,6300041,6300042,6300043,6400041,6400042,6400043],"8":[12200077,12200078,12300076,12300077,12300078,12300079,12300080,12300086,12400076,12400077,12400078,12400079,12400080,12400081,12400082,12400083,12400084,12400085,12400086,12500075,12500076,12500077,12500078,12500079,12500080,12500081,12500082,12500083,12500084,12500085,12500086,12600075,12600077,12600078,12600079,12600080,12600081,12600082,12600083,12600084,12600085,12600086,12700073,12700074,12700081,12700082,12700083,12700084,12700085,12700086,12800082,12800083,12800084,12800085,12800086,12900083,12900084,12900085],"9":[24500154,24500155,24500156,24600153,24600154,24600155,24600156,24600157,24600158,24600159,24600160,24600173,24700153,24700154,24700155,24700156,24700157,24700158,24700159,24700160,24700161,24700173,24800153,24800154,24800155,24800156,24800157,24800158,24800159,24800160,24800161,24800162,24800169,24800170,24800172,24800173,24900152,24900153,24900154,24900155,24900156,24900157,24900158,24900159,24900160,24900161,24900162,24900165,24900166,24900167,24900168,24900169,24900170,24900171,24900172,24900173,25000152,25000153,25000154,25000155,25000156,25000157,25000158,25000159,25000160,25000161,25000162,25000163,25000165,25000166,25000167,25000168,25000169,25000170,25000171,25000172,25000173,25100151,25100152,25100153,25100154,25100155,25100156,25100157,25100158,25100159,25100160,25100161,25100162,25100163,25100164,25100165,25100166,25100167,25100168,25100169,25100170,25100171,25100172,25200150,25200151,25200155,25200156,25200157,25200158,25200159,25200160,25200161,25200162,25200163,25200164,25200165,25200166,25200167,25200168,25200169,25200170,25200171,25200172,25300155,25300156,25300159,25300160,25300161,25300162,25300163,25300164,25300165,25300166,25300167,25300168,25300169,25300170,25300171,25300172,25400147,25400148,25400162,25400163,25400164,25400165,25400166,25400167,25400168,25400169,25400170,25400171,25400172,25500163,25500164,25500165,25500166,25500167,25500168,25500169,25500170,25500171,25600165,25600166,25600167,25600168,25600169,25600170,25600171,25600172,25700166,25700167,25700168,25700169,25700170,25700171,25800167,25800168,25800169,25800170]},"mix5":{"5":[1500009,1500010,1600010],"6":[3000019,3000020,3000021,3100018,3100019,3100020,3100021,3200020,3200021],"7":[6100038,6100039,6100040,6100043,6200037,6200038,6200039,6200040,6200041,6200042,6200043,6300037,6300038,6300039,6300040,6300041,6300042,6300043,6400041,6400042,6400043],"8":[12200077,12200078,12300076,12300077,12300078,12300079,12300080,12300086,12400076,12400077,12400078,12400079,12400080,12400081,12400082,12400083,12400084,12400085,12400086,12500075,12500076,12500077,12500078,12500079,12500080,12500081,12500082,12500083,12500084,12500085,12500086,12600075,12600077,12600078,12600079,12600080,12600081,12600082,12600083,12600084,12600085,12600086,12700080,12700081,12700082,12700083,12700084,12700085,12700086,12800082,12800083,12800084,12800085,12800086,12900083,12900084,12900085]},"hill":{"5":[1500009,1500010],"6":[3000018,3000019,3000020,3000021,3100018,3100019,3100020,3100021,3200021],"7":[6000038,6000040,6000041,6000042,6100037,6100038,6100039,6100040,6100041,6100042,6100043,6200037,6200038,6200039,6200040,6200041,6200042,6200043,6300036,6300037,6300038,6300039,6300040,6300041,6300042,6300043,6400041,6400042,6400043],"8":[12000081,12000082,12000083,12000084,12000085,12100077,12100080,12100081,12100082,12100083,12100084,12100085,12200076,12200077,12200078,12200080,12200081,12200082,12200083,12200084,12300075,12300076,12300077,12300078,12300079,12300080,12300081,12300082,12300083,12300084,12300086,12400075,12400076,12400077,12400078,12400079,12400080,12400081,12400082,12400083,12400084,12400085,12400086,12500075,12500076,12500077,12500078,12500079,12500080,12500081,12500082,12500083,12500084,12500085,12500086,12600073,12600074,12600075,12600077,12600078,12600079,12600080,12600081,12600082,12600083,12600084,12600085,12600086,12600087,12700073,12700074,12700080,12700081,12700082,12700083,12700084,12700085,12700086,12700087,12800082,12800083,12800084,12800085,12800086,12800087,12900083,12900084,12900085,12900086,12900087],"9":[24000168,24000169,24100163,24100164,24100165,24100166,24100167,24100168,24100169,24100170,24200163,24200164,24200165,24200166,24200167,24200168,24200169,24200170,24300154,24300161,24300162,24300163,24300164,24300165,24300166,24300167,24300168,24300169,24300170,24400161,24400162,24400163,24400164,24400165,24400166,24400167,24400168,24400169,24500153,24500154,24500155,24500156,24500157,24500160,24500161,24500162,24500163,24500164,24500165,24500166,24500167,24500168,24500169,24600152,24600153,24600154,24600155,24600156,24600157,24600158,24600159,24600160,24600161,24600162,24600163,24600164,24600165,24600166,24600167,24600168,24600173,24700151,24700152,24700153,24700154,24700155,24700156,24700157,24700158,24700159,24700160,24700161,24700162,24700163,24700164,24700165,24700166,24700167,24700168,24700173,24800152,24800153,24800154,24800155,24800156,24800157,24800158,24800159,24800160,24800161,24800162,24800163,24800169,24800170,24800172,24800173,24900151,24900152,24900153,24900154,24900155,24900156,24900157,24900158,24900159,24900160,24900161,24900162,24900163,24900164,24900165,24900166,24900167,24900168,24900169,24900170,24900171,24900172,24900173,25000152,25000153,25000154,25000155,25000156,25000157,25000158,25000159,25000160,25000161,25000162,25000163,25000165,25000166,25000167,25000168,25000169,25000170,25000171,25000172,25000173,25100150,25100151,25100152,25100153,25100154,25100155,25100156,25100157,25100158,25100159,25100160,25100161,25100162,25100163,25100164,25100165,25100166,25100167,25100168,25100169,25100170,25100171,25100172,25200148,25200150,25200151,25200154,25200155,25200156,25200157,25200158,25200159,25200160,25200161,25200162,25200163,25200164,25200165,25200166,25200167,25200168,25200169,25200170,25200171,25200172,25200174,25300146,25300147,25300148,25300149,25300150,25300154,25300155,25300156,25300159,25300160,25300161,25300162,25300163,25300164,25300165,25300166,25300167,25300168,25300169,25300170,25300171,25300172,25300174,25400146,25400147,25400148,25400149,25400161,25400162,25400163,25400164,25400165,25400166,25400167,25400168,25400169,25400170,25400171,25400172,25400174,25500163,25500164,25500165,25500166,25500167,25500168,25500169,25500170,25500171,25600164,25600165,25600166,25600167,25600168,25600169,25600170,25600171,25600172,25600173,25600174,25700166,25700167,25700168,25700169,25700170,25700171,25700173,25700174,25800167,25800168,25800169,25800170,25800171,25800172,25800173,25800174,25900171,25900172,25900173,25900174]}};
+const NS = "http://www.w3.org/2000/svg";
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const fmt = n => n == null || isNaN(n) ? "n/a" : Math.round(n).toLocaleString("en-GB");
+const pc = (v, d = 0) => (v == null || isNaN(v)) ? "n/a" : (v).toFixed(d) + "%";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tip = document.getElementById("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+function hover(node, h) { node.style.cursor = "pointer"; node.setAttribute("tabindex", "0"); const s = () => { const r = node.getBoundingClientRect(); showTip(h, r.left + r.width / 2, r.top); }; node.addEventListener("pointerenter", s); node.addEventListener("pointerleave", hideTip); node.addEventListener("focus", s); node.addEventListener("blur", hideTip); }
+const redraws = [];
+function resp(box, render) { let last = 0; const go = (force) => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+const lbl = (svg, x, y, s, cls = "lab", anchor = "start") => { const t = el("text", { x, y, class: cls, "text-anchor": anchor }, svg); t.textContent = s; return t; };
+const isDark = () => { const r = document.documentElement; return r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+const hex = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+const GCOL = R.groups.cols, GNAME = R.groups.names, GKEY = R.groups.keys;
+const COMMON = R.common, GENCOL = R.genus_cols;
+const gname = g => COMMON[g] ? (COMMON[g].includes(g) ? COMMON[g] : `${COMMON[g]} (${g})`) : g;
+const getJSON = (() => { const c = {}; return u => c[u] || (c[u] = fetch(u).then(r => { if (!r.ok) throw new Error(u); return r.json(); })); })();
+const msg = document.getElementById("loadMsg");
+
+/* hero mark: a small grove of trees, broadleaf and conifer, swaying */
+(() => { const g = document.getElementById("heroMark"), dark = isDark();
+  const tree = (x, y, s, kind, col) => { const t = el("g", { transform: `translate(${x} ${y}) scale(${s})` }, g);
+    el("rect", { x: -1.6, y: -2, width: 3.2, height: 14, fill: "#7a5530" }, t);
+    if (kind === "c") el("path", { d: "M0 -40 L13 -6 L-13 -6 Z M0 -30 L15 2 L-15 2 Z", fill: col }, t);
+    else el("ellipse", { cx: 0, cy: -16, rx: 15, ry: 17, fill: col }, t);
+    return t; };
+  const T = [tree(26, 100, 1.1, "b", "#3E8E3A"), tree(60, 104, 1.45, "c", "#1D5C5E"), tree(95, 98, 1.05, "b", "#86A845"), tree(78, 112, .8, "c", "#4E8F7A")];
+  el("rect", { x: 4, y: 112, width: 112, height: 3, fill: "#8A5A22" }, g);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let t0 = performance.now(); (function f(t) { const a = (t - t0) / 1000; T.forEach((n, i) => { const b = n.getAttribute("transform").replace(/ rotate\([^)]*\)/, ""); n.setAttribute("transform", b + ` rotate(${Math.sin(a * 1.3 + i) * 2.2})`); }); requestAnimationFrame(f); })(t0);
+})();
+
+/* ===== lat/lon to British National Grid (Helmert to OSGB36, then Transverse Mercator) ===== */
+function ll2en(lat, lon) {
+  const d = Math.PI / 180; let a = 6378137, b = 6356752.3142, e2 = 1 - b * b / (a * a);
+  let p = lat * d, l = lon * d, nu = a / Math.sqrt(1 - e2 * Math.sin(p) ** 2);
+  let x = nu * Math.cos(p) * Math.cos(l), y = nu * Math.cos(p) * Math.sin(l), z = (1 - e2) * nu * Math.sin(p);
+  const tx = -446.448, ty = 125.157, tz = -542.060, s = 20.4894e-6, rx = -0.1502 / 3600 * d, ry = -0.2470 / 3600 * d, rz = -0.8421 / 3600 * d;
+  const x2 = tx + (1 + s) * x - rz * y + ry * z, y2 = ty + rz * x + (1 + s) * y - rx * z, z2 = tz - ry * x + rx * y + (1 + s) * z;
+  a = 6377563.396; b = 6356256.909; e2 = 1 - b * b / (a * a);
+  const pp = Math.sqrt(x2 * x2 + y2 * y2); p = Math.atan2(z2, pp * (1 - e2));
+  for (let i = 0; i < 6; i++) { nu = a / Math.sqrt(1 - e2 * Math.sin(p) ** 2); p = Math.atan2(z2 + e2 * nu * Math.sin(p), pp); }
+  l = Math.atan2(y2, x2);
+  const F0 = 0.9996012717, p0 = 49 * d, l0 = -2 * d, N0 = -100000, E0 = 400000, n = (a - b) / (a + b);
+  const sp = Math.sin(p), cp = Math.cos(p), tp = Math.tan(p);
+  nu = a * F0 / Math.sqrt(1 - e2 * sp * sp); const rho = a * F0 * (1 - e2) / Math.pow(1 - e2 * sp * sp, 1.5), eta2 = nu / rho - 1;
+  const M = b * F0 * ((1 + n + 5 / 4 * n * n + 5 / 4 * n ** 3) * (p - p0) - (3 * n + 3 * n * n + 21 / 8 * n ** 3) * Math.sin(p - p0) * Math.cos(p + p0)
+    + (15 / 8 * n * n + 15 / 8 * n ** 3) * Math.sin(2 * (p - p0)) * Math.cos(2 * (p + p0)) - 35 / 24 * n ** 3 * Math.sin(3 * (p - p0)) * Math.cos(3 * (p + p0)));
+  const I = M + N0, II = nu / 2 * sp * cp, III = nu / 24 * sp * cp ** 3 * (5 - tp * tp + 9 * eta2), IIIA = nu / 720 * sp * cp ** 5 * (61 - 58 * tp * tp + tp ** 4);
+  const IV = nu * cp, V = nu / 6 * cp ** 3 * (nu / rho - tp * tp), VI = nu / 120 * cp ** 5 * (5 - 18 * tp * tp + tp ** 4 + 14 * eta2 - 58 * tp * tp * eta2);
+  const dl = l - l0;
+  return [E0 + IV * dl + V * dl ** 3 + VI * dl ** 5, I + II * dl * dl + III * dl ** 4 + IIIA * dl ** 6];
+}
+const GBB = L.latLngBounds([49.8, -8.75], [60.9, 2.0]);
+const inGB = (lat, lon) => { if (!GBB.contains([lat, lon])) return false; const [e, n] = ll2en(lat, lon); return K1 ? k1at(e, n) !== null : true; };
+
+/* ===== state ===== */
+const S = { view: "gb", gbLay: "wood", wLay: "typ", genusGB: "Quercus", genusW: "Quercus", fe: false, pt: null };
+try { const h = new URLSearchParams(location.hash.slice(1)); if (h.get("view") === "world") S.view = "world"; } catch (e) {}
+
+/* ===== map and layers ===== */
+const BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+const PACKS = {}; const tilePack = (k, z) => PACKS[k + z] || (PACKS[k + z] = fetch(`data/tiles/${k}_${z}.json`).then(r => r.ok ? r.json() : {}).catch(() => ({})));
+const IdxTiles = L.TileLayer.extend({ createTile(c, done) { const img = document.createElement("img"); img.alt = ""; img.setAttribute("role", "presentation"); const z = this._getZoomForUrl(), k = this.options.key, s = TILEIDX[k] && TILEIDX[k][z]; if (!(s && s.has(c.x * 100000 + c.y))) { img.onload = () => done(null, img); img.src = BLANK; return img; } tilePack(k, z).then(p => { const b = p[c.x + "/" + c.y]; img.onload = () => done(null, img); img.onerror = e => done(e, img); img.src = b ? "data:image/png;base64," + b : BLANK; }); return img; } });
+for (const k in TILEIDX) for (const z in TILEIDX[k]) TILEIDX[k][z] = new Set(TILEIDX[k][z]);
+const CanvasOverlay = L.ImageOverlay.extend({ _initImage() { const c = this._image = this._url; L.DomUtil.addClass(c, "leaflet-image-layer"); if (this.options.px) L.DomUtil.addClass(c, "px"); if (this._zoomAnimated) L.DomUtil.addClass(c, "leaflet-zoom-animated"); c.onselectstart = L.Util.falseFn; c.onmousemove = L.Util.falseFn; } });
+const lmap = L.map("lmap", { zoomSnap: .5, zoomDelta: .5, minZoom: 2, maxZoom: 15, worldCopyJump: false, scrollWheelZoom: false, maxBounds: [[-85, -200], [85, 200]], preferCanvas: true });
+lmap.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+for (const [n, z] of [["land", 150], ["hills", 350], ["data", 380], ["lines", 420], ["pts", 430]]) { lmap.createPane(n).style.zIndex = z; lmap.getPane(n).style.pointerEvents = "none"; }
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+const LY = { base: "plain", hills: true, hillK: 45, names: true, nameLvl: 1, lines: true, lineK: 55, colour: 90 };
+const LYDEF = { ...LY };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("tree_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("tree_layers", JSON.stringify(LY)); } catch (e) {} };
+let base = null, esriHill = null;
+const gbHill = new IdxTiles("data/tiles/hill/{z}/{x}/{y}.png", { key: "hill", pane: "hills", minZoom: 5, maxNativeZoom: 9, maxZoom: 15, bounds: GBB.pad(.15), attribution: "Hills: Terrain Tiles (Mapzen)" });
+const T = {
+  wood: new IdxTiles("data/tiles/wood/{z}/{x}/{y}.png", { key: "wood", pane: "data", className: "px", minZoom: 5, maxNativeZoom: 10, maxZoom: 15, bounds: GBB, attribution: "© Forestry Commission; contains OS data © Crown copyright (OGL v3)" }),
+  mix1: new IdxTiles("data/tiles/mix1/{z}/{x}/{y}.png", { key: "mix1", pane: "data", className: "px", minZoom: 5, maxNativeZoom: 9, maxZoom: 15, bounds: GBB, attribution: "© Forestry Commission; contains OS data © Crown copyright (OGL v3)" }),
+  mix5: new IdxTiles("data/tiles/mix5/{z}/{x}/{y}.png", { key: "mix5", pane: "data", className: "px", minZoom: 5, maxNativeZoom: 8, maxZoom: 15, bounds: GBB, attribution: "© Forestry Commission; contains OS data © Crown copyright (OGL v3)" })
+};
+function setBase() {
+  if (base) lmap.removeLayer(base); if (esriHill) lmap.removeLayer(esriHill);
+  const t = isDark() ? "Dark" : "Light";
+  base = LY.base === "paper" ? null : L.tileLayer(LY.base === "relief" ? ESRI + "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}" : LY.base === "satellite" ? ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}" : `${ESRI}Canvas/World_${t}_Gray_Base/MapServer/tile/{z}/{y}/{x}`,
+    { maxZoom: 15, maxNativeZoom: LY.base === "relief" ? 13 : 16, attribution: "Tiles © Esri" });
+  if (base) base.addTo(lmap);
+  esriHill = L.tileLayer(ESRI + "Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", { maxZoom: 15, pane: "hills", attribution: "Hillshade © Esri" });
+  applyLayers();
+}
+/* our own land, so the map still reads if the base tiles do not load */
+let landL = null, borderGB = null, borderW = null;
+getJSON("data/ctx/world.json").then(gj => {
+  landL = L.geoJSON(gj, { pane: "land", interactive: false, style: () => ({ stroke: false, fillColor: css("--ctx"), fillOpacity: 1 }) }).addTo(lmap);
+  borderW = L.geoJSON(gj, { pane: "lines", interactive: false, style: () => ({ color: css("--fg"), weight: .8, fill: false, opacity: .6 }) });
+  applyLayers();
+});
+getJSON("data/ctx/gb_borders.json").then(gj => {
+  borderGB = L.geoJSON(gj, { pane: "lines", interactive: false, style: f => ({ color: css("--fg"), weight: 1, dashArray: "4 3", fill: false, opacity: .6 }) });
+  applyLayers();
+});
+let dataL = null;          // canvas overlay for GBIF layers
+let feL = null;
+function initLayerPanel() {
+  const Ctl = L.Control.extend({ options: { position: "topright" }, onAdd() {
+    const d = L.DomUtil.create("div"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
+    d.innerHTML = `<button class="lyrBtn" aria-expanded="false" aria-controls="lyrPanel">Map layers</button>
+<div class="lyrPanel" id="lyrPanel" hidden>
+ <div class="row"><label for="lyBase" style="font-weight:600">Base map</label><div class="sub"><select id="lyBase" aria-label="Base map"><option value="plain">Plain grey</option><option value="relief">Shaded relief</option><option value="satellite">Satellite</option><option value="paper">Paper (no tiles)</option></select></div></div>
+ <div class="row"><label><input type="checkbox" id="lyHills"> Hills</label><span></span><div class="sub"><span>strength</span><input type="range" id="lyHillK" min="10" max="100" step="5" aria-label="Hill shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" id="lyNames"> Place names</label><span></span><div class="sub"><span>how many</span><select id="lyNameLvl" aria-label="How many place names"><option value="0">Cities only</option><option value="1">Cities and towns</option><option value="2">Down to villages and woods</option></select></div></div>
+ <div class="row"><label><input type="checkbox" id="lyLines"> Coast and borders</label><span></span><div class="sub"><span>strength</span><input type="range" id="lyLineK" min="10" max="100" step="5" aria-label="Border line strength"></div></div>
+ <div class="row"><label style="font-weight:600">Colour</label><span></span><div class="sub"><span>strength</span><input type="range" id="lyColour" min="20" max="100" step="5" aria-label="Colour strength"></div></div>
+ <button class="reset" id="lyReset">Reset layers</button>
+</div>`;
+    return d; } });
+  lmap.addControl(new Ctl());
+  const q = id => document.getElementById(id), btn = lmap.getContainer().querySelector(".lyrBtn"), pan = q("lyrPanel");
+  btn.onclick = () => { const o = pan.hidden; pan.hidden = !o; btn.setAttribute("aria-expanded", o); };
+  const sync = () => { q("lyBase").value = LY.base; q("lyHills").checked = LY.hills; q("lyHillK").value = LY.hillK; q("lyNames").checked = LY.names; q("lyNameLvl").value = LY.nameLvl; q("lyLines").checked = LY.lines; q("lyLineK").value = LY.lineK; q("lyColour").value = LY.colour; };
+  const on = (id, ev, f, rebase) => q(id).addEventListener(ev, e => { f(e.target); saveLY(); rebase ? setBase() : applyLayers(); });
+  on("lyBase", "change", t => LY.base = t.value, true);
+  on("lyHills", "change", t => LY.hills = t.checked); on("lyHillK", "input", t => { LY.hillK = +t.value; LY.hills = q("lyHills").checked = true; });
+  on("lyNames", "change", t => LY.names = t.checked); on("lyNameLvl", "change", t => { LY.nameLvl = +t.value; LY.names = q("lyNames").checked = true; });
+  on("lyLines", "change", t => LY.lines = t.checked); on("lyLineK", "input", t => { LY.lineK = +t.value; LY.lines = q("lyLines").checked = true; });
+  on("lyColour", "input", t => LY.colour = +t.value);
+  q("lyReset").onclick = () => { Object.assign(LY, LYDEF); saveLY(); sync(); setBase(); };
+  sync();
+}
+function applyLayers() {
+  const gb = S.view === "gb", k = Math.min(1, .2 + LY.hillK / 100);
+  // hills: our own baked shading over Britain; Esri's hillshade for the world
+  if (LY.hills && gb) { gbHill.addTo(lmap); gbHill.setOpacity(k); } else lmap.removeLayer(gbHill);
+  if (esriHill) { if (LY.hills && !gb) { esriHill.addTo(lmap); esriHill.setOpacity(k * .8); } else lmap.removeLayer(esriHill); }
+  for (const key in T) { if (gb && S.gbLay === key) { T[key].addTo(lmap); T[key].setOpacity(LY.colour / 100); } else lmap.removeLayer(T[key]); }
+  if (dataL) dataL.setOpacity(LY.colour / 100);
+  const lw = .15 + LY.lineK / 100 * .85;
+  if (borderGB) { if (LY.lines && gb) { borderGB.addTo(lmap); borderGB.setStyle({ opacity: lw, color: css("--fg") }); } else lmap.removeLayer(borderGB); }
+  if (borderW) { if (LY.lines && !gb) { borderW.addTo(lmap); borderW.setStyle({ opacity: lw, color: css("--fg") }); } else lmap.removeLayer(borderW); }
+  if (landL) landL.setStyle({ fillColor: css("--ctx") });
+  placeNames();
+}
+
+/* ===== place names ===== */
+let PL = null, WOODS = null, WC = null;
+const nameL = L.layerGroup().addTo(lmap);
+getJSON("data/places/gb.json").then(d => { PL = d; placeNames(); });
+function loadWorldPlaces() { return getJSON("data/places/world.json").then(d => { WC = d; placeNames(); return d; }); }
+function placeNames() {
+  nameL.clearLayers(); if (!LY.names || !lmap._loaded) return;
+  const z = lmap.getZoom(), bb = lmap.getBounds().pad(.05), lvl = LY.nameLvl, cand = [];
+  if (S.view === "gb" && PL) {
+    const minR = lvl === 0 ? 3 : lvl === 1 ? (z >= 10 ? 1 : z >= 7.5 ? 2 : 3) : (z >= 9 ? 1 : z >= 7 ? 2 : 3);
+    for (const p of PL) if (p[4] >= minR && (z >= 6.5 || p[4] === 3) && bb.contains([p[2], p[3]])) cand.push({ nm: p[0], la: p[2], lo: p[3], r: p[4] });
+    if (lvl === 2 && z >= 11 && WOODS) for (const w of WOODS) if (bb.contains([w[1], w[2]])) cand.push({ nm: w[0], la: w[1], lo: w[2], r: .5, w: 1 });
+    if (lvl === 2 && z >= 11 && !WOODS) getJSON("data/places/woods.json").then(d => { WOODS = d; placeNames(); });
+  } else if (WC) {
+    const minPop = [[3, 5e6], [4, 2e6], [5, 7e5], [6, 2.5e5], [7, 8e4], [99, 15000]].find(([zz]) => z < zz + (lvl === 2 ? 1.5 : lvl === 0 ? -1 : 0))[1] * (lvl === 0 ? 2 : 1);
+    for (const c of WC.rows) { if (c[4] < minPop) break; if (bb.contains([c[2], c[3]])) cand.push({ nm: c[0], la: c[2], lo: c[3], r: c[4] >= 1e6 ? 3 : 2 }); }
+  }
+  cand.sort((a, b) => b.r - a.r);
+  const boxes = []; let n = 0;
+  for (const c of cand) {
+    const pt = lmap.latLngToContainerPoint([c.la, c.lo]), fs = c.r >= 2 ? 11 : 10;
+    const bx = [pt.x - 4, pt.y - 8, pt.x + 10 + c.nm.length * fs * .62, pt.y + 7];
+    if (boxes.some(o => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1])) continue;
+    boxes.push(bx);
+    L.marker([c.la, c.lo], { interactive: false, keyboard: false, icon: L.divIcon({ className: "city" + (c.w ? " w" : c.r <= 1 ? " r" + c.r : ""), html: `<i></i>${esc(c.nm)}`, iconSize: null, iconAnchor: [3, 6] }) }).addTo(nameL);
+    if (++n >= 260) break;
+  }
+}
+lmap.on("zoomend moveend", placeNames);
+
+/* ===== lat/lon grids (GBIF) drawn onto a Web Mercator canvas ===== */
+const mercY = lat => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+function gridCanvas(G, colour, latTop, latBot, rowsOut) {
+  const c = document.createElement("canvas"); c.width = G.cols; c.height = rowsOut;
+  const x = c.getContext("2d"), img = x.createImageData(G.cols, rowsOut), d = img.data;
+  const y0 = mercY(latTop), y1 = mercY(latBot);
+  for (let j = 0; j < rowsOut; j++) {
+    const yy = y0 + (j + .5) / rowsOut * (y1 - y0), lat = (2 * Math.atan(Math.exp(yy)) - Math.PI / 2) * 180 / Math.PI;
+    const r = Math.floor((G.lat_top - lat) / G.deg); if (r < 0 || r >= G.rows) continue;
+    for (let i = 0; i < G.cols; i++) { const col = colour(r * G.cols + i); if (!col) continue; const q = (j * G.cols + i) * 4; d[q] = col[0]; d[q + 1] = col[1]; d[q + 2] = col[2]; d[q + 3] = col[3]; }
+  }
+  x.putImageData(img, 0, 0); return c;
+}
+function setOverlay(canvas, bounds) {
+  if (dataL) lmap.removeLayer(dataL);
+  dataL = canvas ? new CanvasOverlay(canvas, bounds, { pane: "data", px: true, opacity: LY.colour / 100, interactive: false, attribution: "Records: GBIF.org (CC BY 4.0)" }).addTo(lmap) : null;
+}
+const unpack = (p, n) => { const out = new Map(); let k = 0; for (let i = 0; i < p.length; i++) { k += p[i]; out.set(k, n[i]); } return out; };
+const RAMP = ["#F3EFC8", "#D7E3A0", "#A9CC7A", "#6FAE5B", "#3E8E4A", "#1E6A44", "#0F4636"];
+const RAMP_E = ["#F4E7D3", "#E8C98F", "#D69E52", "#B86E2E", "#8A4520", "#5A2A16"];
+function rampCol(t, ramp) { t = Math.max(0, Math.min(1, t)) * (ramp.length - 1); const i = Math.min(ramp.length - 2, Math.floor(t)), f = t - i, a = hex(ramp[i]), b = hex(ramp[i + 1]); return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]; }
+function fadeA(n, min) { return n < min ? 0 : n < min * 10 ? 110 + 125 * Math.log10(n / min) : 235; }
+
+let GB = null, WB = null, GBG = {}, WG = {};
+function loadGB() { return GB ? Promise.resolve(GB) : getJSON("data/gbif/gb.json").then(d => { GB = d; for (const g in d.g) GBG[g] = unpack(d.g[g][0], d.g[g][1]); return d; }); }
+function loadWB() { return WB ? Promise.resolve(WB) : (msg.textContent = "Loading the world grid...", getJSON("data/gbif/world_base.json").then(d => { WB = d; WB.pos = new Map(d.idx.map((c, k) => [c, k])); msg.textContent = ""; return d; })); }
+function loadWG(g) { return WG[g] ? Promise.resolve(WG[g]) : getJSON(`data/gbif/world/${g}.json`).then(d => (WG[g] = unpack(d.d, d.n))); }
+const GBMIN = R.gbif_gb.min_records;
+let gbScale = 1, wScale = 1;
+function q98(vals) { if (!vals.length) return 1; vals.sort((a, b) => a - b); return vals[Math.floor(vals.length * .97)] || vals[vals.length - 1]; }
+function drawGBIFgb() {
+  const m = GBG[S.genusGB] || new Map(), P = GB.plants, sh = [];
+  m.forEach((v, k) => { if (P[k] >= GBMIN) sh.push(v / P[k]); }); gbScale = q98(sh);
+  const cv = gridCanvas(GB, k => { const p = P[k]; if (p < GBMIN) return null; const v = (m.get(k) || 0) / p; const c = rampCol(Math.sqrt(v / gbScale), RAMP); return [c[0], c[1], c[2], fadeA(p, GBMIN)]; },
+    GB.lat_top, GB.lat_top - GB.rows * GB.deg, GB.rows * 4);
+  setOverlay(cv, [[GB.lat_top - GB.rows * GB.deg, GB.lon_left], [GB.lat_top, GB.lon_left + GB.cols * GB.deg]]);
+  legend();
+}
+const WMIN = () => WB.min_records;
+function worldColour(mode) {
+  const P = new Float32Array(WB.cols * WB.rows); WB.idx.forEach((c, k) => P[c] = WB.plants[k]);
+  if (mode === "effort") return k => { const p = P[k]; if (!p) return null; const c = rampCol(Math.log10(p) / 6, RAMP_E); return [c[0], c[1], c[2], 230]; };
+  if (mode === "dom" || mode === "typ") return k => { const p = P[k]; if (p < WMIN()) return null; const s = WB.pos.get(k); const g = mode === "dom" ? (WB.top[s] || [])[0] : WB.lq[s]; if (g == null || g < 0) return null; const c = hex(GENCOL[WB.genera[g]]); return [c[0], c[1], c[2], fadeA(p, WMIN())]; };
+  const m = WG[S.genusW] || new Map(), sh = []; m.forEach((v, k) => { if (P[k] >= WMIN()) sh.push(v / P[k]); }); wScale = q98(sh);
+  return k => { const p = P[k]; if (p < WMIN()) return null; const v = (m.get(k) || 0) / p; const c = rampCol(Math.sqrt(v / wScale), RAMP); return [c[0], c[1], c[2], fadeA(p, WMIN())]; };
+}
+function drawWorld() {
+  loadWB().then(() => (S.wLay === "one" ? loadWG(S.genusW) : 0)).then(() => {
+    const cv = gridCanvas(WB, worldColour(S.wLay), 85.05, -85.05, 1400);
+    setOverlay(cv, [[-85.05, -180], [85.05, 180]]); legend();
+  });
+}
+
+/* ===== Forestry England compartments as dots when zoomed in ===== */
+let FE = null; const feLayer = L.layerGroup();
+const feRend = L.canvas({ pane: "pts" });
+function drawFE() {
+  feLayer.clearLayers();
+  if (!S.fe || S.view !== "gb" || !lmap._loaded) { lmap.removeLayer(feLayer); return; }
+  feLayer.addTo(lmap);
+  if (lmap.getZoom() < 10) { msg.textContent = "Zoom in further to see the public forest compartments."; return; }
+  msg.textContent = "";
+  const go = () => { const bb = lmap.getBounds(); let n = 0;
+    for (const r of FE.rows) { if (r[2] < 0 || !bb.contains([r[0], r[1]])) continue; const sp = FE.species[r[2]], con = FE.kind[r[2]] === "conifer";
+      L.circleMarker([r[0], r[1]], { renderer: feRend, radius: Math.max(2.5, Math.min(9, Math.sqrt(r[4]) * 1.6)), weight: 1, color: isDark() ? "#000" : "#fff", fillColor: con ? "#1D5C5E" : "#C38A2E", fillOpacity: .9, interactive: false }).addTo(feLayer);
+      if (++n > 4000) break; } };
+  if (FE) go(); else { msg.textContent = "Loading the public forest compartments..."; getJSON("data/fe_points.json").then(d => { FE = d; msg.textContent = ""; go(); }); }
+}
+lmap.on("moveend zoomend", () => { if (S.fe) drawFE(); });
+
+/* ===== the 1 km lookup grid and 5 km breakdowns for the info panel ===== */
+let K1 = null, C5 = null;
+fetch("data/gb/km1.png").then(r => r.blob()).then(b => createImageBitmap(b, { colorSpaceConversion: "none", premultiplyAlpha: "none" })).then(bm => {
+  const c = document.createElement("canvas"); c.width = bm.width; c.height = bm.height; const x = c.getContext("2d", { willReadFrequently: true }); x.drawImage(bm, 0, 0);
+  K1 = { w: bm.width, h: bm.height, d: x.getImageData(0, 0, bm.width, bm.height).data };
+}).catch(() => {});
+function k1at(e, n) { if (!K1) return null; const i = Math.floor(e / 1000), j = K1.h - 1 - Math.floor(n / 1000); if (i < 0 || j < 0 || i >= K1.w || j >= K1.h) return null; const q = (j * K1.w + i) * 4; if (K1.d[q] === 255) return null; return { pct: K1.d[q], share: K1.d[q + 1] === 255 ? null : K1.d[q + 1], dom: K1.d[q + 2] }; }
+function c5at(e, n) { if (!C5) return null; return C5.map.get(Math.floor(e / 5000) * 5 * 10000 + Math.floor(n / 5000) * 5) || null; }
+getJSON("data/gb/cells5.json").then(d => { C5 = { map: new Map(d.rows.map(r => [r[0] * 10000 + r[1], r])) }; });
+
+/* read the woodland type under a point from the zoom 10 tile */
+const tileCache = {};
+function woodAt(lat, lon) {
+  const z = 10, n = 2 ** z, fx = (lon + 180) / 360 * n, fy = (1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * n;
+  const x = Math.floor(fx), y = Math.floor(fy), px = Math.floor((fx - x) * 256), py = Math.floor((fy - y) * 256);
+  if (!TILEIDX.wood[z].has(x * 100000 + y)) return Promise.resolve(0);
+  const key = x + "/" + y;
+  const p = tileCache[key] || (tileCache[key] = new Promise(ok => { const im = new Image(); im.onload = () => { const c = document.createElement("canvas"); c.width = c.height = 256; const g = c.getContext("2d", { willReadFrequently: true }); g.drawImage(im, 0, 0); ok(g.getImageData(0, 0, 256, 256).data); }; im.onerror = () => ok(null); tilePack("wood", z).then(pk => { const b = pk[x + "/" + y]; if (b) im.src = "data:image/png;base64," + b; else ok(null); }); }));
+  return p.then(d => { if (!d) return 0; let best = 0, bd = 1e9; const q = (py * 256 + px) * 4; if (d[q + 3] < 20) return 0;
+    GCOL.forEach((h, g) => { const c = hex(h), dd = (c[0] - d[q]) ** 2 + (c[1] - d[q + 1]) ** 2 + (c[2] - d[q + 2]) ** 2; if (dd < bd) { bd = dd; best = g + 1; } }); return best; });
+}
+
+/* ===== info for a point ===== */
+let pinM = null;
+function topGB(lat, lon, n = 6) {
+  if (!GB) return null; const r = Math.floor((GB.lat_top - lat) / GB.deg), c = Math.floor((lon - GB.lon_left) / GB.deg);
+  if (r < 0 || c < 0 || r >= GB.rows || c >= GB.cols) return null; const k = r * GB.cols + c, p = GB.plants[k];
+  const arr = []; for (const g in GBG) { const v = GBG[g].get(k); if (v) arr.push([g, v]); } arr.sort((a, b) => b[1] - a[1]);
+  return { p, top: arr.slice(0, n) };
+}
+function topW(lat, lon) {
+  if (!WB) return null; const r = Math.floor((90 - lat) / WB.deg), c = Math.floor((lon + 180) / WB.deg), k = r * WB.cols + c, s = WB.pos.get(k);
+  if (s == null) return { p: 0, top: [] };
+  return { p: WB.plants[s], con: WB.conifers[s], top: WB.top[s].map((g, i) => [WB.genera[g], WB.topn[s][i]]), lq: WB.lq[s] >= 0 ? WB.genera[WB.lq[s]] : null, lqv: WB.lqv[s] };
+}
+function recHTML(t, min) {
+  if (!t || !t.p) return `<div>No plant records in this cell.</div>`;
+  let h = `<div style="margin-top:6px"><b>Most recorded trees here</b> (share of ${fmt(t.p)} plant records${t.p < min ? "; few records, read with care" : ""})</div><div class="gl">`;
+  for (const [g, v] of t.top.slice(0, 5)) h += `<span><span class="sw" style="background:${GENCOL[g] || "#888"}"></span>${esc(gname(g))}</span><span>${pc(v / t.p * 100, v / t.p < .01 ? 2 : 1)}</span>`;
+  return h + "</div>";
+}
+async function info(lat, lon, label) {
+  const box = document.getElementById("info");
+  if (pinM) lmap.removeLayer(pinM);
+  pinM = L.marker([lat, lon], { interactive: false, icon: L.divIcon({ className: "", html: '<div class="pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }) }).addTo(lmap);
+  let h = label ? `<div class="big">${esc(label)}</div>` : "";
+  const gbHere = GBB.contains([lat, lon]) && (() => { const [e, n] = ll2en(lat, lon); return k1at(e, n) !== null || c5at(e, n) !== null; })();
+  if (gbHere) {
+    const [e, n] = ll2en(lat, lon), k = k1at(e, n), c = c5at(e, n), w = await woodAt(lat, lon);
+    h += `<div>${w ? `<span class="sw" style="background:${GCOL[w - 1]}"></span>On this spot: <b>${GNAME[w - 1].toLowerCase()}</b> woodland` : "No mapped woodland on this spot"}</div>`;
+    if (k) h += `<div>This 1 km square: <b>${k.pct}%</b> woodland${k.share != null ? `, ${k.share}% of it conifer` : ""}</div>`;
+    if (c) { const tot = c.slice(3).reduce((a, b) => a + b, 0); if (tot > 0) { h += `<div style="margin-top:4px">The 5 km square: ${fmt(tot)} ha of woodland (${pc(tot / Math.max(1, c[2] * 100) * 100)} of its land)</div><div class="bar">` + c.slice(3).map((v, i) => `<span title="${GNAME[i]}: ${fmt(v)} ha" style="width:${v / tot * 100}%;background:${GCOL[i]}"></span>`).join("") + "</div>"; } }
+    await loadGB(); h += recHTML(topGB(lat, lon), GBMIN);
+    if (FE && S.fe) { const near = FE.rows.filter(r => r[2] >= 0 && Math.abs(r[0] - lat) < .012 && Math.abs(r[1] - lon) < .02).map(r => [r, (r[0] - lat) ** 2 + ((r[1] - lon) * Math.cos(lat * Math.PI / 180)) ** 2]).sort((a, b) => a[1] - b[1]).slice(0, 3);
+      if (near.length) h += `<div style="margin-top:6px"><b>Nearest public forest compartments</b></div>` + near.map(([r]) => `<div>${esc(FE.species[r[2]])}${r[3] ? ", planted " + r[3] : ""} (${r[4]} ha)</div>`).join(""); }
+  } else {
+    await loadWB(); const t = topW(lat, lon);
+    if (t && t.p) { h += recHTML(t, WMIN()); if (t.lq) h += `<div style="margin-top:4px">Most typical here: <b>${esc(gname(t.lq))}</b>, recorded ${t.lqv}× as often as across the world.</div>`; h += `<div>Conifers: ${pc(t.con / t.p * 100, 1)} of plant records.</div>`; }
+    else h += "<div>No plant records in this cell.</div>";
+    h += `<div class="src">Grid cell of ${WB.deg.toFixed(2)} degrees. Records are where people have recorded plants, not a forest survey.</div>`;
+  }
+  box.innerHTML = h;
+  return h;
+}
+lmap.on("click", ev => { lmap.scrollWheelZoom.enable(); info(ev.latlng.lat, ev.latlng.lng); });
+
+/* ===== legend ===== */
+function legend() {
+  const box = document.getElementById("legend"), t = document.getElementById("keyTitle"), note = document.getElementById("keyNote");
+  box.innerHTML = ""; note.textContent = "";
+  if (S.view === "gb" && S.gbLay === "wood") {
+    t.textContent = "Woodland type (NFI 2024)";
+    const k = document.createElement("div"); k.className = "key";
+    GNAME.forEach((nm, i) => { k.innerHTML += `<span class="sw" style="background:${GCOL[i]}"></span><div>${nm}</div><span class="v">${pc(R.gb.groups_pct_of_woodland[GKEY[i]])}</span>`; });
+    box.appendChild(k); note.textContent = "Right: share of Great Britain's woodland. Paler where only part of a pixel is woodland. Zoom in for single woods.";
+  } else if (S.view === "gb" && S.gbLay.startsWith("mix")) {
+    t.textContent = `Woodland cover and mix, ${S.gbLay === "mix1" ? "1 km" : "5 km"} squares`;
+    const mk = R.mix_key; let h = `<div class="axis rampl" style="margin-bottom:2px"><span>less woodland</span><span>more</span></div>`;
+    for (let s = mk.cols.length - 1; s >= 0; s--) { h += `<div class="mixkey">` + mk.alpha.map(a => `<div style="background:${mk.cols[s]};opacity:${a / 255}"></div>`).join("") + `</div>`; }
+    h += `<div class="rampl"><span>under ${mk.cover_breaks[0]}%</span><span>${mk.cover_breaks[0]} to ${mk.cover_breaks[1]}</span><span>to ${mk.cover_breaks[2]}</span><span>to ${mk.cover_breaks[3]}</span><span>${mk.cover_breaks[3]}%+</span></div>`;
+    box.innerHTML = h; note.textContent = "Across: woodland as a share of the square's land. Down: from mostly conifer (top, dark teal) to mostly broadleaf (bottom, green), in steps of 20% conifer share.";
+  } else {
+    const one = (S.view === "gb" && S.gbLay === "gbif") || (S.view === "world" && S.wLay === "one");
+    if (one) {
+      const g = S.view === "gb" ? S.genusGB : S.genusW, sc = S.view === "gb" ? gbScale : wScale;
+      t.textContent = `${gname(g)}: share of plant records`;
+      box.innerHTML = `<div class="ramp" style="background:linear-gradient(90deg,${RAMP.join(",")})"></div><div class="rampl"><span>0%</span><span>${pc(sc * 100 / 4, sc < .04 ? 2 : 1)}</span><span>${pc(sc * 100, sc < .04 ? 2 : 1)}+</span></div>`;
+      note.textContent = `Each cell's records of this genus as a share of all its vascular plant records (square root scale). Hidden under ${fmt(S.view === "gb" ? GBMIN : WMIN())} plant records; faded under ten times that.`;
+    } else if (S.view === "world" && S.wLay === "effort") {
+      t.textContent = "Recording effort: all plant records per cell";
+      box.innerHTML = `<div class="ramp" style="background:linear-gradient(90deg,${RAMP_E.join(",")})"></div><div class="rampl"><span>1</span><span>1,000</span><span>1,000,000</span></div>`;
+      note.textContent = "GBIF vascular plant records in each 0.35 degree cell, log scale.";
+    } else if (WB) {
+      const typ = S.wLay === "typ"; t.textContent = typ ? "Most typical genus (tap one to map it)" : "Most recorded genus (tap one to map it)";
+      const list = typ ? R.world.typical_area : R.world.dominant_area, k = document.createElement("div"); k.className = "key";
+      list.slice(0, 14).forEach(([g, , s]) => { const d = document.createElement("div"); d.className = "k"; d.textContent = gname(g); d.onclick = () => { S.genusW = g; document.getElementById("genus").value = g; setW("one"); };
+        const sw = document.createElement("span"); sw.className = "sw"; sw.style.background = GENCOL[g]; const v = document.createElement("span"); v.className = "v"; v.textContent = pc(s, 1); k.append(sw, d, v); });
+      box.appendChild(k); note.textContent = (typ ? "Typical: the genus recorded most often here compared with its share of all the world's records. " : "") + "Right: share of qualifying land. Other genera take the rest; colours follow families (pines teal, oaks and beeches brown, acacias gold, figs purple, eucalypts grey-blue).";
+    }
+  }
+}
+
+/* ===== view and layer switching ===== */
+const press = (sel, attr, v) => document.querySelectorAll(sel + " .btn").forEach(b => b.setAttribute("aria-pressed", b.dataset[attr] === v));
+function fillGenus() {
+  const s = document.getElementById("genus"), list = S.view === "gb" ? Object.keys(R.gbif_gb.genera).concat(R.gbif_gb.genus_records_rank.map(x => x[0])) : R.world.genus_records_top.map(x => x[0]).concat(Object.keys(GENCOL).sort());
+  const seen = new Set(); s.innerHTML = "";
+  const all = S.view === "gb" ? Object.keys(GB ? GB.g : R.genus_cols).sort((a, b) => gname(a).localeCompare(gname(b))) : Object.keys(R.genus_cols).sort((a, b) => gname(a).localeCompare(gname(b)));
+  for (const g of all) { if (seen.has(g)) continue; seen.add(g); const o = document.createElement("option"); o.value = g; o.textContent = gname(g); s.appendChild(o); }
+  s.value = S.view === "gb" ? S.genusGB : S.genusW;
+}
+function setView(v, fly = true) {
+  S.view = v; press("#viewBtns", "v", v);
+  document.getElementById("gbCtl").classList.toggle("hide", v !== "gb"); document.getElementById("worldCtl").classList.toggle("hide", v !== "world");
+  try { history.replaceState(null, "", v === "world" ? "#view=world" : location.pathname); } catch (e) {}
+  lmap.setMinZoom(v === "gb" ? 5 : 2);
+  if (fly) { if (v === "gb") lmap.fitBounds(GBB, { animate: false, paddingBottomRight: [0, 20] }); else lmap.setView([25, 10], innerWidth < 600 ? 2 : 2.5, { animate: false }); }
+  if (v === "world") loadWorldPlaces();
+  refresh();
+}
+function refresh() {
+  const gb = S.view === "gb";
+  document.getElementById("genusCtl").classList.toggle("hide", !((gb && S.gbLay === "gbif") || (!gb && S.wLay === "one")));
+  if (gb) { if (S.gbLay === "gbif") loadGB().then(() => { fillGenus(); drawGBIFgb(); }); else { setOverlay(null); legend(); } }
+  else { fillGenus(); drawWorld(); }
+  drawFE(); applyLayers();
+}
+function setW(l) { S.wLay = l; press("#wLay", "l", l); refresh(); }
+document.querySelectorAll("#viewBtns .btn").forEach(b => b.onclick = () => setView(b.dataset.v));
+document.querySelectorAll("#gbLay .btn").forEach(b => b.onclick = () => { S.gbLay = b.dataset.l; press("#gbLay", "l", S.gbLay); refresh(); });
+document.querySelectorAll("#wLay .btn").forEach(b => b.onclick = () => setW(b.dataset.l));
+document.getElementById("genus").onchange = e => { if (S.view === "gb") { S.genusGB = e.target.value; drawGBIFgb(); } else { S.genusW = e.target.value; drawWorld(); } };
+document.getElementById("feOn").onchange = e => { S.fe = e.target.checked; if (S.fe && lmap.getZoom() < 10) lmap.setView(lmap.getCenter(), 10); drawFE(); };
+document.getElementById("theme").onclick = () => { const r = document.documentElement; r.dataset.theme = isDark() ? "light" : "dark"; setBase(); refresh(); redraws.forEach(f => f()); };
+
+initLayerPanel();
+setBase();
+setView(S.view);
+
+/* ===== search ===== */
+const qI = document.getElementById("q"), sug = document.getElementById("sug");
+let hits = [], hi = -1;
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+function search(t) {
+  t = norm(t.trim()); if (t.length < 2) return [];
+  const out = [];
+  if (PL) for (const p of PL) { const a = norm(p[0]), b = p[5] ? norm(p[5]) : ""; if (a.startsWith(t) || b.startsWith(t)) out.push({ name: p[0], sub: p[1] || "Great Britain", lat: p[2], lon: p[3], r: p[4] + 10 + (a === t ? 5 : 0) }); }
+  if (WOODS) for (const w of WOODS) if (norm(w[0]).startsWith(t)) out.push({ name: w[0], sub: "wood or forest", lat: w[1], lon: w[2], r: 9 + (norm(w[0]) === t ? 5 : 0) });
+  if (WC) for (const c of WC.rows) if (norm(c[0]).startsWith(t)) out.push({ name: c[0], sub: WC.cc[c[1]] || c[1], lat: c[2], lon: c[3], r: Math.log10(c[4]) + (norm(c[0]) === t ? 5 : 0) });
+  return out.sort((a, b) => b.r - a.r).slice(0, 12);
+}
+function showSug() { sug.innerHTML = hits.map((h, i) => `<li role="option" aria-selected="${i === hi}" data-i="${i}">${esc(h.name)} <span>${esc(h.sub)}</span></li>`).join(""); sug.style.display = hits.length ? "block" : "none"; qI.setAttribute("aria-expanded", hits.length > 0); }
+qI.addEventListener("focus", () => { if (!WC) loadWorldPlaces(); if (!WOODS) getJSON("data/places/woods.json").then(d => { WOODS = d; }); });
+qI.addEventListener("input", () => { hits = search(qI.value); hi = -1; showSug(); });
+qI.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown") { hi = Math.min(hits.length - 1, hi + 1); showSug(); e.preventDefault(); }
+  else if (e.key === "ArrowUp") { hi = Math.max(0, hi - 1); showSug(); e.preventDefault(); }
+  else if (e.key === "Enter") { e.preventDefault(); const pcm = qI.value.trim().toUpperCase().replace(/\s+/g, ""); if (/^[A-Z]{1,2}\d[A-Z\d]?\d[A-Z]{2}$/.test(pcm)) postcode(pcm); else if (hits.length) choose(hits[Math.max(0, hi)]); }
+  else if (e.key === "Escape") { hits = []; showSug(); }
+});
+sug.addEventListener("click", e => { const li = e.target.closest("li"); if (li) choose(hits[+li.dataset.i]); });
+document.addEventListener("click", e => { if (!e.target.closest(".searchbox")) { hits = []; showSug(); } });
+function postcode(pcode) {
+  fetch("https://api.postcodes.io/postcodes/" + encodeURIComponent(pcode)).then(r => r.json()).then(j => { if (j.status === 200 && j.result && j.result.latitude) choose({ name: j.result.postcode, sub: j.result.admin_district || "", lat: j.result.latitude, lon: j.result.longitude }); else document.getElementById("answer").innerHTML = '<div class="pn">That postcode was not found.</div>'; })
+    .catch(() => { document.getElementById("answer").innerHTML = '<div class="pn">The postcode service did not respond. Try a place name instead.</div>'; });
+}
+document.getElementById("geo").onclick = () => { if (!navigator.geolocation) return; navigator.geolocation.getCurrentPosition(p => choose({ name: "Your location", sub: "", lat: p.coords.latitude, lon: p.coords.longitude })); };
+async function choose(h) {
+  hits = []; showSug(); qI.value = h.name;
+  const gb = GBB.contains([h.lat, h.lon]) && (() => { const [e, n] = ll2en(h.lat, h.lon); return k1at(e, n) !== null || c5at(e, n) !== null; })();
+  if ((gb ? "gb" : "world") !== S.view) setView(gb ? "gb" : "world", false);
+  lmap.setView([h.lat, h.lon], gb ? 11 : 6, { animate: false });
+  const html = await info(h.lat, h.lon, h.name + (h.sub ? ", " + h.sub : ""));
+  document.getElementById("answer").innerHTML = html.replace('class="big"', 'class="big"') + `<div class="pn">The map above has moved to ${esc(h.name)}. Click anywhere on it to look around.</div>`;
+}
+
+/* ===== charts ===== */
+const NAT = ["England", "Scotland", "Wales"];
+resp(document.getElementById("natChart"), (w, sm) => {
+  const ml = sm ? 72 : 92, mr = 46, bh = sm ? 30 : 36, gap = 18, top = 8, H = top + NAT.length * (bh + gap) + 28;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}` }, document.getElementById("natChart")), max = 22, sx = v => ml + v / max * (w - ml - mr);
+  NAT.forEach((nm, i) => { const y = top + i * (bh + gap), N = R.nations[nm]; let x = 0;
+    lbl(svg, ml - 8, y + bh / 2 + 4, nm, "lab b", "end");
+    GKEY.forEach((k, g) => { const v = N.groups_ha[k] / (N.land_km2 * 100) * 100, r = el("rect", { x: sx(x), y, width: Math.max(0, sx(x + v) - sx(x)), height: bh, fill: GCOL[g] }, svg); hover(r, `<b>${nm}: ${GNAME[g].toLowerCase()}</b><br>${fmt(N.groups_ha[k])} ha, ${v.toFixed(1)}% of land`); x += v; });
+    lbl(svg, sx(x) + 6, y + bh / 2 + 4, N.woodland_pct.toFixed(1) + "%", "lab b"); });
+  for (let v = 0; v <= 20; v += 5) { el("line", { x1: sx(v), x2: sx(v), y1: H - 22, y2: H - 18, stroke: css("--muted") }, svg); lbl(svg, sx(v), H - 4, v + "%", "lab m s", "middle"); }
+});
+resp(document.getElementById("ctyChart"), (w, sm) => {
+  const rows = R.counties.most.slice(0, 8).concat([null], R.counties.least.slice(0, 5).reverse());
+  const ml = sm ? 150 : 190, mr = 50, bh = 18, gap = 7, H = rows.length * (bh + gap) + 24;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}` }, document.getElementById("ctyChart")), sx = v => ml + v / 32 * (w - ml - mr);
+  rows.forEach((c, i) => { const y = i * (bh + gap); if (!c) { lbl(svg, ml - 8, y + bh / 2 + 4, "...", "lab m", "end"); return; }
+    const wd = c.woodland_pct;
+    lbl(svg, ml - 8, y + bh / 2 + 4, c.county + (sm ? "" : `, ${c.nation}`), "lab", "end");
+    el("rect", { x: ml, y, width: Math.max(1, sx(wd) - ml), height: bh, fill: css("--rule") }, svg);
+    const bl = c.bl_land_pct, cf = c.cf_land_pct;
+    el("rect", { x: ml, y, width: Math.max(0, sx(bl) - ml), height: bh, fill: GCOL[0] }, svg);
+    el("rect", { x: sx(bl), y, width: Math.max(0, sx(bl + cf) - sx(bl)), height: bh, fill: GCOL[3] }, svg);
+    const r = el("rect", { x: ml, y, width: Math.max(1, sx(wd) - ml), height: bh, fill: "transparent" }, svg);
+    hover(r, `<b>${c.county}</b><br>${c.woodland_pct.toFixed(1)}% woodland, ${fmt(c.woodland_ha)} ha<br>${c.conifer_share_pct.toFixed(0)}% conifer`);
+    lbl(svg, sx(wd) + 6, y + bh / 2 + 4, c.woodland_pct < 1 ? c.woodland_pct.toFixed(2) + "%" : c.woodland_pct.toFixed(1) + "%", "lab b"); });
+});
+(() => { const t = document.getElementById("sqTable"); let h = `<tr><th>Square</th><th>Named forest</th><th class="wide">Near</th><th class="num">Woodland</th><th class="num">Conifer, ha</th></tr>`;
+  R.squares10.most_conifer.forEach((s, i) => { h += `<tr class="go" data-i="${i}"><td>${s.ref}<small>${esc(s.county)}</small></td><td>${esc(s.forest || "none named")}</td><td class="wide">${esc(s.place)}</td><td class="num">${s.woodland_pct.toFixed(0)}%</td><td class="num">${fmt(s.conifer_ha)}</td></tr>`; });
+  t.innerHTML = h; t.querySelectorAll("tr.go").forEach(tr => tr.onclick = () => { const s = R.squares10.most_conifer[+tr.dataset.i]; if (S.view !== "gb") setView("gb", false); lmap.setView([s.lat, s.lon], 11, { animate: false }); info(s.lat, s.lon, s.ref + ", " + (s.forest || s.place)); document.getElementById("lmap").scrollIntoView({ behavior: "smooth", block: "center" }); }); })();
+resp(document.getElementById("decChart"), (w, sm) => {
+  const D = R.fe.decades, ml = 56, mr = 10, H = sm ? 250 : 290, mb = 36, mt = 10, svg = el("svg", { viewBox: `0 0 ${w} ${H}` }, document.getElementById("decChart"));
+  const max = Math.max(...D.map(d => d[1] + d[2])), bw = (w - ml - mr) / D.length, sy = v => H - mb - v / (max * 1.05) * (H - mb - mt);
+  for (let v = 0; v <= max; v += 5000) { el("line", { x1: ml, x2: w - mr, y1: sy(v), y2: sy(v), stroke: css("--rule") }, svg); lbl(svg, ml - 6, sy(v) + 4, fmt(v), "lab m s", "end"); }
+  D.forEach((d, i) => { const x = ml + i * bw + 2, ww = bw - 4;
+    const a = el("rect", { x, y: sy(d[1]), width: ww, height: sy(0) - sy(d[1]), fill: GCOL[3] }, svg), b = el("rect", { x, y: sy(d[1] + d[2]), width: ww, height: sy(d[1]) - sy(d[1] + d[2]), fill: GCOL[0] }, svg);
+    [a, b].forEach(r => hover(r, `<b>${d[0]}s</b><br>Conifer ${fmt(d[1])} ha<br>Broadleaf ${fmt(d[2])} ha (${d[3].toFixed(0)}%)`));
+    if (!sm || i % 2 === 0) lbl(svg, x + ww / 2, H - mb + 16, sm ? "'" + String(d[0]).slice(2) : d[0] + "s", "lab m s", "middle"); });
+  el("rect", { x: ml + 4, y: mt, width: 12, height: 12, fill: GCOL[3] }, svg); lbl(svg, ml + 22, mt + 10, "conifer", "lab");
+  el("rect", { x: ml + 92, y: mt, width: 12, height: 12, fill: GCOL[0] }, svg); lbl(svg, ml + 110, mt + 10, "broadleaf", "lab");
+  lbl(svg, ml, H - 4, "hectares standing today, by decade planted", "lab m s");
+});
+(() => { const t = document.getElementById("contTable"), C = R.world.by_continent; let h = `<tr><th>Continent</th><th>Most recorded genus, share of qualifying land</th></tr>`;
+  for (const c in C) h += `<tr><td>${c}</td><td>${C[c].top.slice(0, 3).map(([g, s]) => `<span class="sw" style="background:${GENCOL[g]}"></span>${esc(gname(g))} ${s.toFixed(0)}%`).join("<br>")}</td></tr>`;
+  t.innerHTML = h; })();
+resp(document.getElementById("effChart"), (w, sm) => {
+  const C = Object.entries(R.world.continents).sort((a, b) => b[1].records_per_1000km2 - a[1].records_per_1000km2);
+  const ml = sm ? 110 : 130, mr = 60, bh = 22, gap = 9, H = C.length * (bh + gap) + 26, svg = el("svg", { viewBox: `0 0 ${w} ${H}` }, document.getElementById("effChart"));
+  const sx = v => ml + Math.log10(Math.max(v, 10)) / 5 * (w - ml - mr);
+  C.forEach(([c, d], i) => { const y = i * (bh + gap); lbl(svg, ml - 8, y + bh / 2 + 4, c, "lab", "end");
+    const r = el("rect", { x: ml, y, width: sx(d.records_per_1000km2) - ml, height: bh, fill: "#B86E2E" }, svg);
+    hover(r, `<b>${c}</b><br>${fmt(d.records)} plant records<br>${fmt(d.land_km2)} km² of land<br>${d.cells_ok_pct.toFixed(0)}% of land in cells with ${R.world.min_records}+ records`);
+    lbl(svg, sx(d.records_per_1000km2) + 6, y + bh / 2 + 4, fmt(d.records_per_1000km2), "lab b"); });
+  for (const v of [10, 100, 1000, 10000, 100000]) lbl(svg, sx(v), H - 4, fmt(v), "lab m s", "middle");
+});
+</script>
+</body>
+</html>

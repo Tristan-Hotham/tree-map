@@ -1,0 +1,38 @@
+MIT License
+
+Copyright (c) 2026 Tristan Hotham
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+This licence covers the code in code/, reddit/collage.py and the page scripts.
+
+Data files in data/ derived from the National Forest Inventory, Forestry England
+subcompartments, ONS boundaries and OS Open Names (the tiles in data/tiles/,
+data/gb/, data/ctx/gb_borders.json, data/places/gb.json, data/places/woods.json,
+data/fe_points.json and the CSV tables of woodland) contain Forestry Commission
+data (c) Crown copyright and Ordnance Survey data (c) Crown copyright and
+database right 2025; they are released under the Open Government Licence v3.0
+(https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+The derived GBIF grids (data/gbif/, world_cells.csv, genera.csv) are released
+under CC BY 4.0; cite GBIF.org (28 October 2026) GBIF occurrence density maps.
+data/places/world.json contains GeoNames data (CC BY 4.0); data/ctx/world.json
+is from Natural Earth (public domain).
+
+Text, figures, the paper and the collage are released under the Creative
+Commons Attribution 4.0 International licence (CC BY 4.0).
