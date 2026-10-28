@@ -1,0 +1,111 @@
+species,kind,subcompartments,area_ha,median_plant_year
+Sitka spruce,conifer,8193,47919.5,1992.0
+Corsican pine,conifer,6712,23660.2,1980.0
+Scots pine,conifer,7476,18355.0,1958.0
+Oak (robur/petraea),broadleaf,4811,16806.3,1936.0
+Beech,broadleaf,4056,13931.3,1951.0
+Douglas fir,conifer,4513,12381.3,1979.0
+Birch (downy/silver),broadleaf,4969,10702.1,1993.0
+Norway spruce,conifer,2371,6679.9,1966.0
+Mixed broadleaves,broadleaf,1714,4584.9,1997.0
+Japanese larch,conifer,1883,3909.1,1961.0
+European Ash,broadleaf,1351,3565.9,1961.0
+Hybrid larch,conifer,1033,2419.6,1994.0
+Lodgepole pine,conifer,665,2338.5,1966.0
+Western hemlock,conifer,885,1775.4,1967.0
+Sweet chestnut,broadleaf,990,1759.1,1985.0
+Pedunculate/common oak,broadleaf,509,1659.2,1990.0
+Sycamore,broadleaf,707,1303.3,1958.0
+European larch,conifer,546,1183.1,1957.0
+Western red cedar,conifer,420,985.5,1968.0
+Sessile oak,broadleaf,456,884.9,2015.0
+Hazel,broadleaf,357,786.0,1998.0
+Mixed conifers,conifer,233,614.3,1972.0
+Downy birch,broadleaf,141,512.7,2021.0
+Hybrid poplar,broadleaf,247,469.6,1960.0
+Grand Fir,conifer,252,463.1,1968.0
+Common alder,broadleaf,253,454.7,1985.0
+Silver birch,broadleaf,186,429.0,2016.0
+Red oak,broadleaf,274,389.8,1957.0
+Other Alders,broadleaf,206,376.2,1960.0
+Goat willow,broadleaf,147,356.1,1998.0
+Small-leaved lime,broadleaf,108,354.7,1960.5
+Serbian spruce,conifer,105,287.4,2016.0
+Hornbeam,broadleaf,127,285.9,1992.0
+Lawsons cypress,conifer,161,256.6,1958.0
+European Holly,broadleaf,26,241.0,1970.0
+other broadleaves,broadleaf,118,173.4,2002.0
+Monterey pine,conifer,88,167.5,1963.0
+Macedonian pine,conifer,67,165.7,2019.0
+Maritime pine,conifer,72,145.2,2019.0
+Japanese cedar,conifer,70,133.6,2020.0
+Aspen,broadleaf,75,130.0,2022.0
+Yew,conifer,40,121.8,1930.0
+Rowan,broadleaf,75,115.6,2018.0
+Noble fir,conifer,67,106.3,2001.0
+Coast redwood,conifer,93,105.6,2016.0
+other willows,broadleaf,56,98.5,2000.0
+Wild cherry/gean,broadleaf,82,95.7,2012.0
+European silver fir,conifer,47,74.2,2017.0
+Bishop pine,conifer,31,72.1,1981.0
+Hawthorn species,broadleaf,55,68.9,1999.0
+Oriental spruce,conifer,31,68.1,2018.0
+Norway maple,broadleaf,54,67.9,1957.5
+White willow,broadleaf,25,67.8,1985.0
+Leyland cypress,conifer,36,58.0,2016.0
+other conifers,conifer,42,53.5,1993.0
+Atlas cedar,conifer,27,52.0,2018.0
+Italian alder,broadleaf,17,48.5,2020.0
+Wellingtonia,conifer,34,47.1,2016.0
+other Eucalyptus,broadleaf,28,36.6,2013.5
+Field maple,broadleaf,24,34.0,1991.0
+Crack willow,broadleaf,15,30.4,1999.0
+Weymouth pine,conifer,24,27.7,2014.0
+Raoul/rauli,broadleaf,23,27.2,1979.0
+White poplar,broadleaf,5,20.8,1980.0
+Whitebeam,broadleaf,11,20.4,2019.0
+Grey alder,broadleaf,18,20.1,2017.5
+Other Limes,broadleaf,17,19.1,1900.0
+Common lime,broadleaf,13,18.3,1880.0
+Grey willow,broadleaf,14,16.9,2003.0
+other firs (Abies),conifer,8,14.5,1986.5
+Red alder,broadleaf,9,14.4,2025.0
+Wild service tree,broadleaf,15,13.9,2022.0
+other walnut,broadleaf,3,13.9,2002.0
+Loblolly pine,conifer,8,12.5,2021.5
+other poplar spp,broadleaf,7,10.9,1960.0
+Blackthorn,broadleaf,16,9.9,2025.0
+Turkey oak,broadleaf,9,8.8,1940.0
+other spruces,conifer,6,8.6,2005.0
+Roble,broadleaf,10,8.4,1979.0
+Other Elms,broadleaf,9,8.0,1965.0
+Black walnut,broadleaf,10,8.0,2025.0
+other oak spp,broadleaf,1,7.5,2025.0
+Grey poplar,broadleaf,7,6.8,1980.0
+Nordmann fir,conifer,3,6.6,2022.0
+other pines,conifer,6,6.1,1965.0
+Black poplar,broadleaf,6,5.9,1995.0
+Austrian pine,conifer,8,5.6,2023.0
+Bird cherry,broadleaf,6,4.9,2014.5
+Tingiringi gum,broadleaf,3,4.5,2019.0
+Red (pacific silver) fir,conifer,5,4.4,2018.0
+Shining gum,broadleaf,1,3.6,2009.0
+Common walnut,broadleaf,4,3.5,2022.0
+Horse chestnut,broadleaf,4,3.5,1927.0
+Crab apple,broadleaf,6,3.4,2023.0
+Cider gum,broadleaf,1,3.4,2011.0
+Wych elm,broadleaf,3,3.2,1955.0
+other Nothofagus,broadleaf,3,2.6,1978.0
+Large-leaved lime,broadleaf,4,2.5,1970.0
+other Cedar,conifer,2,2.3,2015.0
+Mountain pine,conifer,1,2.1,1954.0
+Juniper,conifer,1,1.8,2023.0
+Downy oak,broadleaf,2,1.8,2006.5
+Ponderosa pine,conifer,2,1.6,1939.0
+Shagbark hickory,broadleaf,2,1.5,2014.0
+Oriental beech,broadleaf,1,1.4,1979.0
+English elm,broadleaf,3,1.1,2012.0
+Tulip tree,broadleaf,2,1.0,1912.5
+Other Cherries,broadleaf,2,0.8,1982.5
+Holm oak,broadleaf,1,0.8,1931.0
+London plane,broadleaf,1,0.3,2025.0

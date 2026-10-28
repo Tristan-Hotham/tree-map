@@ -1,0 +1,89 @@
+genus,family,gbif_key,gbif_name,records_world
+Quercus,Fagaceae,2877951,Quercus L.,6561919
+Pinus,Pinaceae,2684241,Pinus L.,3410213
+Picea,Pinaceae,7606064,Picea A.Dietr.,1236557
+Abies,Pinaceae,2684876,Abies Mill.,458711
+Larix,Pinaceae,2686156,Larix Mill.,380639
+Betula,Betulaceae,2875008,Betula L.,2086229
+Fagus,Fagaceae,2874875,Fagus L.,1655878
+Acer,Sapindaceae,3189834,Acer L.,4011833
+Fraxinus,Oleaceae,3172323,Fraxinus Tourn. ex L.,1960553
+Tilia,Malvaceae,3152041,Tilia L.,1146962
+Ulmus,Ulmaceae,2984510,Ulmus L.,1038436
+Carpinus,Betulaceae,2875770,Carpinus L.,747744
+Castanea,Fagaceae,2882140,Castanea Mill.,456155
+Populus,Salicaceae,3040183,Populus L.,1579202
+Salix,Salicaceae,3039576,Salix L.,4535931
+Alnus,Betulaceae,2876099,Alnus Mill.,1472929
+Juniperus,Cupressaceae,2684359,Juniperus L.,1239591
+Cupressus,Cupressaceae,10225588,Cupressus L.,54191
+Taxus,Taxaceae,2684902,Taxus L.,278487
+Tsuga,Pinaceae,8527396,Tsuga (Endl.) Carrière,113477
+Pseudotsuga,Pinaceae,2685775,Pseudotsuga Carrière,135606
+Thuja,Cupressaceae,2684168,Thuja L.,95995
+Sequoia,Cupressaceae,2683908,Sequoia Endl.,23631
+Eucalyptus,Myrtaceae,7493935,Eucalyptus L'Hér.,1882228
+Corymbia,Myrtaceae,3180424,Corymbia K.D.Hill & L.A.S.Johnson,103738
+Acacia,Fabaceae,2978223,Acacia Mill.,1195392
+Ficus,Moraceae,2984588,Ficus L.,511965
+Shorea,Dipterocarpaceae,10803341,Shorea Roxb.,3621
+Dipterocarpus,Dipterocarpaceae,7299001,Dipterocarpus C.F.Gaertn.,2361
+Tectona,Lamiaceae,2925648,Tectona L.f.,15460
+Swietenia,Meliaceae,3190483,Swietenia Jacq.,6223
+Ceiba,Malvaceae,3152218,Ceiba Mill.,28326
+Hevea,Euphorbiaceae,3071157,Hevea Aubl.,5534
+Cecropia,Urticaceae,2984472,Cecropia Loefl.,31163
+Inga,Fabaceae,2965936,Inga Mill.,51992
+Nothofagus,Nothofagaceae,2874877,Nothofagus Blume,57753
+Araucaria,Araucariaceae,2684910,Araucaria Juss.,20648
+Podocarpus,Podocarpaceae,5284386,Podocarpus L'Hér. ex Pers.,53699
+Ginkgo,Ginkgoaceae,2687884,Ginkgo L.,48739
+Magnolia,Magnoliaceae,2888195,Magnolia Plum. ex L.,69721
+Liquidambar,Altingiaceae,3152823,Liquidambar L.,95314
+Liriodendron,Magnoliaceae,3152860,Liriodendron L.,77157
+Prunus,Rosaceae,3020559,Prunus L.,3646631
+Sorbus,Rosaceae,3012146,Sorbus L.,1353164
+Juglans,Juglandaceae,3054350,Juglans L.,334609
+Carya,Juglandaceae,3054287,Carya Nutt.,59492
+Olea,Oleaceae,3172244,Olea L.,408001
+Ilex,Aquifoliaceae,10792217,Ilex L.L.,1048740
+Adansonia,Malvaceae,3152213,Adansonia L.,13019
+Brachystegia,Fabaceae,2952646,Brachystegia Benth.,2922
+Julbernardia,Fabaceae,2981743,Julbernardia Pellegr.,1609
+Isoberlinia,Fabaceae,2976322,Isoberlinia Craib & Stapf,6999
+Terminalia,Combretaceae,3189387,Terminalia L.,96327
+Combretum,Combretaceae,2986357,Combretum Loefl.,50567
+Colophospermum,Fabaceae,2974566,Colophospermum J.Léonard,2223
+Prosopis,Fabaceae,2970763,Prosopis L.,132754
+Vachellia,Fabaceae,8142432,Vachellia Wight & Arn.,139458
+Senegalia,Fabaceae,7989631,Senegalia Raf.,52768
+Casuarina,Casuarinaceae,2891925,Casuarina L.,43023
+Melaleuca,Myrtaceae,3175449,Melaleuca L.,170089
+Banksia,Proteaceae,8399031,Banksia L.f.,139856
+Callitris,Cupressaceae,2684270,Callitris Vent.,52322
+Agathis,Araucariaceae,2685008,Agathis Salisb.,5312
+Dacrydium,Podocarpaceae,10684721,Dacrydium Sol. ex G.Forst.,6440
+Cryptomeria,Cupressaceae,2683915,Cryptomeria D.Don,11026
+Chamaecyparis,Cupressaceae,2683848,Chamaecyparis Spach,38689
+Cinnamomum,Lauraceae,3033980,Cinnamomum Schaeff.,33124
+Castanopsis,Fagaceae,2881728,Castanopsis (D.Don) Spach,13783
+Lithocarpus,Fagaceae,2876673,Lithocarpus Blume,16600
+Rhizophora,Rhizophoraceae,3086525,Rhizophora L.,41023
+Avicennia,Acanthaceae,2925398,Avicennia L.,60646
+Mangifera,Anacardiaceae,3075453,Mangifera L.,34866
+Syzygium,Myrtaceae,3029010,Syzygium Gaertn.,79618
+Eschweilera,Lecythidaceae,3083183,Eschweilera Mart. ex DC.,13333
+Bertholletia,Lecythidaceae,3083179,Bertholletia Bonpl.,4747
+Hymenaea,Fabaceae,2950720,Hymenaea L.,11481
+Handroanthus,Bignoniaceae,6401269,Handroanthus Mattos,67111
+Dalbergia,Fabaceae,2968358,Dalbergia L.f.,31616
+Pterocarpus,Fabaceae,5349236,Pterocarpus Jacq.,27112
+Khaya,Meliaceae,3190507,Khaya A.Juss.,9040
+Entandrophragma,Meliaceae,3190486,Entandrophragma C.DC.,1239
+Milicia,Moraceae,6358584,Milicia Sim,4079
+Sabal,Arecaceae,2732480,Sabal Adans.,29570
+Phoenix,Arecaceae,2732076,Phoenix L.,24005
+Nyssa,Nyssaceae,3082211,Nyssa Gronov. ex L.,21365
+Platanus,Platanaceae,3152811,Platanus L.,430742
+Aesculus,Sapindaceae,3189801,Aesculus L.,431781
+Robinia,Fabaceae,2952066,Robinia L.,514695

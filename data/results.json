@@ -1,0 +1,3721 @@
+{
+ "nfi": {
+  "polygons": 641642,
+  "woodland_polygons": 611229,
+  "nonwoodland_polygons": 30413,
+  "duplicates": 0,
+  "main_file_rows": 525642,
+  "missing_file_rows": 116000,
+  "woodland_ha": 3152516.7,
+  "nonwoodland_ha": 81848.5,
+  "types": [
+   {
+    "type": "Broadleaved",
+    "group": "Broadleaved",
+    "polygons": 298953,
+    "area_ha": 1125137.4
+   },
+   {
+    "type": "Conifer",
+    "group": "Conifer",
+    "polygons": 95866,
+    "area_ha": 861042.4
+   },
+   {
+    "type": "Felled",
+    "group": "Felled and restocking",
+    "polygons": 48420,
+    "area_ha": 539554.3
+   },
+   {
+    "type": "Assumed woodland",
+    "group": "Other and assumed woodland",
+    "polygons": 41996,
+    "area_ha": 243645.5
+   },
+   {
+    "type": "Young trees",
+    "group": "Young trees",
+    "polygons": 42610,
+    "area_ha": 188851.2
+   },
+   {
+    "type": "Ground prep",
+    "group": "Felled and restocking",
+    "polygons": 8372,
+    "area_ha": 52332.3
+   },
+   {
+    "type": "Mixed mainly broadleaved",
+    "group": "Mixed, mainly broadleaved",
+    "polygons": 28141,
+    "area_ha": 51100.1
+   },
+   {
+    "type": "Mixed mainly conifer",
+    "group": "Mixed, mainly conifer",
+    "polygons": 27533,
+    "area_ha": 49655.5
+   },
+   {
+    "type": "Windblow",
+    "group": "Felled and restocking",
+    "polygons": 8125,
+    "area_ha": 17166.1
+   },
+   {
+    "type": "Low density",
+    "group": "Other and assumed woodland",
+    "polygons": 4220,
+    "area_ha": 9646.1
+   },
+   {
+    "type": "Shrub",
+    "group": "Other and assumed woodland",
+    "polygons": 4579,
+    "area_ha": 7295.9
+   },
+   {
+    "type": "Failed",
+    "group": "Felled and restocking",
+    "polygons": 1893,
+    "area_ha": 4315.4
+   },
+   {
+    "type": "Coppice",
+    "group": "Other and assumed woodland",
+    "polygons": 460,
+    "area_ha": 2505.3
+   },
+   {
+    "type": "Coppice with standards",
+    "group": "Other and assumed woodland",
+    "polygons": 61,
+    "area_ha": 269.2
+   }
+  ]
+ },
+ "gb": {
+  "land_km2": 229968.0,
+  "woodland_ha": 3152516.4,
+  "woodland_pct": 13.71,
+  "groups_ha": {
+   "broadleaved": 1125138.1,
+   "mixed_broad": 51099.8,
+   "mixed_conifer": 49655.4,
+   "conifer": 861042.1,
+   "young": 188851.4,
+   "felled": 613368.4,
+   "other": 263362.0
+  },
+  "groups_pct_of_woodland": {
+   "broadleaved": 35.69,
+   "mixed_broad": 1.62,
+   "mixed_conifer": 1.58,
+   "conifer": 27.31,
+   "young": 5.99,
+   "felled": 19.46,
+   "other": 8.35
+  },
+  "conifer_share_pct": 43.6,
+  "broadleaf_share_pct": 56.4,
+  "woodland_kha": 3153
+ },
+ "nations": {
+  "England": {
+   "land_km2": 130481.4,
+   "woodland_ha": 1338932.8,
+   "woodland_pct": 10.26,
+   "conifer_share_pct": 25.1,
+   "broadleaf_share_pct": 74.9,
+   "share_of_gb_woodland_pct": 42.5,
+   "groups_ha": {
+    "broadleaved": 802808.1,
+    "mixed_broad": 25358.7,
+    "mixed_conifer": 28744.0,
+    "conifer": 248770.7,
+    "young": 58676.9,
+    "felled": 111263.9,
+    "other": 63311.0
+   },
+   "felled_pct_of_woodland": 8.3
+  },
+  "Scotland": {
+   "land_km2": 78703.8,
+   "woodland_ha": 1501200.6,
+   "woodland_pct": 19.07,
+   "conifer_share_pct": 71.0,
+   "broadleaf_share_pct": 29.0,
+   "share_of_gb_woodland_pct": 47.6,
+   "groups_ha": {
+    "broadleaved": 205062.8,
+    "mixed_broad": 19192.7,
+    "mixed_conifer": 15047.5,
+    "conifer": 533084.4,
+    "young": 105347.9,
+    "felled": 434576.3,
+    "other": 188889.2
+   },
+   "felled_pct_of_woodland": 28.9
+  },
+  "Wales": {
+   "land_km2": 20782.8,
+   "woodland_ha": 312383.0,
+   "woodland_pct": 15.03,
+   "conifer_share_pct": 40.7,
+   "broadleaf_share_pct": 59.3,
+   "share_of_gb_woodland_pct": 9.9,
+   "groups_ha": {
+    "broadleaved": 117267.2,
+    "mixed_broad": 6548.4,
+    "mixed_conifer": 5863.9,
+    "conifer": 79187.0,
+    "young": 24826.6,
+    "felled": 67528.2,
+    "other": 11161.8
+   },
+   "felled_pct_of_woodland": 21.6
+  }
+ },
+ "counties": {
+  "n": 87,
+  "most": [
+   {
+    "county": "Moray",
+    "nation": "Scotland",
+    "woodland_pct": 30.8,
+    "conifer_share_pct": 81.7,
+    "land_km2": 2238.8,
+    "woodland_ha": 68956.7,
+    "bl_land_pct": 3.55,
+    "cf_land_pct": 15.85
+   },
+   {
+    "county": "South Ayrshire",
+    "nation": "Scotland",
+    "woodland_pct": 30.71,
+    "conifer_share_pct": 80.4,
+    "land_km2": 1224.4,
+    "woodland_ha": 37598.0,
+    "bl_land_pct": 3.28,
+    "cf_land_pct": 13.48
+   },
+   {
+    "county": "Argyll and Bute",
+    "nation": "Scotland",
+    "woodland_pct": 30.41,
+    "conifer_share_pct": 72.9,
+    "land_km2": 6982.5,
+    "woodland_ha": 212353.0,
+    "bl_land_pct": 4.55,
+    "cf_land_pct": 12.23
+   },
+   {
+    "county": "Dumfries and Galloway",
+    "nation": "Scotland",
+    "woodland_pct": 28.98,
+    "conifer_share_pct": 76.8,
+    "land_km2": 6435.9,
+    "woodland_ha": 186514.0,
+    "bl_land_pct": 2.9,
+    "cf_land_pct": 9.61
+   },
+   {
+    "county": "West Glamorgan",
+    "nation": "Wales",
+    "woodland_pct": 27.25,
+    "conifer_share_pct": 46.2,
+    "land_km2": 821.6,
+    "woodland_ha": 22389.4,
+    "bl_land_pct": 9.51,
+    "cf_land_pct": 8.17
+   },
+   {
+    "county": "Stirling",
+    "nation": "Scotland",
+    "woodland_pct": 26.3,
+    "conifer_share_pct": 63.6,
+    "land_km2": 2255.0,
+    "woodland_ha": 59313.4,
+    "bl_land_pct": 4.7,
+    "cf_land_pct": 8.24
+   },
+   {
+    "county": "Surrey",
+    "nation": "England",
+    "woodland_pct": 25.2,
+    "conifer_share_pct": 20.2,
+    "land_km2": 1670.2,
+    "woodland_ha": 42096.8,
+    "bl_land_pct": 18.42,
+    "cf_land_pct": 4.65
+   },
+   {
+    "county": "North Lanarkshire",
+    "nation": "Scotland",
+    "woodland_pct": 23.09,
+    "conifer_share_pct": 39.6,
+    "land_km2": 471.7,
+    "woodland_ha": 10891.7,
+    "bl_land_pct": 7.23,
+    "cf_land_pct": 4.74
+   },
+   {
+    "county": "East Ayrshire",
+    "nation": "Scotland",
+    "woodland_pct": 23.06,
+    "conifer_share_pct": 76.9,
+    "land_km2": 1271.3,
+    "woodland_ha": 29315.6,
+    "bl_land_pct": 2.51,
+    "cf_land_pct": 8.36
+   },
+   {
+    "county": "Mid Glamorgan",
+    "nation": "Wales",
+    "woodland_pct": 22.29,
+    "conifer_share_pct": 43.9,
+    "land_km2": 785.7,
+    "woodland_ha": 17516.4,
+    "bl_land_pct": 8.27,
+    "cf_land_pct": 6.48
+   }
+  ],
+  "least": [
+   {
+    "county": "Shetland Islands",
+    "nation": "Scotland",
+    "woodland_pct": 0.04,
+    "conifer_share_pct": 24.2,
+    "land_km2": 1451.0,
+    "woodland_ha": 55.6,
+    "bl_land_pct": 0.0,
+    "cf_land_pct": 0.0
+   },
+   {
+    "county": "Orkney Islands",
+    "nation": "Scotland",
+    "woodland_pct": 0.21,
+    "conifer_share_pct": 24.7,
+    "land_km2": 1008.0,
+    "woodland_ha": 216.5,
+    "bl_land_pct": 0.05,
+    "cf_land_pct": 0.02
+   },
+   {
+    "county": "Na h-Eileanan Siar",
+    "nation": "Scotland",
+    "woodland_pct": 1.12,
+    "conifer_share_pct": 88.7,
+    "land_km2": 3064.4,
+    "woodland_ha": 3427.8,
+    "bl_land_pct": 0.04,
+    "cf_land_pct": 0.29
+   },
+   {
+    "county": "Cambridgeshire",
+    "nation": "England",
+    "woodland_pct": 3.61,
+    "conifer_share_pct": 9.6,
+    "land_km2": 3400.3,
+    "woodland_ha": 12273.8,
+    "bl_land_pct": 2.85,
+    "cf_land_pct": 0.3
+   },
+   {
+    "county": "East Riding of Yorkshire",
+    "nation": "England",
+    "woodland_pct": 3.86,
+    "conifer_share_pct": 23.1,
+    "land_km2": 2478.1,
+    "woodland_ha": 9569.8,
+    "bl_land_pct": 2.39,
+    "cf_land_pct": 0.71
+   },
+   {
+    "county": "Lincolnshire",
+    "nation": "England",
+    "woodland_pct": 4.29,
+    "conifer_share_pct": 21.8,
+    "land_km2": 6976.3,
+    "woodland_ha": 29953.9,
+    "bl_land_pct": 2.86,
+    "cf_land_pct": 0.8
+   }
+  ],
+  "by_nation": {
+   "England": {
+    "most": {
+     "county": "Surrey",
+     "nation": "England",
+     "woodland_pct": 25.2,
+     "conifer_share_pct": 20.2,
+     "land_km2": 1670.2,
+     "woodland_ha": 42096.8,
+     "bl_land_pct": 18.42,
+     "cf_land_pct": 4.65
+    },
+    "least": {
+     "county": "Cambridgeshire",
+     "nation": "England",
+     "woodland_pct": 3.61,
+     "conifer_share_pct": 9.6,
+     "land_km2": 3400.3,
+     "woodland_ha": 12273.8,
+     "bl_land_pct": 2.85,
+     "cf_land_pct": 0.3
+    }
+   },
+   "Scotland": {
+    "most": {
+     "county": "Moray",
+     "nation": "Scotland",
+     "woodland_pct": 30.8,
+     "conifer_share_pct": 81.7,
+     "land_km2": 2238.8,
+     "woodland_ha": 68956.7,
+     "bl_land_pct": 3.55,
+     "cf_land_pct": 15.85
+    },
+    "least": {
+     "county": "Shetland Islands",
+     "nation": "Scotland",
+     "woodland_pct": 0.04,
+     "conifer_share_pct": 24.2,
+     "land_km2": 1451.0,
+     "woodland_ha": 55.6,
+     "bl_land_pct": 0.0,
+     "cf_land_pct": 0.0
+    }
+   },
+   "Wales": {
+    "most": {
+     "county": "West Glamorgan",
+     "nation": "Wales",
+     "woodland_pct": 27.25,
+     "conifer_share_pct": 46.2,
+     "land_km2": 821.6,
+     "woodland_ha": 22389.4,
+     "bl_land_pct": 9.51,
+     "cf_land_pct": 8.17
+    },
+    "least": {
+     "county": "South Glamorgan",
+     "nation": "Wales",
+     "woodland_pct": 9.01,
+     "conifer_share_pct": 8.6,
+     "land_km2": 474.1,
+     "woodland_ha": 4272.8,
+     "bl_land_pct": 7.67,
+     "cf_land_pct": 0.72
+    }
+   }
+  },
+  "most_conifer": [
+   {
+    "county": "Moray",
+    "nation": "Scotland",
+    "woodland_pct": 30.8,
+    "conifer_share_pct": 81.7,
+    "land_km2": 2238.8,
+    "woodland_ha": 68956.7,
+    "bl_land_pct": 3.55,
+    "cf_land_pct": 15.85
+   },
+   {
+    "county": "South Ayrshire",
+    "nation": "Scotland",
+    "woodland_pct": 30.71,
+    "conifer_share_pct": 80.4,
+    "land_km2": 1224.4,
+    "woodland_ha": 37598.0,
+    "bl_land_pct": 3.28,
+    "cf_land_pct": 13.48
+   },
+   {
+    "county": "East Ayrshire",
+    "nation": "Scotland",
+    "woodland_pct": 23.06,
+    "conifer_share_pct": 76.9,
+    "land_km2": 1271.3,
+    "woodland_ha": 29315.6,
+    "bl_land_pct": 2.51,
+    "cf_land_pct": 8.36
+   },
+   {
+    "county": "Dumfries and Galloway",
+    "nation": "Scotland",
+    "woodland_pct": 28.98,
+    "conifer_share_pct": 76.8,
+    "land_km2": 6435.9,
+    "woodland_ha": 186514.0,
+    "bl_land_pct": 2.9,
+    "cf_land_pct": 9.61
+   },
+   {
+    "county": "Scottish Borders",
+    "nation": "Scotland",
+    "woodland_pct": 22.01,
+    "conifer_share_pct": 75.9,
+    "land_km2": 4740.9,
+    "woodland_ha": 104354.9,
+    "bl_land_pct": 2.07,
+    "cf_land_pct": 6.51
+   }
+  ],
+  "most_broadleaf": [
+   {
+    "county": "Essex",
+    "nation": "England",
+    "woodland_pct": 6.67,
+    "conifer_share_pct": 7.6,
+    "land_km2": 3672.1,
+    "woodland_ha": 24510.6,
+    "bl_land_pct": 5.66,
+    "cf_land_pct": 0.46
+   },
+   {
+    "county": "Kent",
+    "nation": "England",
+    "woodland_pct": 13.15,
+    "conifer_share_pct": 11.8,
+    "land_km2": 3741.9,
+    "woodland_ha": 49196.7,
+    "bl_land_pct": 10.24,
+    "cf_land_pct": 1.37
+   },
+   {
+    "county": "East Sussex",
+    "nation": "England",
+    "woodland_pct": 19.13,
+    "conifer_share_pct": 14.3,
+    "land_km2": 1797.5,
+    "woodland_ha": 34392.9,
+    "bl_land_pct": 15.35,
+    "cf_land_pct": 2.56
+   },
+   {
+    "county": "Buckinghamshire",
+    "nation": "England",
+    "woodland_pct": 11.7,
+    "conifer_share_pct": 16.5,
+    "land_km2": 1874.6,
+    "woodland_ha": 21935.3,
+    "bl_land_pct": 8.82,
+    "cf_land_pct": 1.74
+   },
+   {
+    "county": "Cornwall",
+    "nation": "England",
+    "woodland_pct": 9.43,
+    "conifer_share_pct": 17.2,
+    "land_km2": 3567.1,
+    "woodland_ha": 33620.3,
+    "bl_land_pct": 6.99,
+    "cf_land_pct": 1.45
+   }
+  ],
+  "england_top5": [
+   {
+    "county": "Surrey",
+    "nation": "England",
+    "woodland_pct": 25.2,
+    "conifer_share_pct": 20.2,
+    "land_km2": 1670.2,
+    "woodland_ha": 42096.8,
+    "bl_land_pct": 18.42,
+    "cf_land_pct": 4.65
+   },
+   {
+    "county": "West Sussex",
+    "nation": "England",
+    "woodland_pct": 21.4,
+    "conifer_share_pct": 17.3,
+    "land_km2": 1992.3,
+    "woodland_ha": 42630.2,
+    "bl_land_pct": 16.03,
+    "cf_land_pct": 3.36
+   },
+   {
+    "county": "Hampshire",
+    "nation": "England",
+    "woodland_pct": 19.53,
+    "conifer_share_pct": 22.4,
+    "land_km2": 3771.1,
+    "woodland_ha": 73641.6,
+    "bl_land_pct": 13.69,
+    "cf_land_pct": 3.96
+   },
+   {
+    "county": "East Sussex",
+    "nation": "England",
+    "woodland_pct": 19.13,
+    "conifer_share_pct": 14.3,
+    "land_km2": 1797.5,
+    "woodland_ha": 34392.9,
+    "bl_land_pct": 15.35,
+    "cf_land_pct": 2.56
+   },
+   {
+    "county": "Northumberland",
+    "nation": "England",
+    "woodland_pct": 18.0,
+    "conifer_share_pct": 71.1,
+    "land_km2": 5026.5,
+    "woodland_ha": 90458.1,
+    "bl_land_pct": 2.73,
+    "cf_land_pct": 6.73
+   }
+  ]
+ },
+ "squares10": {
+  "n": 2303,
+  "most_wooded": [
+   {
+    "ref": "NY68",
+    "county": "Northumberland",
+    "woodland_pct": 81.1,
+    "conifer_share_pct": 98.0,
+    "conifer_ha": 4519.0,
+    "broadleaf_ha": 92.6,
+    "forest": "Kielder Forest",
+    "lat": 55.1581,
+    "lon": -2.5508,
+    "place": "Falstone",
+    "km": 7.7
+   },
+   {
+    "ref": "NX38",
+    "county": "Dumfries and Galloway",
+    "woodland_pct": 79.4,
+    "conifer_share_pct": 98.4,
+    "conifer_ha": 4911.6,
+    "broadleaf_ha": 77.9,
+    "forest": "Dornal Forest",
+    "lat": 55.1318,
+    "lon": -4.5897,
+    "place": "Glentrool Village",
+    "km": 6.6
+   },
+   {
+    "ref": "NY58",
+    "county": "Scottish Borders",
+    "woodland_pct": 79.2,
+    "conifer_share_pct": 99.3,
+    "conifer_ha": 2965.6,
+    "broadleaf_ha": 20.2,
+    "forest": "Kershope Forest",
+    "lat": 55.1573,
+    "lon": -2.7078,
+    "place": "Copshaw Holm",
+    "km": 7.2
+   },
+   {
+    "ref": "NY77",
+    "county": "Northumberland",
+    "woodland_pct": 77.2,
+    "conifer_share_pct": 99.2,
+    "conifer_ha": 3309.8,
+    "broadleaf_ha": 26.9,
+    "forest": "Wark Forest",
+    "lat": 55.0688,
+    "lon": -2.393,
+    "place": "Redburn",
+    "km": 10.6
+   },
+   {
+    "ref": "NR88",
+    "county": "Argyll and Bute",
+    "woodland_pct": 75.4,
+    "conifer_share_pct": 91.2,
+    "conifer_ha": 2954.3,
+    "broadleaf_ha": 285.8,
+    "forest": "Achnaba Forest",
+    "lat": 56.0096,
+    "lon": -5.4504,
+    "place": "Ardrishaig",
+    "km": 0.8
+   },
+   {
+    "ref": "NT20",
+    "county": "Dumfries and Galloway",
+    "woodland_pct": 72.8,
+    "conifer_share_pct": 99.1,
+    "conifer_ha": 1153.3,
+    "broadleaf_ha": 10.6,
+    "forest": "Eskdalemuir Forest",
+    "lat": 55.3333,
+    "lon": -3.1838,
+    "place": "Eskdalemuir",
+    "km": 6.6
+   },
+   {
+    "ref": "NT30",
+    "county": "Dumfries and Galloway",
+    "woodland_pct": 72.0,
+    "conifer_share_pct": 98.4,
+    "conifer_ha": 1459.5,
+    "broadleaf_ha": 23.8,
+    "forest": "Craik Forest",
+    "lat": 55.3347,
+    "lon": -3.0262,
+    "place": "Eskdalemuir",
+    "km": 12.0
+   },
+   {
+    "ref": "NX57",
+    "county": "Dumfries and Galloway",
+    "woodland_pct": 68.7,
+    "conifer_share_pct": 98.9,
+    "conifer_ha": 2166.4,
+    "broadleaf_ha": 24.3,
+    "forest": "",
+    "lat": 55.0483,
+    "lon": -4.2711,
+    "place": "New Galloway",
+    "km": 8.9
+   },
+   {
+    "ref": "NG72",
+    "county": "Highland",
+    "woodland_pct": 66.3,
+    "conifer_share_pct": 56.2,
+    "conifer_ha": 339.4,
+    "broadleaf_ha": 264.6,
+    "forest": "",
+    "lat": 57.2601,
+    "lon": -5.7325,
+    "place": "Kyleakin",
+    "km": 1.6
+   },
+   {
+    "ref": "NS50",
+    "county": "East Ayrshire",
+    "woodland_pct": 65.9,
+    "conifer_share_pct": 99.0,
+    "conifer_ha": 2470.9,
+    "broadleaf_ha": 24.4,
+    "forest": "",
+    "lat": 55.3176,
+    "lon": -4.2865,
+    "place": "Dalmellington",
+    "km": 7.0
+   }
+  ],
+  "most_conifer": [
+   {
+    "ref": "NX38",
+    "county": "Dumfries and Galloway",
+    "woodland_pct": 79.4,
+    "conifer_share_pct": 98.4,
+    "conifer_ha": 4911.6,
+    "broadleaf_ha": 77.9,
+    "forest": "Dornal Forest",
+    "lat": 55.1318,
+    "lon": -4.5897,
+    "place": "Glentrool Village",
+    "km": 6.6
+   },
+   {
+    "ref": "NY68",
+    "county": "Northumberland",
+    "woodland_pct": 81.1,
+    "conifer_share_pct": 98.0,
+    "conifer_ha": 4519.0,
+    "broadleaf_ha": 92.6,
+    "forest": "Kielder Forest",
+    "lat": 55.1581,
+    "lon": -2.5508,
+    "place": "Falstone",
+    "km": 7.7
+   },
+   {
+    "ref": "TL88",
+    "county": "Norfolk",
+    "woodland_pct": 61.6,
+    "conifer_share_pct": 83.6,
+    "conifer_ha": 4444.5,
+    "broadleaf_ha": 869.7,
+    "forest": "The Forest",
+    "lat": 52.4317,
+    "lon": 0.7198,
+    "place": "Thetford",
+    "km": 2.9
+   },
+   {
+    "ref": "NR74",
+    "county": "Argyll and Bute",
+    "woodland_pct": 60.1,
+    "conifer_share_pct": 95.0,
+    "conifer_ha": 3581.9,
+    "broadleaf_ha": 187.8,
+    "forest": "",
+    "lat": 55.6463,
+    "lon": -5.5773,
+    "place": "Tayinloan",
+    "km": 5.5
+   },
+   {
+    "ref": "NN94",
+    "county": "Perth and Kinross",
+    "woodland_pct": 58.8,
+    "conifer_share_pct": 94.2,
+    "conifer_ha": 3519.4,
+    "broadleaf_ha": 215.8,
+    "forest": "",
+    "lat": 56.5851,
+    "lon": -3.7111,
+    "place": "Dalguise",
+    "km": 4.9
+   },
+   {
+    "ref": "NH91",
+    "county": "Highland",
+    "woodland_pct": 60.6,
+    "conifer_share_pct": 76.9,
+    "conifer_ha": 3398.9,
+    "broadleaf_ha": 1021.6,
+    "forest": "The Queen's Forest",
+    "lat": 57.2137,
+    "lon": -3.7401,
+    "place": "Boat of Garten",
+    "km": 4.0
+   },
+   {
+    "ref": "NO59",
+    "county": "Aberdeenshire",
+    "woodland_pct": 47.9,
+    "conifer_share_pct": 86.9,
+    "conifer_ha": 3392.0,
+    "broadleaf_ha": 510.9,
+    "forest": "Slewdrum Forest",
+    "lat": 57.0439,
+    "lon": -2.7433,
+    "place": "Birse",
+    "km": 2.1
+   },
+   {
+    "ref": "NX39",
+    "county": "South Ayrshire",
+    "woodland_pct": 57.0,
+    "conifer_share_pct": 97.4,
+    "conifer_ha": 3329.6,
+    "broadleaf_ha": 89.5,
+    "forest": "",
+    "lat": 55.2216,
+    "lon": -4.5955,
+    "place": "Barr",
+    "km": 7.6
+   },
+   {
+    "ref": "NY77",
+    "county": "Northumberland",
+    "woodland_pct": 77.2,
+    "conifer_share_pct": 99.2,
+    "conifer_ha": 3309.8,
+    "broadleaf_ha": 26.9,
+    "forest": "Wark Forest",
+    "lat": 55.0688,
+    "lon": -2.393,
+    "place": "Redburn",
+    "km": 10.6
+   },
+   {
+    "ref": "NJ35",
+    "county": "Moray",
+    "woodland_pct": 49.8,
+    "conifer_share_pct": 89.1,
+    "conifer_ha": 3275.3,
+    "broadleaf_ha": 400.9,
+    "forest": "",
+    "lat": 57.5804,
+    "lon": -3.0886,
+    "place": "Fochabers",
+    "km": 3.7
+   }
+  ],
+  "most_broadleaf": [
+   {
+    "ref": "SU91",
+    "county": "West Sussex",
+    "woodland_pct": 45.7,
+    "conifer_share_pct": 16.5,
+    "conifer_ha": 697.8,
+    "broadleaf_ha": 3534.6,
+    "forest": "Charlton Forest",
+    "lat": 50.9266,
+    "lon": -0.6497,
+    "place": "Duncton",
+    "km": 2.6
+   },
+   {
+    "ref": "SU93",
+    "county": "Surrey",
+    "woodland_pct": 42.8,
+    "conifer_share_pct": 17.6,
+    "conifer_ha": 685.0,
+    "broadleaf_ha": 3218.5,
+    "forest": "",
+    "lat": 51.1064,
+    "lon": -0.6444,
+    "place": "Chiddingfold",
+    "km": 1.4
+   },
+   {
+    "ref": "SU30",
+    "county": "Hampshire",
+    "woodland_pct": 45.8,
+    "conifer_share_pct": 26.9,
+    "conifer_ha": 1124.1,
+    "broadleaf_ha": 3054.3,
+    "forest": "New Forest",
+    "lat": 50.8435,
+    "lon": -1.5043,
+    "place": "Furzey Lodge",
+    "km": 3.8
+   },
+   {
+    "ref": "SU21",
+    "county": "Hampshire",
+    "woodland_pct": 42.1,
+    "conifer_share_pct": 26.3,
+    "conifer_ha": 1023.6,
+    "broadleaf_ha": 2874.8,
+    "forest": "New Forest",
+    "lat": 50.9339,
+    "lon": -1.6456,
+    "place": "Fritham",
+    "km": 1.4
+   },
+   {
+    "ref": "SU20",
+    "county": "Hampshire",
+    "woodland_pct": 48.4,
+    "conifer_share_pct": 35.6,
+    "conifer_ha": 1584.9,
+    "broadleaf_ha": 2868.2,
+    "forest": "New Forest",
+    "lat": 50.844,
+    "lon": -1.6463,
+    "place": "Bank",
+    "km": 4.2
+   },
+   {
+    "ref": "TQ43",
+    "county": "East Sussex",
+    "woodland_pct": 35.9,
+    "conifer_share_pct": 17.8,
+    "conifer_ha": 605.2,
+    "broadleaf_ha": 2791.4,
+    "forest": "Ashdown Forest",
+    "lat": 51.096,
+    "lon": 0.0694,
+    "place": "Coleman's Hatch",
+    "km": 1.2
+   },
+   {
+    "ref": "TQ33",
+    "county": "West Sussex",
+    "woodland_pct": 34.5,
+    "conifer_share_pct": 15.9,
+    "conifer_ha": 521.6,
+    "broadleaf_ha": 2753.4,
+    "forest": "Worthlodge Forest",
+    "lat": 51.0984,
+    "lon": -0.0734,
+    "place": "Turners Hill",
+    "km": 1.0
+   },
+   {
+    "ref": "SU83",
+    "county": "Hampshire",
+    "woodland_pct": 43.1,
+    "conifer_share_pct": 29.7,
+    "conifer_ha": 1148.2,
+    "broadleaf_ha": 2723.5,
+    "forest": "Stream Forest",
+    "lat": 51.108,
+    "lon": -0.7872,
+    "place": "Headley Down",
+    "km": 2.0
+   },
+   {
+    "ref": "TQ14",
+    "county": "Surrey",
+    "woodland_pct": 36.6,
+    "conifer_share_pct": 25.7,
+    "conifer_ha": 875.8,
+    "broadleaf_ha": 2529.9,
+    "forest": "Winterfold Forest",
+    "lat": 51.1927,
+    "lon": -0.3557,
+    "place": "Coldharbour",
+    "km": 1.2
+   },
+   {
+    "ref": "TQ71",
+    "county": "East Sussex",
+    "woodland_pct": 30.7,
+    "conifer_share_pct": 13.6,
+    "conifer_ha": 391.8,
+    "broadleaf_ha": 2486.7,
+    "forest": "Vinehall Forest",
+    "lat": 50.9079,
+    "lon": 0.4878,
+    "place": "Battle",
+    "km": 1.2
+   }
+  ],
+  "under1pct": 100,
+  "over50pct": 60,
+  "under1_by_county": {
+   "Na h-Eileanan Siar": 22,
+   "Lincolnshire": 16,
+   "Highland": 16,
+   "Shetland Islands": 11,
+   "Cambridgeshire": 10,
+   "Orkney Islands": 8,
+   "Norfolk": 4,
+   "Kent": 2,
+   "Somerset": 2,
+   "Perth and Kinross": 2,
+   "Aberdeenshire": 2,
+   "East Riding of Yorkshire": 1,
+   "North Yorkshire": 1,
+   "Cumbria": 1,
+   "Argyll and Bute": 1,
+   "Moray": 1
+  },
+  "note": "10 km squares of the British National Grid with at least 50 km2 of land"
+ },
+ "named": {
+  "kielder": {
+   "name": "Kielder Forest",
+   "lat": 55.2249,
+   "lon": -2.521,
+   "woodland_ha": 19679.8,
+   "land_km2": 314,
+   "woodland_pct": 62.7,
+   "conifer_share_pct": 95.7,
+   "felled_young_pct": 55.9
+  },
+  "thetford": {
+   "name": "Thetford",
+   "lat": 52.4135,
+   "lon": 0.7505,
+   "woodland_ha": 13481.1,
+   "land_km2": 317,
+   "woodland_pct": 42.5,
+   "conifer_share_pct": 70.3,
+   "felled_young_pct": 15.1
+  },
+  "glentrool": {
+   "name": "Glentrool Village",
+   "lat": 55.0737,
+   "lon": -4.5699,
+   "woodland_ha": 18901.6,
+   "land_km2": 312,
+   "woodland_pct": 60.6,
+   "conifer_share_pct": 90.8,
+   "felled_young_pct": 51.3
+  },
+  "abernethy": {
+   "name": "Abernethy Forest",
+   "lat": 57.2309,
+   "lon": -3.665,
+   "woodland_ha": 13767.5,
+   "land_km2": 313,
+   "woodland_pct": 44.0,
+   "conifer_share_pct": 84.2,
+   "felled_young_pct": 12.2
+  },
+  "new_forest": {
+   "name": "Lyndhurst",
+   "lat": 50.8725,
+   "lon": -1.5738,
+   "woodland_ha": 13140.9,
+   "land_km2": 314,
+   "woodland_pct": 41.9,
+   "conifer_share_pct": 28.5,
+   "felled_young_pct": 7.8
+  },
+  "dean": {
+   "name": "Cinderford",
+   "lat": 51.8244,
+   "lon": -2.4992,
+   "woodland_ha": 10579.6,
+   "land_km2": 299,
+   "woodland_pct": 35.4,
+   "conifer_share_pct": 43.2,
+   "felled_young_pct": 14.0
+  },
+  "savernake": {
+   "name": "Savernake Forest",
+   "lat": 51.3959,
+   "lon": -1.6816,
+   "woodland_ha": 4830.4,
+   "land_km2": 313,
+   "woodland_pct": 15.4,
+   "conifer_share_pct": 20.9,
+   "felled_young_pct": 9.1
+  },
+  "chilterns": {
+   "name": "High Wycombe",
+   "lat": 51.6288,
+   "lon": -0.7495,
+   "woodland_ha": 6905.9,
+   "land_km2": 317,
+   "woodland_pct": 21.8,
+   "conifer_share_pct": 17.1,
+   "felled_young_pct": 4.0
+  }
+ },
+ "named_radius_km": 10,
+ "common": {
+  "Quercus": "oak",
+  "Fraxinus": "ash",
+  "Fagus": "beech",
+  "Betula": "birch",
+  "Pinus": "pine",
+  "Picea": "spruce",
+  "Larix": "larch",
+  "Taxus": "yew",
+  "Ilex": "holly",
+  "Sorbus": "rowan and whitebeam",
+  "Alnus": "alder",
+  "Castanea": "sweet chestnut",
+  "Acer": "maple and sycamore",
+  "Salix": "willow",
+  "Prunus": "cherry and blackthorn",
+  "Ulmus": "elm",
+  "Populus": "poplar and aspen",
+  "Tilia": "lime",
+  "Carpinus": "hornbeam",
+  "Juniperus": "juniper",
+  "Aesculus": "horse chestnut",
+  "Abies": "fir",
+  "Pseudotsuga": "Douglas fir",
+  "Eucalyptus": "eucalyptus",
+  "Acacia": "acacia",
+  "Ficus": "fig",
+  "Adansonia": "baobab",
+  "Cupressus": "cypress",
+  "Platanus": "plane",
+  "Juglans": "walnut",
+  "Tsuga": "hemlock",
+  "Thuja": "thuja (red cedar)",
+  "Sequoia": "coast redwood",
+  "Nothofagus": "southern beech",
+  "Araucaria": "araucaria",
+  "Podocarpus": "podocarp",
+  "Ginkgo": "ginkgo",
+  "Magnolia": "magnolia",
+  "Liquidambar": "sweetgum",
+  "Liriodendron": "tulip tree",
+  "Carya": "hickory",
+  "Olea": "olive",
+  "Prosopis": "mesquite",
+  "Vachellia": "thorn acacia (Vachellia)",
+  "Senegalia": "Senegalia",
+  "Casuarina": "she-oak",
+  "Melaleuca": "paperbark",
+  "Banksia": "banksia",
+  "Callitris": "cypress pine",
+  "Agathis": "kauri",
+  "Shorea": "meranti (Shorea)",
+  "Dipterocarpus": "keruing",
+  "Tectona": "teak",
+  "Swietenia": "mahogany",
+  "Ceiba": "kapok",
+  "Hevea": "rubber tree",
+  "Cecropia": "cecropia",
+  "Inga": "ice-cream bean (Inga)",
+  "Rhizophora": "red mangrove",
+  "Avicennia": "black mangrove",
+  "Mangifera": "mango",
+  "Syzygium": "Syzygium",
+  "Brachystegia": "miombo (Brachystegia)",
+  "Julbernardia": "Julbernardia",
+  "Isoberlinia": "doka (Isoberlinia)",
+  "Terminalia": "Terminalia",
+  "Combretum": "bushwillow",
+  "Colophospermum": "mopane",
+  "Cryptomeria": "Japanese cedar",
+  "Chamaecyparis": "false cypress",
+  "Cinnamomum": "camphor and cinnamon",
+  "Castanopsis": "chinquapin",
+  "Lithocarpus": "stone oak",
+  "Eschweilera": "Eschweilera",
+  "Bertholletia": "Brazil nut",
+  "Hymenaea": "jatoba",
+  "Handroanthus": "ipe",
+  "Dalbergia": "rosewood",
+  "Pterocarpus": "padauk",
+  "Khaya": "African mahogany",
+  "Entandrophragma": "sapele",
+  "Milicia": "iroko",
+  "Sabal": "palmetto",
+  "Phoenix": "date palm",
+  "Nyssa": "tupelo",
+  "Robinia": "black locust",
+  "Dacrydium": "rimu (Dacrydium)",
+  "Corymbia": "bloodwood (Corymbia)"
+ },
+ "gbif_gb_typical": [
+  [
+   "Juniperus",
+   473
+  ],
+  [
+   "Picea",
+   401
+  ],
+  [
+   "Sorbus",
+   334
+  ],
+  [
+   "Salix",
+   295
+  ],
+  [
+   "Larix",
+   271
+  ],
+  [
+   "Castanea",
+   233
+  ],
+  [
+   "Carpinus",
+   229
+  ],
+  [
+   "Populus",
+   195
+  ],
+  [
+   "Juglans",
+   178
+  ],
+  [
+   "Alnus",
+   144
+  ],
+  [
+   "Ulmus",
+   129
+  ],
+  [
+   "Betula",
+   119
+  ]
+ ],
+ "gbif_gb": {
+  "min_records": 500,
+  "cells_land": 4098,
+  "cells_ok": 4089,
+  "cell_deg": 0.0879,
+  "plant_records": 77858769,
+  "median_records": 13374,
+  "genus_records_rank": [
+   [
+    "Salix",
+    937226
+   ],
+   [
+    "Prunus",
+    686724
+   ],
+   [
+    "Acer",
+    653930
+   ],
+   [
+    "Quercus",
+    516973
+   ],
+   [
+    "Fraxinus",
+    434049
+   ],
+   [
+    "Betula",
+    357520
+   ],
+   [
+    "Ilex",
+    318976
+   ],
+   [
+    "Ulmus",
+    287317
+   ],
+   [
+    "Alnus",
+    264950
+   ],
+   [
+    "Fagus",
+    250775
+   ],
+   [
+    "Sorbus",
+    248060
+   ],
+   [
+    "Populus",
+    225677
+   ]
+  ],
+  "dominant_cells": [
+   [
+    "Salix",
+    2863
+   ],
+   [
+    "Prunus",
+    613
+   ],
+   [
+    "Acer",
+    293
+   ],
+   [
+    "Quercus",
+    112
+   ],
+   [
+    "Betula",
+    74
+   ],
+   [
+    "Juniperus",
+    45
+   ],
+   [
+    "Sorbus",
+    28
+   ],
+   [
+    "Pinus",
+    21
+   ],
+   [
+    "Fraxinus",
+    16
+   ],
+   [
+    "Picea",
+    14
+   ],
+   [
+    "Ulmus",
+    2
+   ],
+   [
+    "Alnus",
+    2
+   ]
+  ],
+  "genera": {
+   "Quercus": {
+    "records": 516973,
+    "share_pct": 0.664,
+    "cells_dominant": 112,
+    "top": [
+     {
+      "lat": 51.37,
+      "lon": -0.31,
+      "records": 45494,
+      "place": "Long Ditton",
+      "county": "Surrey",
+      "km": 1.6,
+      "share_pct": 3.86
+     },
+     {
+      "lat": 52.87,
+      "lon": -3.91,
+      "records": 3985,
+      "place": "Trawsfynydd",
+      "county": "Gwynedd",
+      "km": 4.1,
+      "share_pct": 3.36
+     },
+     {
+      "lat": 51.37,
+      "lon": -1.71,
+      "records": 27416,
+      "place": "Wootton Rivers",
+      "county": "Wiltshire",
+      "km": 0.9,
+      "share_pct": 3.06
+     }
+    ]
+   },
+   "Fraxinus": {
+    "records": 434049,
+    "share_pct": 0.557,
+    "cells_dominant": 16,
+    "top": [
+     {
+      "lat": 51.64,
+      "lon": -1.71,
+      "records": 19312,
+      "place": "Highworth",
+      "county": "Swindon",
+      "km": 0.6,
+      "share_pct": 5.14
+     },
+     {
+      "lat": 52.6,
+      "lon": -0.83,
+      "records": 42123,
+      "place": "Belton-in-Rutland",
+      "county": "Rutland",
+      "km": 2.6,
+      "share_pct": 2.79
+     },
+     {
+      "lat": 51.37,
+      "lon": 0.04,
+      "records": 27956,
+      "place": "Keston",
+      "county": "Greater London",
+      "km": 1.6,
+      "share_pct": 2.36
+     }
+    ]
+   },
+   "Fagus": {
+    "records": 250775,
+    "share_pct": 0.322,
+    "cells_dominant": 2,
+    "top": [
+     {
+      "lat": 51.37,
+      "lon": -1.71,
+      "records": 27416,
+      "place": "Wootton Rivers",
+      "county": "Wiltshire",
+      "km": 0.9,
+      "share_pct": 3.34
+     },
+     {
+      "lat": 55.59,
+      "lon": -4.53,
+      "records": 4185,
+      "place": "Gatehead",
+      "county": "East Ayrshire",
+      "km": 1.9,
+      "share_pct": 2.32
+     },
+     {
+      "lat": 53.48,
+      "lon": -1.54,
+      "records": 22497,
+      "place": "Wortley",
+      "county": "Barnsley",
+      "km": 0.7,
+      "share_pct": 1.6
+     }
+    ]
+   },
+   "Betula": {
+    "records": 357520,
+    "share_pct": 0.459,
+    "cells_dominant": 74,
+    "top": [
+     {
+      "lat": 57.0,
+      "lon": -3.65,
+      "records": 4460,
+      "place": "Braemar",
+      "county": "Aberdeenshire",
+      "km": 15.0,
+      "share_pct": 11.5
+     },
+     {
+      "lat": 55.42,
+      "lon": -4.35,
+      "records": 2065,
+      "place": "Ochiltree",
+      "county": "East Ayrshire",
+      "km": 5.2,
+      "share_pct": 5.96
+     },
+     {
+      "lat": 57.26,
+      "lon": -4.79,
+      "records": 1506,
+      "place": "Tomich",
+      "county": "Highland",
+      "km": 4.9,
+      "share_pct": 5.58
+     }
+    ]
+   },
+   "Pinus": {
+    "records": 188212,
+    "share_pct": 0.242,
+    "cells_dominant": 21,
+    "top": [
+     {
+      "lat": 57.17,
+      "lon": -3.56,
+      "records": 8570,
+      "place": "Nethy Bridge",
+      "county": "Highland",
+      "km": 11.8,
+      "share_pct": 7.49
+     },
+     {
+      "lat": 57.0,
+      "lon": -2.86,
+      "records": 763,
+      "place": "Birsemore",
+      "county": "Aberdeenshire",
+      "km": 8.9,
+      "share_pct": 6.82
+     },
+     {
+      "lat": 57.17,
+      "lon": -3.65,
+      "records": 17460,
+      "place": "Duackbridge",
+      "county": "Highland",
+      "km": 10.1,
+      "share_pct": 6.51
+     }
+    ]
+   },
+   "Picea": {
+    "records": 96860,
+    "share_pct": 0.124,
+    "cells_dominant": 14,
+    "top": [
+     {
+      "lat": 52.87,
+      "lon": -3.56,
+      "records": 9940,
+      "place": "Y Bala",
+      "county": "Gwynedd",
+      "km": 5.6,
+      "share_pct": 28.28
+     },
+     {
+      "lat": 52.78,
+      "lon": -3.74,
+      "records": 9023,
+      "place": "Brithdir",
+      "county": "Gwynedd",
+      "km": 6.6,
+      "share_pct": 25.73
+     },
+     {
+      "lat": 52.95,
+      "lon": -3.82,
+      "records": 12853,
+      "place": "Cwm Penmachno",
+      "county": "Conwy",
+      "km": 6.7,
+      "share_pct": 23.18
+     }
+    ]
+   },
+   "Larix": {
+    "records": 95559,
+    "share_pct": 0.123,
+    "cells_dominant": 0,
+    "top": [
+     {
+      "lat": 56.56,
+      "lon": -2.94,
+      "records": 1213,
+      "place": "Tealing",
+      "county": "Angus",
+      "km": 2.9,
+      "share_pct": 0.91
+     },
+     {
+      "lat": 53.48,
+      "lon": -1.54,
+      "records": 22497,
+      "place": "Wortley",
+      "county": "Barnsley",
+      "km": 0.7,
+      "share_pct": 0.88
+     },
+     {
+      "lat": 57.17,
+      "lon": -2.68,
+      "records": 4137,
+      "place": "Muir of Fowlis",
+      "county": "Aberdeenshire",
+      "km": 3.5,
+      "share_pct": 0.82
+     }
+    ]
+   },
+   "Taxus": {
+    "records": 120302,
+    "share_pct": 0.155,
+    "cells_dominant": 0,
+    "top": [
+     {
+      "lat": 51.37,
+      "lon": 0.04,
+      "records": 27956,
+      "place": "Keston",
+      "county": "Greater London",
+      "km": 1.6,
+      "share_pct": 1.14
+     },
+     {
+      "lat": 51.37,
+      "lon": 0.13,
+      "records": 16541,
+      "place": "Chelsfield",
+      "county": "Greater London",
+      "km": 1.7,
+      "share_pct": 0.75
+     },
+     {
+      "lat": 53.39,
+      "lon": -1.1,
+      "records": 16194,
+      "place": "Oldcotes",
+      "county": "Nottinghamshire",
+      "km": 0.7,
+      "share_pct": 0.69
+     }
+    ]
+   },
+   "Ilex": {
+    "records": 318976,
+    "share_pct": 0.41,
+    "cells_dominant": 2,
+    "top": [
+     {
+      "lat": 55.59,
+      "lon": -4.53,
+      "records": 4185,
+      "place": "Gatehead",
+      "county": "East Ayrshire",
+      "km": 1.9,
+      "share_pct": 2.46
+     },
+     {
+      "lat": 53.48,
+      "lon": -1.54,
+      "records": 22497,
+      "place": "Wortley",
+      "county": "Barnsley",
+      "km": 0.7,
+      "share_pct": 2.17
+     },
+     {
+      "lat": 51.37,
+      "lon": 0.04,
+      "records": 27956,
+      "place": "Keston",
+      "county": "Greater London",
+      "km": 1.6,
+      "share_pct": 1.97
+     }
+    ]
+   },
+   "Sorbus": {
+    "records": 248060,
+    "share_pct": 0.319,
+    "cells_dominant": 28,
+    "top": [
+     {
+      "lat": 57.17,
+      "lon": -3.56,
+      "records": 8570,
+      "place": "Nethy Bridge",
+      "county": "Highland",
+      "km": 11.8,
+      "share_pct": 4.95
+     },
+     {
+      "lat": 57.17,
+      "lon": -3.65,
+      "records": 17460,
+      "place": "Duackbridge",
+      "county": "Highland",
+      "km": 10.1,
+      "share_pct": 4.89
+     },
+     {
+      "lat": 53.57,
+      "lon": -1.89,
+      "records": 5289,
+      "place": "Meltham",
+      "county": "Kirklees",
+      "km": 3.6,
+      "share_pct": 3.38
+     }
+    ]
+   },
+   "Alnus": {
+    "records": 264950,
+    "share_pct": 0.34,
+    "cells_dominant": 2,
+    "top": [
+     {
+      "lat": 53.39,
+      "lon": -2.68,
+      "records": 50011,
+      "place": "Bold Heath",
+      "county": "St. Helens",
+      "km": 1.7,
+      "share_pct": 1.39
+     },
+     {
+      "lat": 53.22,
+      "lon": -2.24,
+      "records": 19163,
+      "place": "Marton",
+      "county": "Cheshire East",
+      "km": 1.3,
+      "share_pct": 1.27
+     },
+     {
+      "lat": 53.48,
+      "lon": -2.77,
+      "records": 40918,
+      "place": "Crank",
+      "county": "St. Helens",
+      "km": 1.8,
+      "share_pct": 1.26
+     }
+    ]
+   },
+   "Castanea": {
+    "records": 72884,
+    "share_pct": 0.094,
+    "cells_dominant": 0,
+    "top": [
+     {
+      "lat": 53.48,
+      "lon": -1.54,
+      "records": 22497,
+      "place": "Wortley",
+      "county": "Barnsley",
+      "km": 0.7,
+      "share_pct": 1.31
+     },
+     {
+      "lat": 51.46,
+      "lon": 0.13,
+      "records": 15012,
+      "place": "North Cray",
+      "county": "Greater London",
+      "km": 3.2,
+      "share_pct": 1.03
+     },
+     {
+      "lat": 53.22,
+      "lon": -1.1,
+      "records": 27144,
+      "place": "Meden Vale",
+      "county": "Nottinghamshire",
+      "km": 2.1,
+      "share_pct": 0.77
+     }
+    ]
+   },
+   "Acer": {
+    "records": 653930,
+    "share_pct": 0.84,
+    "cells_dominant": 293,
+    "top": [
+     {
+      "lat": 55.59,
+      "lon": -4.53,
+      "records": 4185,
+      "place": "Gatehead",
+      "county": "East Ayrshire",
+      "km": 1.9,
+      "share_pct": 5.42
+     },
+     {
+      "lat": 51.64,
+      "lon": -1.71,
+      "records": 19312,
+      "place": "Highworth",
+      "county": "Swindon",
+      "km": 0.6,
+      "share_pct": 4.2
+     },
+     {
+      "lat": 51.46,
+      "lon": 0.13,
+      "records": 15012,
+      "place": "North Cray",
+      "county": "Greater London",
+      "km": 3.2,
+      "share_pct": 4.16
+     }
+    ]
+   },
+   "Salix": {
+    "records": 937226,
+    "share_pct": 1.204,
+    "cells_dominant": 2863,
+    "top": [
+     {
+      "lat": 57.0,
+      "lon": -3.65,
+      "records": 4460,
+      "place": "Braemar",
+      "county": "Aberdeenshire",
+      "km": 15.0,
+      "share_pct": 11.43
+     },
+     {
+      "lat": 57.08,
+      "lon": -4.35,
+      "records": 1731,
+      "place": "Newtonmore",
+      "county": "Highland",
+      "km": 14.0,
+      "share_pct": 7.86
+     },
+     {
+      "lat": 57.0,
+      "lon": -3.82,
+      "records": 4266,
+      "place": "Insh",
+      "county": "Highland",
+      "km": 13.3,
+      "share_pct": 6.19
+     }
+    ]
+   },
+   "Juniperus": {
+    "records": 46152,
+    "share_pct": 0.059,
+    "cells_dominant": 45,
+    "top": [
+     {
+      "lat": 57.08,
+      "lon": -3.65,
+      "records": 11893,
+      "place": "Inverdruie",
+      "county": "Highland",
+      "km": 14.6,
+      "share_pct": 17.43
+     },
+     {
+      "lat": 57.08,
+      "lon": -3.56,
+      "records": 7138,
+      "place": "Braemar",
+      "county": "Aberdeenshire",
+      "km": 13.0,
+      "share_pct": 15.65
+     },
+     {
+      "lat": 57.0,
+      "lon": -3.65,
+      "records": 4460,
+      "place": "Braemar",
+      "county": "Aberdeenshire",
+      "km": 15.0,
+      "share_pct": 8.79
+     }
+    ]
+   },
+   "Ulmus": {
+    "records": 287317,
+    "share_pct": 0.369,
+    "cells_dominant": 2,
+    "top": [
+     {
+      "lat": 55.59,
+      "lon": -4.53,
+      "records": 4185,
+      "place": "Gatehead",
+      "county": "East Ayrshire",
+      "km": 1.9,
+      "share_pct": 7.98
+     },
+     {
+      "lat": 51.28,
+      "lon": -2.59,
+      "records": 78977,
+      "place": "Litton",
+      "county": "Somerset",
+      "km": 0.9,
+      "share_pct": 1.55
+     },
+     {
+      "lat": 53.39,
+      "lon": -1.19,
+      "records": 98366,
+      "place": "Firbeck",
+      "county": "Rotherham",
+      "km": 2.2,
+      "share_pct": 1.48
+     }
+    ]
+   },
+   "Carpinus": {
+    "records": 61074,
+    "share_pct": 0.078,
+    "cells_dominant": 0,
+    "top": [
+     {
+      "lat": 51.64,
+      "lon": 0.04,
+      "records": 16182,
+      "place": "Sewardstonebury",
+      "county": "Essex",
+      "km": 2.4,
+      "share_pct": 1.22
+     },
+     {
+      "lat": 50.93,
+      "lon": 0.57,
+      "records": 14823,
+      "place": "Cackle Street",
+      "county": "East Sussex",
+      "km": 1.5,
+      "share_pct": 0.94
+     },
+     {
+      "lat": 51.64,
+      "lon": -0.13,
+      "records": 43086,
+      "place": "Botany Bay",
+      "county": "Greater London",
+      "km": 4.6,
+      "share_pct": 0.75
+     }
+    ]
+   },
+   "Tilia": {
+    "records": 137650,
+    "share_pct": 0.177,
+    "cells_dominant": 0,
+    "top": [
+     {
+      "lat": 51.37,
+      "lon": -0.31,
+      "records": 45494,
+      "place": "Long Ditton",
+      "county": "Surrey",
+      "km": 1.6,
+      "share_pct": 2.79
+     },
+     {
+      "lat": 51.55,
+      "lon": -0.22,
+      "records": 75902,
+      "place": "London",
+      "county": "Greater London",
+      "km": 7.8,
+      "share_pct": 2.43
+     },
+     {
+      "lat": 51.46,
+      "lon": -0.22,
+      "records": 66239,
+      "place": "City of Westminster",
+      "county": "Greater London",
+      "km": 7.9,
+      "share_pct": 2.23
+     }
+    ]
+   },
+   "Prunus": {
+    "records": 686724,
+    "share_pct": 0.882,
+    "cells_dominant": 613,
+    "top": [
+     {
+      "lat": 55.59,
+      "lon": -4.53,
+      "records": 4185,
+      "place": "Gatehead",
+      "county": "East Ayrshire",
+      "km": 1.9,
+      "share_pct": 3.78
+     },
+     {
+      "lat": 51.46,
+      "lon": 0.04,
+      "records": 20995,
+      "place": "North Cray",
+      "county": "Greater London",
+      "km": 7.4,
+      "share_pct": 3.14
+     },
+     {
+      "lat": 51.55,
+      "lon": -0.22,
+      "records": 75902,
+      "place": "London",
+      "county": "Greater London",
+      "km": 7.8,
+      "share_pct": 3.1
+     }
+    ]
+   },
+   "Populus": {
+    "records": 225677,
+    "share_pct": 0.29,
+    "cells_dominant": 1,
+    "top": [
+     {
+      "lat": 51.64,
+      "lon": -1.71,
+      "records": 19312,
+      "place": "Highworth",
+      "county": "Swindon",
+      "km": 0.6,
+      "share_pct": 2.02
+     },
+     {
+      "lat": 51.64,
+      "lon": -1.36,
+      "records": 12559,
+      "place": "East Hanney",
+      "county": "Oxfordshire",
+      "km": 2.6,
+      "share_pct": 1.65
+     },
+     {
+      "lat": 60.42,
+      "lon": -1.45,
+      "records": 869,
+      "place": "Hillswick",
+      "county": "Shetland Islands",
+      "km": 5.8,
+      "share_pct": 1.38
+     }
+    ]
+   }
+  },
+  "conifer_share_pct": 0.86
+ },
+ "world": {
+  "cell_deg": 0.3516,
+  "min_records": 200,
+  "genera_n": 88,
+  "dropped": [
+   "Cedrus",
+   "Washingtonia"
+  ],
+  "plant_records": 526962197,
+  "conifer_records": 8174690,
+  "land_cells": 173247,
+  "continents": {
+   "Europe": {
+    "land_km2": 22914320,
+    "records": 368484203,
+    "records_per_1000km2": 16081,
+    "cells_ok_pct": 40.3
+   },
+   "North America": {
+    "land_km2": 24216636,
+    "records": 50626538,
+    "records_per_1000km2": 2091,
+    "cells_ok_pct": 48.5
+   },
+   "Asia": {
+    "land_km2": 31232424,
+    "records": 15271988,
+    "records_per_1000km2": 489,
+    "cells_ok_pct": 22.0
+   },
+   "Africa": {
+    "land_km2": 30077408,
+    "records": 8697066,
+    "records_per_1000km2": 289,
+    "cells_ok_pct": 20.0
+   },
+   "South America": {
+    "land_km2": 17703554,
+    "records": 15126626,
+    "records_per_1000km2": 854,
+    "cells_ok_pct": 44.5
+   },
+   "Oceania": {
+    "land_km2": 8523291,
+    "records": 27271700,
+    "records_per_1000km2": 3200,
+    "cells_ok_pct": 67.8
+   }
+  },
+  "europe_namerica_share_pct": 86.3,
+  "europe_namerica_land_pct": 32.1,
+  "tropics_land_pct": 34.1,
+  "tropics_records_pct": 6.6,
+  "cells_ok_land_pct": 32.4,
+  "tropics_cells_ok_pct": 34.3,
+  "north_temperate_cells_ok_pct": 44.1,
+  "dominant_area": [
+   [
+    "Ficus",
+    7180259,
+    13.9
+   ],
+   [
+    "Salix",
+    6544836,
+    12.6
+   ],
+   [
+    "Quercus",
+    5365859,
+    10.4
+   ],
+   [
+    "Acacia",
+    3797917,
+    7.3
+   ],
+   [
+    "Acer",
+    3064905,
+    5.9
+   ],
+   [
+    "Prunus",
+    2408446,
+    4.6
+   ],
+   [
+    "Pinus",
+    2389357,
+    4.6
+   ],
+   [
+    "Eucalyptus",
+    2254860,
+    4.4
+   ],
+   [
+    "Vachellia",
+    1856965,
+    3.6
+   ],
+   [
+    "Inga",
+    1358194,
+    2.6
+   ],
+   [
+    "Combretum",
+    1316623,
+    2.5
+   ],
+   [
+    "Ilex",
+    1286146,
+    2.5
+   ],
+   [
+    "Juniperus",
+    1256824,
+    2.4
+   ],
+   [
+    "Prosopis",
+    1033536,
+    2.0
+   ],
+   [
+    "Terminalia",
+    895585,
+    1.7
+   ]
+  ],
+  "dominant_genera_n": 86,
+  "typical_area": [
+   [
+    "Ficus",
+    2137744,
+    4.1
+   ],
+   [
+    "Acacia",
+    2097066,
+    4.0
+   ],
+   [
+    "Salix",
+    1786294,
+    3.4
+   ],
+   [
+    "Quercus",
+    1018894,
+    2.0
+   ],
+   [
+    "Juniperus",
+    979554,
+    1.9
+   ],
+   [
+    "Pinus",
+    793845,
+    1.5
+   ],
+   [
+    "Picea",
+    790108,
+    1.5
+   ],
+   [
+    "Corymbia",
+    679853,
+    1.3
+   ],
+   [
+    "Vachellia",
+    655988,
+    1.3
+   ],
+   [
+    "Betula",
+    622809,
+    1.2
+   ],
+   [
+    "Acer",
+    577892,
+    1.1
+   ],
+   [
+    "Eucalyptus",
+    572474,
+    1.1
+   ],
+   [
+    "Ilex",
+    553812,
+    1.1
+   ],
+   [
+    "Inga",
+    524952,
+    1.0
+   ],
+   [
+    "Abies",
+    469456,
+    0.9
+   ]
+  ],
+  "typical_genera_n": 88,
+  "lq_min": 20,
+  "typical_by_continent": {
+   "Europe": [
+    [
+     "Salix",
+     13.7
+    ],
+    [
+     "Picea",
+     10.8
+    ],
+    [
+     "Betula",
+     8.1
+    ],
+    [
+     "Robinia",
+     5.5
+    ]
+   ],
+   "North America": [
+    [
+     "Quercus",
+     9.8
+    ],
+    [
+     "Salix",
+     8.3
+    ],
+    [
+     "Pinus",
+     7.7
+    ],
+    [
+     "Juniperus",
+     7.0
+    ]
+   ],
+   "Asia": [
+    [
+     "Ficus",
+     35.3
+    ],
+    [
+     "Ilex",
+     5.5
+    ],
+    [
+     "Salix",
+     5.0
+    ],
+    [
+     "Acer",
+     4.8
+    ]
+   ],
+   "Africa": [
+    [
+     "Ficus",
+     20.7
+    ],
+    [
+     "Vachellia",
+     17.5
+    ],
+    [
+     "Combretum",
+     15.3
+    ],
+    [
+     "Acacia",
+     6.0
+    ]
+   ],
+   "South America": [
+    [
+     "Inga",
+     20.7
+    ],
+    [
+     "Ficus",
+     17.1
+    ],
+    [
+     "Ilex",
+     9.5
+    ],
+    [
+     "Eschweilera",
+     8.4
+    ]
+   ],
+   "Oceania": [
+    [
+     "Acacia",
+     36.8
+    ],
+    [
+     "Corymbia",
+     13.0
+    ],
+    [
+     "Eucalyptus",
+     9.7
+    ],
+    [
+     "Callitris",
+     8.2
+    ]
+   ]
+  },
+  "ok_area_km2": 51814222,
+  "by_continent": {
+   "Europe": {
+    "ok_km2": 9212734,
+    "top": [
+     [
+      "Salix",
+      35.7
+     ],
+     [
+      "Prunus",
+      12.8
+     ],
+     [
+      "Quercus",
+      11.8
+     ],
+     [
+      "Acer",
+      11.6
+     ],
+     [
+      "Pinus",
+      7.1
+     ]
+    ]
+   },
+   "North America": {
+    "ok_km2": 11714029,
+    "top": [
+     [
+      "Quercus",
+      25.5
+     ],
+     [
+      "Salix",
+      15.1
+     ],
+     [
+      "Pinus",
+      11.5
+     ],
+     [
+      "Acer",
+      11.3
+     ],
+     [
+      "Juniperus",
+      6.2
+     ]
+    ]
+   },
+   "Asia": {
+    "ok_km2": 6721507,
+    "top": [
+     [
+      "Ficus",
+      30.9
+     ],
+     [
+      "Quercus",
+      11.2
+     ],
+     [
+      "Salix",
+      10.1
+     ],
+     [
+      "Acer",
+      8.2
+     ],
+     [
+      "Prunus",
+      7.8
+     ]
+    ]
+   },
+   "Africa": {
+    "ok_km2": 5861883,
+    "top": [
+     [
+      "Ficus",
+      26.8
+     ],
+     [
+      "Vachellia",
+      17.1
+     ],
+     [
+      "Combretum",
+      14.8
+     ],
+     [
+      "Acacia",
+      5.7
+     ],
+     [
+      "Terminalia",
+      5.4
+     ]
+    ]
+   },
+   "South America": {
+    "ok_km2": 7561497,
+    "top": [
+     [
+      "Ficus",
+      23.8
+     ],
+     [
+      "Inga",
+      15.3
+     ],
+     [
+      "Ilex",
+      8.6
+     ],
+     [
+      "Senegalia",
+      5.3
+     ],
+     [
+      "Prosopis",
+      5.2
+     ]
+    ]
+   },
+   "Oceania": {
+    "ok_km2": 5774185,
+    "top": [
+     [
+      "Acacia",
+      48.7
+     ],
+     [
+      "Eucalyptus",
+      34.1
+     ],
+     [
+      "Ficus",
+      5.1
+     ],
+     [
+      "Avicennia",
+      2.0
+     ],
+     [
+      "Nothofagus",
+      1.9
+     ]
+    ]
+   }
+  },
+  "country_top": {
+   "Argentina": [
+    "Prosopis",
+    36.7
+   ],
+   "Australia": [
+    "Acacia",
+    54.1
+   ],
+   "Bolivia": [
+    "Ficus",
+    28.5
+   ],
+   "Brazil": [
+    "Ficus",
+    23.5
+   ],
+   "Burkina Faso": [
+    "Combretum",
+    42.7
+   ],
+   "Cameroon": [
+    "Ficus",
+    64.3
+   ],
+   "Canada": [
+    "Salix",
+    36.4
+   ],
+   "Chile": [
+    "Nothofagus",
+    44.0
+   ],
+   "China": [
+    "Ficus",
+    18.6
+   ],
+   "Colombia": [
+    "Ficus",
+    32.3
+   ],
+   "Côte d'Ivoire": [
+    "Ficus",
+    55.4
+   ],
+   "Dem. Rep. Congo": [
+    "Ficus",
+    34.4
+   ],
+   "Ecuador": [
+    "Ficus",
+    39.4
+   ],
+   "Ethiopia": [
+    "Ficus",
+    33.3
+   ],
+   "Finland": [
+    "Salix",
+    86.8
+   ],
+   "France": [
+    "Prunus",
+    30.3
+   ],
+   "Gabon": [
+    "Ficus",
+    40.5
+   ],
+   "Germany": [
+    "Salix",
+    51.0
+   ],
+   "India": [
+    "Ficus",
+    52.3
+   ],
+   "Indonesia": [
+    "Ficus",
+    72.6
+   ],
+   "Italy": [
+    "Prunus",
+    40.1
+   ],
+   "Japan": [
+    "Acer",
+    50.6
+   ],
+   "Kazakhstan": [
+    "Salix",
+    31.1
+   ],
+   "Kenya": [
+    "Vachellia",
+    25.4
+   ],
+   "Madagascar": [
+    "Ficus",
+    45.4
+   ],
+   "Malaysia": [
+    "Ficus",
+    71.5
+   ],
+   "Mexico": [
+    "Quercus",
+    41.3
+   ],
+   "Morocco": [
+    "Quercus",
+    24.6
+   ],
+   "Namibia": [
+    "Vachellia",
+    50.0
+   ],
+   "New Zealand": [
+    "Nothofagus",
+    39.1
+   ],
+   "Nigeria": [
+    "Ficus",
+    40.9
+   ],
+   "Norway": [
+    "Salix",
+    69.8
+   ],
+   "Papua New Guinea": [
+    "Ficus",
+    80.8
+   ],
+   "Paraguay": [
+    "Ilex",
+    25.9
+   ],
+   "Peru": [
+    "Ficus",
+    40.5
+   ],
+   "Philippines": [
+    "Ficus",
+    89.5
+   ],
+   "Poland": [
+    "Quercus",
+    25.3
+   ],
+   "Romania": [
+    "Robinia",
+    79.1
+   ],
+   "Russia": [
+    "Salix",
+    48.8
+   ],
+   "South Africa": [
+    "Vachellia",
+    41.4
+   ],
+   "Spain": [
+    "Quercus",
+    62.5
+   ],
+   "Sweden": [
+    "Betula",
+    39.4
+   ],
+   "Tanzania": [
+    "Combretum",
+    22.2
+   ],
+   "Thailand": [
+    "Ficus",
+    59.7
+   ],
+   "Turkey": [
+    "Quercus",
+    35.6
+   ],
+   "Ukraine": [
+    "Acer",
+    31.2
+   ],
+   "United Kingdom": [
+    "Salix",
+    79.9
+   ],
+   "United States of America": [
+    "Quercus",
+    28.9
+   ],
+   "Venezuela": [
+    "Ficus",
+    26.6
+   ]
+  },
+  "genus_countries": {
+   "Pinus": [
+    [
+     "Spain",
+     21.1
+    ],
+    [
+     "Poland",
+     12.5
+    ],
+    [
+     "United States of America",
+     12.5
+    ],
+    [
+     "Canada",
+     10.7
+    ],
+    [
+     "Russia",
+     10.7
+    ]
+   ],
+   "Quercus": [
+    [
+     "Spain",
+     62.5
+    ],
+    [
+     "Mexico",
+     41.3
+    ],
+    [
+     "Turkey",
+     35.6
+    ],
+    [
+     "France",
+     29.2
+    ],
+    [
+     "United States of America",
+     28.9
+    ]
+   ],
+   "Eucalyptus": [
+    [
+     "Australia",
+     38.0
+    ],
+    [
+     "New Zealand",
+     4.0
+    ],
+    [
+     "Morocco",
+     2.2
+    ],
+    [
+     "Spain",
+     1.6
+    ],
+    [
+     "Peru",
+     1.6
+    ]
+   ],
+   "Acacia": [
+    [
+     "Australia",
+     54.1
+    ],
+    [
+     "South Africa",
+     18.6
+    ],
+    [
+     "Ethiopia",
+     15.2
+    ],
+    [
+     "Kenya",
+     12.7
+    ],
+    [
+     "Chile",
+     8.8
+    ]
+   ],
+   "Picea": [
+    [
+     "Poland",
+     7.1
+    ],
+    [
+     "Finland",
+     6.7
+    ],
+    [
+     "Kazakhstan",
+     3.5
+    ],
+    [
+     "Norway",
+     3.2
+    ],
+    [
+     "China",
+     1.8
+    ]
+   ],
+   "Betula": [
+    [
+     "Sweden",
+     39.4
+    ],
+    [
+     "Norway",
+     14.5
+    ],
+    [
+     "Russia",
+     6.7
+    ],
+    [
+     "Kazakhstan",
+     6.1
+    ],
+    [
+     "Poland",
+     4.4
+    ]
+   ],
+   "Salix": [
+    [
+     "Finland",
+     86.8
+    ],
+    [
+     "United Kingdom",
+     79.9
+    ],
+    [
+     "Norway",
+     69.8
+    ],
+    [
+     "Germany",
+     51.0
+    ],
+    [
+     "Russia",
+     48.8
+    ]
+   ],
+   "Prunus": [
+    [
+     "Italy",
+     40.1
+    ],
+    [
+     "Germany",
+     37.6
+    ],
+    [
+     "France",
+     30.3
+    ],
+    [
+     "Ukraine",
+     28.6
+    ],
+    [
+     "Turkey",
+     20.1
+    ]
+   ],
+   "Acer": [
+    [
+     "Japan",
+     50.6
+    ],
+    [
+     "Ukraine",
+     31.2
+    ],
+    [
+     "Canada",
+     18.3
+    ],
+    [
+     "Poland",
+     15.4
+    ],
+    [
+     "Russia",
+     13.8
+    ]
+   ],
+   "Ficus": [
+    [
+     "Philippines",
+     89.5
+    ],
+    [
+     "Papua New Guinea",
+     80.8
+    ],
+    [
+     "Indonesia",
+     72.6
+    ],
+    [
+     "Malaysia",
+     71.5
+    ],
+    [
+     "Cameroon",
+     64.3
+    ]
+   ],
+   "Adansonia": [
+    [
+     "Madagascar",
+     9.0
+    ],
+    [
+     "Tanzania",
+     4.9
+    ],
+    [
+     "Kenya",
+     4.2
+    ],
+    [
+     "Namibia",
+     4.0
+    ],
+    [
+     "Nigeria",
+     3.3
+    ]
+   ]
+  },
+  "tree_genera_share_pct": 9.4,
+  "conifer_share_by_continent": {
+   "Europe": 1.59,
+   "North America": 2.23,
+   "Asia": 1.08,
+   "Africa": 0.25,
+   "South America": 0.36,
+   "Oceania": 0.99
+  },
+  "checks": {
+   "London": {
+    "plants": 94278,
+    "top": [
+     [
+      "Acer",
+      2439
+     ],
+     [
+      "Platanus",
+      2129
+     ],
+     [
+      "Prunus",
+      1887
+     ]
+    ]
+   },
+   "Canberra": {
+    "plants": 66181,
+    "top": [
+     [
+      "Acacia",
+      4170
+     ],
+     [
+      "Eucalyptus",
+      3944
+     ],
+     [
+      "Prunus",
+      112
+     ]
+    ]
+   },
+   "Madrid": {
+    "plants": 16148,
+    "top": [
+     [
+      "Quercus",
+      354
+     ],
+     [
+      "Prunus",
+      318
+     ],
+     [
+      "Aesculus",
+      237
+     ]
+    ]
+   },
+   "Kielder": {
+    "plants": 10287,
+    "top": [
+     [
+      "Salix",
+      211
+     ],
+     [
+      "Betula",
+      59
+     ],
+     [
+      "Prunus",
+      57
+     ]
+    ]
+   },
+   "Aviemore": {
+    "plants": 38131,
+    "top": [
+     [
+      "Juniperus",
+      436
+     ],
+     [
+      "Pinus",
+      381
+     ],
+     [
+      "Salix",
+      322
+     ]
+    ]
+   },
+   "Morondava (baobabs)": {
+    "plants": 950,
+    "top": [
+     [
+      "Adansonia",
+      21
+     ],
+     [
+      "Dalbergia",
+      8
+     ],
+     [
+      "Senegalia",
+      6
+     ]
+    ]
+   }
+  },
+  "gaps": {
+   "Congo basin": {
+    "ok_pct": 9.6,
+    "median_records": 6,
+    "box": [
+     -4,
+     3,
+     15,
+     28
+    ]
+   },
+   "inner Amazon": {
+    "ok_pct": 19.3,
+    "median_records": 17,
+    "box": [
+     -8,
+     -1,
+     -70,
+     -58
+    ]
+   },
+   "Borneo interior": {
+    "ok_pct": 34.4,
+    "median_records": 68,
+    "box": [
+     -1,
+     3,
+     112,
+     116
+    ]
+   },
+   "central Siberia": {
+    "ok_pct": 1.2,
+    "median_records": 1,
+    "box": [
+     60,
+     66,
+     90,
+     120
+    ]
+   },
+   "England": {
+    "ok_pct": 100.0,
+    "median_records": 424629,
+    "box": [
+     51,
+     53,
+     -2,
+     0
+    ]
+   }
+  },
+  "genus_records_top": [
+   [
+    "Quercus",
+    6561919
+   ],
+   [
+    "Salix",
+    4535931
+   ],
+   [
+    "Acer",
+    4011833
+   ],
+   [
+    "Prunus",
+    3646631
+   ],
+   [
+    "Pinus",
+    3410213
+   ],
+   [
+    "Betula",
+    2086229
+   ],
+   [
+    "Fraxinus",
+    1960553
+   ],
+   [
+    "Eucalyptus",
+    1882228
+   ],
+   [
+    "Fagus",
+    1655878
+   ],
+   [
+    "Populus",
+    1579202
+   ]
+  ],
+  "uk_species_missing": 44,
+  "examples": {
+   "Sydney": {
+    "records": 149625,
+    "top": [
+     [
+      "Acacia",
+      6.37
+     ],
+     [
+      "Banksia",
+      2.22
+     ],
+     [
+      "Eucalyptus",
+      1.71
+     ]
+    ]
+   },
+   "Madrid": {
+    "records": 64779,
+    "top": [
+     [
+      "Prunus",
+      1.8
+     ],
+     [
+      "Aesculus",
+      1.54
+     ],
+     [
+      "Quercus",
+      1.18
+     ]
+    ]
+   },
+   "Helsinki": {
+    "records": 400030,
+    "top": [
+     [
+      "Salix",
+      1.7
+     ],
+     [
+      "Betula",
+      0.92
+     ],
+     [
+      "Quercus",
+      0.84
+     ]
+    ]
+   },
+   "Atlanta": {
+    "records": 10126,
+    "top": [
+     [
+      "Quercus",
+      2.02
+     ],
+     [
+      "Liquidambar",
+      1.74
+     ],
+     [
+      "Acer",
+      1.33
+     ]
+    ]
+   },
+   "Cape Town": {
+    "records": 330037,
+    "top": [
+     [
+      "Acacia",
+      2.11
+     ],
+     [
+      "Pinus",
+      0.41
+     ],
+     [
+      "Quercus",
+      0.37
+     ]
+    ]
+   },
+   "Mexico City": {
+    "records": 49697,
+    "top": [
+     [
+      "Quercus",
+      0.86
+     ],
+     [
+      "Pinus",
+      0.46
+     ],
+     [
+      "Eucalyptus",
+      0.31
+     ]
+    ]
+   },
+   "Tokyo": {
+    "records": 88497,
+    "top": [
+     [
+      "Quercus",
+      2.15
+     ],
+     [
+      "Acer",
+      1.37
+     ],
+     [
+      "Ilex",
+      1.18
+     ]
+    ]
+   },
+   "Manaus": {
+    "records": 60727,
+    "top": [
+     [
+      "Ficus",
+      0.78
+     ],
+     [
+      "Eschweilera",
+      0.28
+     ],
+     [
+      "Cecropia",
+      0.23
+     ]
+    ]
+   },
+   "London": {
+    "records": 892984,
+    "top": [
+     [
+      "Acer",
+      2.21
+     ],
+     [
+      "Prunus",
+      2.03
+     ],
+     [
+      "Quercus",
+      1.69
+     ]
+    ]
+   }
+  }
+ },
+ "fe": {
+  "subcompartments": 73109,
+  "area_ha": 254585.1,
+  "with_species": 58778,
+  "species_ha": 185816.2,
+  "species_n": 110,
+  "conifer_pct": 67.1,
+  "top_species": [
+   [
+    "Sitka spruce",
+    47919.5,
+    25.8,
+    "conifer"
+   ],
+   [
+    "Corsican pine",
+    23660.2,
+    12.7,
+    "conifer"
+   ],
+   [
+    "Scots pine",
+    18355.0,
+    9.9,
+    "conifer"
+   ],
+   [
+    "Oak (robur/petraea)",
+    16806.3,
+    9.0,
+    "broadleaf"
+   ],
+   [
+    "Beech",
+    13931.3,
+    7.5,
+    "broadleaf"
+   ],
+   [
+    "Douglas fir",
+    12381.3,
+    6.7,
+    "conifer"
+   ],
+   [
+    "Birch (downy/silver)",
+    10702.1,
+    5.8,
+    "broadleaf"
+   ],
+   [
+    "Norway spruce",
+    6679.9,
+    3.6,
+    "conifer"
+   ],
+   [
+    "Mixed broadleaves",
+    4584.9,
+    2.5,
+    "broadleaf"
+   ],
+   [
+    "Japanese larch",
+    3909.1,
+    2.1,
+    "conifer"
+   ],
+   [
+    "European Ash",
+    3565.9,
+    1.9,
+    "broadleaf"
+   ],
+   [
+    "Hybrid larch",
+    2419.6,
+    1.3,
+    "conifer"
+   ]
+  ],
+  "land_use": {
+   "High Forest": 182063.1,
+   "Open": 51667.2,
+   "Felled": 7447.4,
+   "Agricultural land": 6729.3,
+   "Windblow": 1290.3,
+   "Worked Coppice": 1103.9
+  },
+  "with_year": 58752,
+  "year_ha": 185708.5,
+  "before_1900_ha": 10733.1,
+  "year_1500_n": 79,
+  "year_round_decade_pct": 17.7,
+  "decades": [
+   [
+    1900,
+    164.1,
+    1280.0,
+    88.6
+   ],
+   [
+    1910,
+    111.4,
+    697.2,
+    86.2
+   ],
+   [
+    1920,
+    2575.3,
+    2187.4,
+    45.9
+   ],
+   [
+    1930,
+    3199.5,
+    5149.4,
+    61.7
+   ],
+   [
+    1940,
+    4023.3,
+    5579.3,
+    58.1
+   ],
+   [
+    1950,
+    11771.7,
+    10453.7,
+    47.0
+   ],
+   [
+    1960,
+    14404.1,
+    4100.8,
+    22.2
+   ],
+   [
+    1970,
+    12699.7,
+    2172.4,
+    14.6
+   ],
+   [
+    1980,
+    17963.6,
+    2891.5,
+    13.9
+   ],
+   [
+    1990,
+    19664.9,
+    4318.6,
+    18.0
+   ],
+   [
+    2000,
+    16599.3,
+    5714.8,
+    25.6
+   ],
+   [
+    2010,
+    12638.1,
+    4069.8,
+    24.4
+   ],
+   [
+    2020,
+    8308.7,
+    2236.8,
+    21.2
+   ]
+  ],
+  "conifer_peak_decade": 1990,
+  "conifer_peak_ha": 19664.9,
+  "share_1950_1979_conifer_pct": 31.2,
+  "broadleaf_pct_1950s": 47.0,
+  "broadleaf_pct_1960s": 22.2,
+  "broadleaf_pct_1990s": 18.0,
+  "broadleaf_pct_2000s": 25.6,
+  "broadleaf_pct_2010s": 24.4,
+  "pre1920_ha": 2252.8,
+  "after1919_conifer_pct": 67.2,
+  "periods": {
+   "1920_1949": [
+    [
+     "Oak (robur/petraea)",
+     22.8
+    ],
+    [
+     "Scots pine",
+     21.1
+    ],
+    [
+     "Beech",
+     19.8
+    ],
+    [
+     "Corsican pine",
+     6.4
+    ]
+   ],
+   "1950_1979": [
+    [
+     "Corsican pine",
+     15.6
+    ],
+    [
+     "Sitka spruce",
+     14.6
+    ],
+    [
+     "Beech",
+     12.8
+    ],
+    [
+     "Scots pine",
+     11.9
+    ]
+   ],
+   "1980_1999": [
+    [
+     "Sitka spruce",
+     41.7
+    ],
+    [
+     "Corsican pine",
+     25.0
+    ],
+    [
+     "Birch (downy/silver)",
+     7.2
+    ],
+    [
+     "Douglas fir",
+     6.7
+    ]
+   ],
+   "2000_2029": [
+    [
+     "Sitka spruce",
+     40.9
+    ],
+    [
+     "Scots pine",
+     10.0
+    ],
+    [
+     "Birch (downy/silver)",
+     9.2
+    ],
+    [
+     "Douglas fir",
+     6.4
+    ]
+   ]
+  },
+  "districts": {
+   "North England": 53420.3,
+   "West England": 34224.6,
+   "East England": 30185.8,
+   "South England": 27694.1,
+   "Central England": 22915.4,
+   "Yorkshire": 17287.5,
+   "Westonbirt": 88.5
+  }
+ },
+ "groups": {
+  "names": [
+   "Broadleaved",
+   "Mixed, mainly broadleaved",
+   "Mixed, mainly conifer",
+   "Conifer",
+   "Young trees",
+   "Felled and restocking",
+   "Other and assumed woodland"
+  ],
+  "keys": [
+   "broadleaved",
+   "mixed_broad",
+   "mixed_conifer",
+   "conifer",
+   "young",
+   "felled",
+   "other"
+  ],
+  "cols": [
+   "#3E8E3A",
+   "#86A845",
+   "#4E8F7A",
+   "#1D5C5E",
+   "#BFD47E",
+   "#CDB78C",
+   "#A9B7A0"
+  ]
+ },
+ "mix_key": {
+  "cover_breaks": [
+   5,
+   15,
+   30,
+   50
+  ],
+  "share_breaks": [
+   20,
+   40,
+   60,
+   80
+  ],
+  "cols": [
+   "#3C8F35",
+   "#5E9B47",
+   "#6E9A7C",
+   "#3A7A7E",
+   "#1C4F66"
+  ],
+  "alpha": [
+   70,
+   120,
+   170,
+   215,
+   255
+  ]
+ },
+ "tiles": {
+  "wood": {
+   "tiles": 861,
+   "bytes": 4919289
+  },
+  "mix1": {
+   "tiles": 267,
+   "bytes": 1053887
+  },
+  "mix5": {
+   "tiles": 90,
+   "bytes": 172756
+  },
+  "hill": {
+   "tiles": 406,
+   "bytes": 4910694
+  }
+ },
+ "retrieved": "28 October 2026",
+ "genus_cols": {
+  "Quercus": "#8A5A22",
+  "Pinus": "#1F6F78",
+  "Picea": "#2C4F6B",
+  "Abies": "#3E6F96",
+  "Larix": "#6FA3A0",
+  "Betula": "#A9C46A",
+  "Fagus": "#B9803A",
+  "Acer": "#C5562F",
+  "Fraxinus": "#6F9A7A",
+  "Tilia": "#C98E3B",
+  "Ulmus": "#6F8F4E",
+  "Carpinus": "#86A35E",
+  "Castanea": "#A86B3C",
+  "Populus": "#9DB04A",
+  "Salix": "#C4C948",
+  "Alnus": "#6E9E52",
+  "Juniperus": "#5B7F45",
+  "Cupressus": "#4F6B3A",
+  "Taxus": "#24502F",
+  "Tsuga": "#2E6E73",
+  "Pseudotsuga": "#2E6E73",
+  "Thuja": "#4F6B3A",
+  "Sequoia": "#4F6B3A",
+  "Eucalyptus": "#6F8FB0",
+  "Corymbia": "#8BA6C0",
+  "Acacia": "#E2B323",
+  "Ficus": "#7E4A86",
+  "Shorea": "#A3423A",
+  "Dipterocarpus": "#A3423A",
+  "Tectona": "#8E8A80",
+  "Swietenia": "#A3423A",
+  "Ceiba": "#C98E3B",
+  "Hevea": "#8E8A80",
+  "Cecropia": "#8E8A80",
+  "Inga": "#E09A3E",
+  "Nothofagus": "#B0844A",
+  "Araucaria": "#56794E",
+  "Podocarpus": "#56794E",
+  "Ginkgo": "#9C9A3C",
+  "Magnolia": "#8E8A80",
+  "Liquidambar": "#C7633F",
+  "Liriodendron": "#8E8A80",
+  "Prunus": "#D27C93",
+  "Sorbus": "#B4495A",
+  "Juglans": "#7B5B3A",
+  "Carya": "#8E8A80",
+  "Olea": "#7C9A6A",
+  "Ilex": "#2F7D4E",
+  "Adansonia": "#C2412D",
+  "Brachystegia": "#D9A520",
+  "Julbernardia": "#D9A520",
+  "Isoberlinia": "#D9A520",
+  "Terminalia": "#9C7A3A",
+  "Combretum": "#B9893F",
+  "Colophospermum": "#D9A520",
+  "Prosopis": "#B87C2E",
+  "Vachellia": "#C9902A",
+  "Senegalia": "#D8B04E",
+  "Casuarina": "#6E8A80",
+  "Melaleuca": "#93A3B5",
+  "Banksia": "#C47A52",
+  "Callitris": "#5E7F70",
+  "Agathis": "#56794E",
+  "Dacrydium": "#56794E",
+  "Cryptomeria": "#4F6B3A",
+  "Chamaecyparis": "#4F6B3A",
+  "Cinnamomum": "#8E8A80",
+  "Castanopsis": "#9A6A2E",
+  "Lithocarpus": "#9A6A2E",
+  "Rhizophora": "#2D7F9A",
+  "Avicennia": "#3E9AB0",
+  "Mangifera": "#8E8A80",
+  "Syzygium": "#7F95A8",
+  "Eschweilera": "#A3423A",
+  "Bertholletia": "#A3423A",
+  "Hymenaea": "#D9A520",
+  "Handroanthus": "#8E8A80",
+  "Dalbergia": "#D9A520",
+  "Pterocarpus": "#D9A520",
+  "Khaya": "#A3423A",
+  "Entandrophragma": "#A3423A",
+  "Milicia": "#7E4A86",
+  "Sabal": "#C46FA0",
+  "Phoenix": "#C46FA0",
+  "Nyssa": "#8E8A80",
+  "Platanus": "#8F8A55",
+  "Aesculus": "#B5673A",
+  "Robinia": "#C6A44A"
+ }
+}

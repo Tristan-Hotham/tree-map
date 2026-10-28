@@ -1,0 +1,26 @@
+category,type,polygons,area_ha,group,area_ha_england,area_ha_scotland,area_ha_wales
+Woodland,Broadleaved,298953,1125137.4,Broadleaved,802749.3,204994.9,117393.3
+Woodland,Conifer,95866,861042.4,Conifer,248939.5,533075.8,79027.0
+Woodland,Felled,48420,539554.3,Felled and restocking,100798.9,374886.0,63869.3
+Woodland,Assumed woodland,41996,243645.5,Other and assumed woodland,52632.1,181817.8,9195.6
+Woodland,Young trees,42610,188851.2,Young trees,58674.9,105345.7,24830.6
+Woodland,Ground prep,8372,52332.3,Felled and restocking,7883.6,41432.1,3016.6
+Woodland,Mixed mainly broadleaved,28141,51100.1,"Mixed, mainly broadleaved",25364.3,19195.8,6539.9
+Woodland,Mixed mainly conifer,27533,49655.5,"Mixed, mainly conifer",28761.8,15045.5,5848.2
+Woodland,Windblow,8125,17166.1,Felled and restocking,1703.2,14841.5,621.4
+Woodland,Low density,4220,9646.1,Other and assumed woodland,4394.2,4263.7,988.2
+Woodland,Shrub,4579,7295.9,Other and assumed woodland,3504.8,2821.3,969.8
+Woodland,Failed,1893,4315.4,Felled and restocking,864.9,3432.0,18.5
+Woodland,Coppice,460,2505.3,Other and assumed woodland,2492.7,1.6,11.1
+Woodland,Coppice with standards,61,269.2,Other and assumed woodland,267.2,2.0,0.0
+Non woodland,Grassland,16445,42621.6,Not woodland,14934.7,23967.3,3719.6
+Non woodland,Other vegetation,5094,16617.6,Not woodland,3152.0,12962.9,502.8
+Non woodland,Bare area,3883,9953.6,Not woodland,1387.5,7829.3,736.8
+Non woodland,Agriculture land,419,4248.2,Not woodland,2592.2,1478.5,177.6
+Non woodland,Open water,1501,3519.1,Not woodland,1257.3,2117.5,144.3
+Non woodland,Road,1258,2115.5,Not woodland,215.7,1784.6,115.2
+Non woodland,Urban,1395,1715.2,Not woodland,1279.1,384.9,51.2
+Non woodland,Quarry,202,707.8,Not woodland,302.7,227.3,177.9
+Non woodland,River,95,146.4,Not woodland,26.6,116.3,3.6
+Non woodland,Windfarm,78,118.8,Not woodland,0.0,103.2,15.6
+Non woodland,Power line,43,84.7,Not woodland,50.9,33.7,0.0
