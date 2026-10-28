@@ -1,0 +1,202 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\newfontfamily\headfont{Inter}[UprightFont=*-ExtraBold,BoldFont=*-ExtraBold,Extension=.otf,Path=/usr/share/fonts/opentype/inter/]
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{graphicx,booktabs,float,caption,array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{setspace}
+\setstretch{1.05}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\titleformat{\section}{\headfont\Large}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\headfont\large}{\thesubsection}{0.8em}{}
+\captionsetup{font=small,labelfont=bf}
+\urlstyle{same}
+\hypersetup{pdftitle={What Grows Where: Mapping the Woodland of Great Britain and the Recorded Trees of the World},pdfauthor={Tristan Hotham}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries What Grows Where:\\[2pt] Mapping the Woodland of Great Britain\\[2pt] and the Recorded Trees of the World\par}
+\vspace{1.2em}
+{\large Tristan Hotham\par}
+\vspace{0.3em}
+{\small Independent researcher\\
+ORCID: 0000-0003-4931-9349\\
+DOI: \href{https://doi.org/10.5281/zenodo.23739845}{https://doi.org/10.5281/zenodo.23739845}\par}
+\vspace{0.8em}
+2026
+\end{center}
+
+\begin{quote}
+\small
+\begin{center}\textbf{Abstract}\end{center}
+There is no easy, open, interactive map of which trees grow where in Britain, let alone the world. I build one from three open sources and report what it shows. The National Forest Inventory (NFI) GB 2024 woodland map has {{nfi.polygons|int}} polygons; its {{nfi.woodland_polygons|int}} woodland polygons cover {{gb.woodland_kha|int}} thousand hectares, {{gb.woodland_pct|f1}}\% of Great Britain's land: {{nations.Scotland.woodland_pct|f1}}\% of Scotland, {{nations.Wales.woodland_pct|f1}}\% of Wales and {{nations.England.woodland_pct|f1}}\% of England. Conifers make up {{nations.Scotland.conifer_share_pct|f1}}\% of Scotland's broadleaf and conifer woodland but only {{nations.England.conifer_share_pct|f1}}\% of England's. Moray is the most wooded county or council area ({{counties.most.0.woodland_pct|f1}}\%) and Shetland the least ({{counties.least.0.woodland_pct|f2}}\%); the most wooded 10 km square is in Kielder Forest ({{squares10.most_wooded.0.woodland_pct|f1}}\%). In England's public forests, Forestry England's {{fe.subcompartments|int}} subcompartments show that {{fe.conifer_pct|f1}}\% of the stocked area is conifer, Sitka spruce alone {{fe.top_species.0.2|f1}}\%, and that the broadleaf share of the standing crop falls from {{fe.broadleaf_pct_1950s|f1}}\% for 1950s plantings to {{fe.broadleaf_pct_1990s|f1}}\% for the 1990s before rising to {{fe.broadleaf_pct_2000s|f1}}\% for the 2000s. Worldwide, GBIF occurrence density grids for {{world.genera_n|int}} tree genera, expressed as shares of all vascular plant records, give recognisable regional signatures (acacias, bloodwoods and eucalypts in Oceania; figs, thorn acacias and bushwillows in Africa), but recording effort dominates: Europe and North America hold {{world.europe_namerica_share_pct|f1}}\% of land plant records on {{world.europe_namerica_land_pct|f1}}\% of the land, and the tropics {{world.tropics_records_pct|f1}}\% on {{world.tropics_land_pct|f1}}\%. The records map is a map of recording, not of forest.
+
+\textbf{Keywords:} woodland; National Forest Inventory; Forestry England; GBIF; occurrence records; sampling bias; tree genera; Great Britain; interactive map; open data
+\end{quote}
+
+\section{Introduction}
+
+Asked whether there is a map of tree types across the UK, and of the world, that one can simply explore, the honest answer is: not easily. The pieces exist. The Forestry Commission maps every wood of half a hectare or more in Great Britain as the National Forest Inventory (NFI) and publishes the map as open data. Forestry England publishes the species and planting year of every compartment of the public forest estate in England. GBIF, the Global Biodiversity Information Facility, gathers billions of records of where organisms were seen or collected and serves them as density grids for any taxon. But these sources are published for specialists, in different formats and projections, and none of them alone answers the plain question of what grows where.
+
+This note describes an open, interactive map that puts them together, with two views: a detailed one of Great Britain and a coarser one of the world. It then uses the same data to answer some simple questions. How much of each country of Great Britain is woodland, and how much of that is conifer? Which places are the most and least wooded? What is planted in England's public forests, and when were the trees standing today planted? Which tree genera are typical of which parts of the world? And how far are the world patterns a product of where people record plants rather than where trees grow?
+
+The interactive version is at \url{https://tristan-hotham.github.io/tree-map/}. An earlier project on Britain's ancient and veteran trees is at \url{https://tristan-hotham.github.io/ancient-trees/}.
+
+\section{Data}
+
+\subsection{National Forest Inventory}
+
+The NFI woodland map for Great Britain (Forestry Commission 2025) is interpreted from aerial photography and other imagery and covers woodland of 0.5 ha and over with at least 20\% canopy cover or the potential to achieve it. Each polygon carries an interpreted forest type (IFT). I used the 2024 map, layer NFI\_GB\_IFT\_Data\_20250826, as polygon centroids in British National Grid coordinates with type, category (woodland or not), country and area. The data reached me in two parts, a main extract of 525,642 rows and a second of 116,000 rows that filled offsets the first had missed; together they give exactly the published count of {{nfi.polygons|int}} polygons, with no duplicates on position and area. Of these, {{nfi.woodland_polygons|int}} are woodland and {{nfi.nonwoodland_polygons|int}} are open ground inside woods (grassland, bare ground, water, roads and so on), which I leave out. The NFI covers Great Britain only, not Northern Ireland, and is published under the Open Government Licence.
+
+I group the fourteen woodland types into seven: broadleaved; mixed, mainly broadleaved; mixed, mainly conifer; conifer; young trees; felled and restocking (felled, ground prepared, windblow and failed); and other woodland (low density, shrub, coppice, coppice with standards and assumed woodland). Where I give a ``conifer share'' it is conifer plus mixed mainly conifer, divided by those plus broadleaved and mixed mainly broadleaved; young, felled and other woodland are left out of the ratio because their crop type is not stated.
+
+\subsection{Forestry England subcompartments}
+
+Forestry England manages the public forest estate in England. Its subcompartment dataset (Forestry England 2025) lists {{fe.subcompartments|int}} subcompartments, the units of management, with main species, land use, broad habitat, planting year, yield class and district. I used their centroids and areas. {{fe.with_species|int}} subcompartments, covering {{fe.species_ha|int}} ha of the {{fe.area_ha|int}} ha total, carry a species; I class each of the {{fe.species_n|int}} species names as conifer or broadleaf, counting yew and juniper as conifers. The planting year is the year the current crop was planted, so a compartment felled and restocked carries the new date. {{fe.year_round_decade_pct|f1}}\% of planting years end in zero, suggesting rounding, and {{fe.year_1500_n|int}} carry the placeholder year 1500, so I work in decades and from 1900.
+
+\subsection{GBIF occurrence density grids}
+
+GBIF (GBIF.org 2026) serves the number of occurrence records of any taxon on a grid. I used grids at zoom 2 of the EPSG:4326 tile scheme with square size 8, which on decoding give bins of 45/512 = 0.0879 degrees, about 10 km north to south and 6 km east to west at the latitude of Britain. I checked the decoding against known places: the grid of all vascular plants reproduces the outline of Britain and Ireland, the London cell's second most recorded tree genus is \textit{Platanus} (the London plane), \textit{Eucalyptus} is among the top two genera at Canberra and \textit{Adansonia} (baobab) is the top genus near Morondava in Madagascar. The grids cover {{world.genera_n|int}} tree genera that matched exactly in the GBIF backbone taxonomy, from \textit{Quercus} and \textit{Pinus} to \textit{Shorea}, \textit{Swietenia} and \textit{Rhizophora}, and three baselines: all vascular plants (Tracheophyta), conifers (Pinopsida) and dicots (Magnoliopsida). Two further genera, \textit{Cedrus} and \textit{Washingtonia}, had been matched by GBIF only to Tracheophyta, so their grids were copies of the baseline and I dropped them. Grids of 44 British tree species at a finer scale were part of the plan but were not in the download, so the British records layer works at genus level. The records are published by many institutions under CC0, CC BY and CC BY-NC licences; I share only derived grids.
+
+\subsection{Context}
+
+Land areas and county boundaries come from the Office for National Statistics' local authority boundaries, assembled into ceremonial counties (England), preserved counties (Wales) and council areas (Scotland): {{counties.n|int}} areas with a total land area of {{gb.land_km2|int}} km\textsuperscript{2}. Place names come from OS Open Names (Ordnance Survey 2026), which also lists named woods and forests, and GeoNames (2026). Country outlines and continents are from Natural Earth.
+
+\section{Methods}
+
+\subsection{Drawing the woodland map}
+
+Because the NFI data I used are centroids and areas rather than outlines, I draw each woodland polygon on a 100 m grid as a disc of the same area centred on its centroid. Polygons under 1 ha fill part of one cell. Where discs overlap, the smaller polygon is drawn on top, so small woods inside large ones stay visible. The area of every polygon is kept exactly; only its shape and the precise place of its edges are approximate, by up to the polygon's own radius. For the interactive map the grid is resampled into Web Mercator tiles at zooms 5 to 10, with each pixel coloured by the type that covers most of it and made paler where less of it is woodland. The summaries on 1 km and 5 km squares add up the disc areas in each square and divide by the square's land area. County and country totals do not use the discs: each polygon's exact area is assigned to the county containing its centroid.
+
+\subsection{Shares of records}
+
+Raw record counts follow recording effort: there are more records of everything where there are more recorders. Following common practice for presence-only data, I therefore map each genus as its share of all vascular plant records in a cell. On the world map cells are aggregated four by four into 0.35 degree squares; a square is shown only if it has at least {{world.min_records|int}} plant records and is faded below ten times that. In Britain I keep the native 0.088 degree grid and a threshold of {{gbif_gb.min_records|int}} records.
+
+Two summaries describe the world map. The ``most recorded'' genus of a cell is the one of the {{world.genera_n|int}} with the most records there. Because a few large, widely planted or much-studied genera (figs, willows, oaks) top most cells, I also compute a ``most typical'' genus: the one whose share of the cell's plant records is highest relative to its share of all plant records in the world, a location quotient, among genera with at least {{world.lq_min|int}} records in the cell. Areas are summed with each cell weighted by its true area.
+
+\section{Results}
+
+\subsection{Woodland in Great Britain}
+
+Woodland covers {{gb.woodland_pct|f1}}\% of Great Britain's land (Table~\ref{tab:nations}, Figure~\ref{fig:gb}). Broadleaved woodland is the largest group ({{gb.groups_pct_of_woodland.broadleaved|f1}}\% of all woodland), followed by conifer ({{gb.groups_pct_of_woodland.conifer|f1}}\%) and felled and restocking land ({{gb.groups_pct_of_woodland.felled|f1}}\%). The three countries differ sharply. Scotland has {{nations.Scotland.share_of_gb_woodland_pct|f1}}\% of Britain's woodland on about a third of its land, and {{nations.Scotland.conifer_share_pct|f1}}\% of its broadleaf and conifer woodland is conifer. England's woodland is {{nations.England.conifer_share_pct|f1}}\% conifer, Wales's {{nations.Wales.conifer_share_pct|f1}}\%. In Scotland, {{nations.Scotland.felled_pct_of_woodland|f1}}\% of woodland was mapped as felled or being restocked, against {{nations.England.felled_pct_of_woodland|f1}}\% in England. These areas are the rotation of the conifer plantations, but some of the land may already have been replanted, since young trees are hard to see on imagery for some years.
+
+{{TABLE_NATIONS}}
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=.72\textwidth]{fig_gb_woodland.png}
+\caption{Woodland in Great Britain by interpreted forest type, NFI 2024, on 1 km squares. Colour is the type covering most of the square's woodland; paler squares have less woodland. Shetland is not shown.}\label{fig:gb}
+\end{figure}
+
+Among the {{counties.n|int}} counties and council areas, the four most wooded are all in Scotland and mostly conifer: Moray ({{counties.most.0.woodland_pct|f1}}\%), South Ayrshire ({{counties.most.1.woodland_pct|f1}}\%), Argyll and Bute ({{counties.most.2.woodland_pct|f1}}\%) and Dumfries and Galloway ({{counties.most.3.woodland_pct|f1}}\%) (Figure~\ref{fig:counties}). The most wooded county in England is Surrey ({{counties.by_nation.England.most.woodland_pct|f1}}\%, {{counties.by_nation.England.most.conifer_share_pct|f1}}\% conifer) and in Wales West Glamorgan ({{counties.by_nation.Wales.most.woodland_pct|f1}}\%). The least wooded are the Scottish islands, Shetland ({{counties.least.0.woodland_pct|f2}}\%), Orkney ({{counties.least.1.woodland_pct|f2}}\%) and the Western Isles ({{counties.least.2.woodland_pct|f2}}\%), and in England Cambridgeshire ({{counties.by_nation.England.least.woodland_pct|f2}}\%).
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=.85\textwidth]{fig_counties.png}
+\caption{The ten most and six least wooded counties and council areas. Bars show woodland as a share of land, split into broadleaf (broadleaved and mixed mainly broadleaved), conifer (conifer and mixed mainly conifer) and other woodland.}\label{fig:counties}
+\end{figure}
+
+On the 10 km squares of the National Grid with at least 50 km\textsuperscript{2} of land, the most wooded is {{squares10.most_wooded.0.ref|raw}} in Kielder Forest, Northumberland, at {{squares10.most_wooded.0.woodland_pct|f1}}\% woodland of which {{squares10.most_wooded.0.conifer_share_pct|f1}}\% is conifer. The squares with the most conifer woodland are {{squares10.most_conifer.0.ref|raw}} in Galloway near Glentrool ({{squares10.most_conifer.0.conifer_ha|int}} ha), {{squares10.most_conifer.1.ref|raw}} in Kielder ({{squares10.most_conifer.1.conifer_ha|int}} ha) and {{squares10.most_conifer.2.ref|raw}} at Thetford in the Breckland ({{squares10.most_conifer.2.conifer_ha|int}} ha). Within 10 km of named points the contrast between plantation and older forest landscapes is clear: Kielder Forest {{named.kielder.woodland_pct|f1}}\% woodland and {{named.kielder.conifer_share_pct|f1}}\% conifer; Glentrool {{named.glentrool.woodland_pct|f1}}\% and {{named.glentrool.conifer_share_pct|f1}}\%; Thetford {{named.thetford.woodland_pct|f1}}\% and {{named.thetford.conifer_share_pct|f1}}\%; Abernethy Forest {{named.abernethy.woodland_pct|f1}}\% and {{named.abernethy.conifer_share_pct|f1}}\%; the New Forest around Lyndhurst {{named.new_forest.woodland_pct|f1}}\% and {{named.new_forest.conifer_share_pct|f1}}\%; and the Chilterns around High Wycombe {{named.chilterns.woodland_pct|f1}}\% and {{named.chilterns.conifer_share_pct|f1}}\%. At the other end, {{squares10.under1pct|int}} of {{squares10.n|int}} squares have under 1\% woodland, {{squares10.under1_by_county.Na h-Eileanan Siar|int}} of them in the Western Isles, and {{squares10.over50pct|int}} are more than half woodland.
+
+\subsection{What the records show in Britain}
+
+In the British grid there are {{gbif_gb.plant_records|int}} vascular plant records over {{gbif_gb.cells_land|int}} land cells, a median of {{gbif_gb.median_records|int}} per cell, and {{gbif_gb.cells_ok|int}} cells have at least {{gbif_gb.min_records|int}}. The shares of records reproduce familiar geography (Figure~\ref{fig:recgb}). The share that is \textit{Pinus} is highest in Strathspey and the northern Cairngorms ({{gbif_gb.genera.Pinus.top.0.share_pct|f2}}\% in the cell about {{gbif_gb.genera.Pinus.top.0.km|int}} km from Nethy Bridge), the area of Abernethy and Rothiemurchus that holds the largest remnants of the native Caledonian pinewood (Steven and Carlisle 1959); \textit{Juniperus} peaks in the neighbouring cell ({{gbif_gb.genera.Juniperus.top.0.share_pct|f1}}\%) and \textit{Betula} in the next cell south ({{gbif_gb.genera.Betula.top.0.share_pct|f1}}\%). \textit{Fagus} peaks at Wootton Rivers beside Savernake Forest ({{gbif_gb.genera.Fagus.top.0.share_pct|f2}}\%), \textit{Fraxinus} near Highworth ({{gbif_gb.genera.Fraxinus.top.0.share_pct|f2}}\%) and \textit{Quercus} at Long Ditton in Surrey ({{gbif_gb.genera.Quercus.top.0.share_pct|f2}}\%).
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=.95\textwidth]{fig_records_gb.png}
+\caption{Share of all vascular plant records that are pines, beeches and oaks, GBIF, 0.088 degree cells with at least 500 plant records. Each map is scaled to its own 99th percentile, given above it.}\label{fig:recgb}
+\end{figure}
+
+The records also show their own biases. \textit{Salix} is the most recorded tree genus in {{gbif_gb.dominant_cells.0.1|int}} of the {{gbif_gb.cells_ok|int}} well recorded cells, which says more about how carefully botanists record willows, a genus of many species and hybrids, than about the commonest tree. Near Bala in Gwynedd, \textit{Picea} accounts for {{gbif_gb.genera.Picea.top.0.share_pct|f1}}\% of all plant records, a share that suggests one large dataset rather than an unusual forest.
+
+\subsection{England's public forests}
+
+Of the stocked area of the Forestry England estate, {{fe.conifer_pct|f1}}\% is conifer (Table~\ref{tab:fe}). Sitka spruce is the largest species ({{fe.top_species.0.2|f1}}\%), then Corsican pine ({{fe.top_species.1.2|f1}}\%) and Scots pine ({{fe.top_species.2.2|f1}}\%); oak ({{fe.top_species.3.2|f1}}\%) and beech ({{fe.top_species.4.2|f1}}\%) are the largest broadleaves.
+
+{{TABLE_FE}}
+
+By decade of planting (Figure~\ref{fig:plant}), the standing crop is young: {{fe.pre1920_ha|int}} ha was planted from 1900 to 1919, and the conifer area peaks with the {{fe.conifer_peak_decade|raw}}s ({{fe.conifer_peak_ha|int}} ha). Because restocked compartments take the new date, this is the age structure of the current crop, not a history of afforestation; the great expansion of state planting after the Forestry Commission was founded in 1919 appears here mostly as its second rotation. The species chosen have changed, though. Broadleaves are {{fe.broadleaf_pct_1950s|f1}}\% of the standing area planted in the 1950s, {{fe.broadleaf_pct_1960s|f1}}\% for the 1960s and {{fe.broadleaf_pct_1990s|f1}}\% for the 1990s, then {{fe.broadleaf_pct_2000s|f1}}\% for the 2000s and {{fe.broadleaf_pct_2010s|f1}}\% for the 2010s. Sitka spruce makes up {{fe.periods.1980_1999.0.1|f1}}\% of the standing area planted from 1980 to 1999 and {{fe.periods.2000_2029.0.1|f1}}\% of that planted since 2000.
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=.85\textwidth]{fig_planting.png}
+\caption{Forestry England subcompartments by decade in which the current crop was planted, hectares, conifer and broadleaf.}\label{fig:plant}
+\end{figure}
+
+\subsection{The world's recorded trees}
+
+GBIF held {{world.plant_records|int}} vascular plant records in the grids used; the {{world.genera_n|int}} tree genera account for {{world.tree_genera_share_pct|f1}}\% of those on land. The most recorded genus is dominated by a few: \textit{Ficus} is most recorded over {{world.dominant_area.0.2|f1}}\% of the qualifying land area, \textit{Salix} {{world.dominant_area.1.2|f1}}\% and \textit{Quercus} {{world.dominant_area.2.2|f1}}\%. The most typical genus is far more varied ({{world.typical_genera_n|int}} genera appear) and gives each continent a recognisable signature (Figure~\ref{fig:world}, Table~\ref{tab:world}): acacias, bloodwoods (\textit{Corymbia}) and eucalypts in Oceania; figs, thorn acacias (\textit{Vachellia}) and bushwillows (\textit{Combretum}) in Africa; \textit{Inga} and figs in South America; willows, spruces and birches in Europe; and oaks, willows, pines and junipers in North America. By country, pines are most recorded over {{world.genus_countries.Pinus.0.1|f1}}\% of Spain's qualifying land, oaks over {{world.genus_countries.Quercus.0.1|f1}}\% of Spain and {{world.genus_countries.Quercus.1.1|f1}}\% of Mexico, the centre of oak diversity in the Americas (Valencia 2004), and eucalypts over {{world.genus_countries.Eucalyptus.0.1|f1}}\% of Australia, where acacias lead over {{world.genus_countries.Acacia.0.1|f1}}\%.
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=.95\textwidth]{fig_world_typical.png}
+\caption{The most typical recorded tree genus of each 0.35 degree cell with at least {{world.min_records|int}} vascular plant records: the genus whose share of the cell's records is highest relative to its share of all the world's records. The legend lists the twelve genera covering most qualifying land.}\label{fig:world}
+\end{figure}
+
+{{TABLE_WORLD}}
+
+\subsection{Recording effort}
+
+Recording is very uneven (Figure~\ref{fig:effort}). Europe has {{world.continents.Europe.records_per_1000km2|int}} plant records per 1,000 km\textsuperscript{2} of land and Africa {{world.continents.Africa.records_per_1000km2|int}}. Europe and North America hold {{world.europe_namerica_share_pct|f1}}\% of the records on land with {{world.europe_namerica_land_pct|f1}}\% of the land; the tropics, {{world.tropics_land_pct|f1}}\% of the land, hold {{world.tropics_records_pct|f1}}\%. With the threshold of {{world.min_records|int}} records, {{world.cells_ok_land_pct|f1}}\% of the world's land qualifies, but only {{world.gaps.Congo basin.ok_pct|f1}}\% of cells in the heart of the Congo basin (median {{world.gaps.Congo basin.median_records|int}} records), {{world.gaps.inner Amazon.ok_pct|f1}}\% in the inner Amazon and {{world.gaps.central Siberia.ok_pct|f1}}\% in central Siberia. This is the well known geographic bias of biodiversity records (Beck et al. 2014; Meyer et al. 2015; Hughes et al. 2021), and it falls hardest on the most forested regions.
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=.9\textwidth]{fig_effort.png}
+\caption{Recording effort: all GBIF vascular plant records per 0.35 degree cell (log colour scale), and records per 1,000 km\textsuperscript{2} of land by continent.}\label{fig:effort}
+\end{figure}
+
+\section{Discussion}
+
+The British part of the map rests on a survey designed to measure woodland, and its numbers are in line with the official woodland statistics (Forest Research 2024): a country about one seventh wooded, more so in Scotland and Wales than in England, with the conifer plantations concentrated in upland Scotland, northern England and Wales and on the sandy Breckland. The new element is access: every wood can be seen by type on one map, at any zoom, alongside summaries and place search. The Forestry England data add the species and age dimension for the public estate, and show how much of what stands today is a second rotation of mid-century conifer plantations, with a modest rise in broadleaf planting since the 1990s.
+
+The world part rests on records collected for many purposes, and it should be read differently. Shares of plant records correct for the overall density of recording but not for what people choose to record: willows and figs are recorded heavily because they are diverse and of interest to botanists, garden and street trees are recorded where people live, and a single large survey can dominate a cell. The ``most typical'' measure brings out regional character better than raw dominance, but it too favours genera that are rare elsewhere. Where records are thin, as across most of the tropical forest belt, the map is not merely noisy but empty, and that emptiness is itself a finding about where knowledge is missing.
+
+\section{Limitations}
+
+The NFI maps woodland of 0.5 ha and over from imagery, so it misses hedgerows, small copses and single trees, and its types are interpretations. The disc drawing misplaces woodland edges by up to a polygon's radius; large plantations appear as round blocks. County land areas come from generalised boundaries. Forestry England covers only the public estate in England, its planting years refer to the current crop and are often rounded, and my conifer and broadleaf classing of species is my own. GBIF grids count records, not trees, mixing wild, planted and cultivated plants, herbarium specimens and observations of all dates; two genera were dropped for taxonomic mismatches, and the 88 genera are a selection, not all trees. The British records layer is at genus level because the planned species grids were not available. All world shares depend on the {{world.min_records|int}} record threshold.
+
+\section{Conclusion}
+
+An explorable map of what grows where can be built entirely from open data. For Great Britain it can be detailed and reliable: {{gb.woodland_pct|f1}}\% of the land is woodland, Scotland's woods are mostly conifer and England's mostly broadleaf, and the great plantations of Kielder, Galloway and Thetford stand out. For the world it can only be a map of what has been recorded, rich in Europe, North America and Australia and nearly blank across the great tropical and boreal forests. Showing both, with their limits stated, is more useful than either alone.
+
+\section*{Data and code availability}
+
+Code and derived data: \url{https://github.com/Tristan-Hotham/tree-map}. Interactive version: \url{https://tristan-hotham.github.io/tree-map/}. Archived release with this paper: \url{https://doi.org/10.5281/zenodo.23739845}. Data derived from Forestry Commission and Ordnance Survey data are under the Open Government Licence v3; derived GBIF grids under CC BY 4.0; text and figures under CC BY 4.0; code under the MIT licence.
+
+\section*{AI statement}
+
+I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.
+
+\section*{References}
+\small
+\setlength{\parskip}{0.3em}
+
+Beck, J., B\"oller, M., Erhardt, A. and Schwanghart, W. (2014) Spatial bias in the GBIF database and its effect on modeling species' geographic distributions. \textit{Ecological Informatics} 19: 10 to 15.
+
+Forest Research (2024) \textit{Forestry Statistics 2024}. Edinburgh: Forest Research.
+
+Forestry Commission (2025) National Forest Inventory Woodland GB 2024 (NFI\_GB\_IFT\_Data\_20250826). Open Government Licence v3. \url{https://data-forestry.opendata.arcgis.com/}
+
+Forestry England (2025) Forestry England Subcompartments. Open Government Licence v3. \url{https://data-forestry.opendata.arcgis.com/}
+
+GBIF.org (28 October 2026) GBIF occurrence density maps. \url{https://www.gbif.org}
+
+GeoNames (2026) Cities with a population of 15,000 or more. CC BY 4.0. \url{https://www.geonames.org}
+
+Hughes, A.C., Orr, M.C., Ma, K., Costello, M.J., Waller, J., Provoost, P., Yang, Q., Zhu, C. and Qiao, H. (2021) Sampling biases shape our view of the natural world. \textit{Ecography} 44: 1259 to 1269.
+
+Meyer, C., Kreft, H., Guralnick, R. and Jetz, W. (2015) Global priorities for an effective information basis of biodiversity distributions. \textit{Nature Communications} 6: 8221.
+
+Natural Earth (2026) Admin 0 countries, 1:50m. Public domain. \url{https://www.naturalearthdata.com}
+
+Office for National Statistics (2025) Local authority district boundaries. Open Government Licence v3.
+
+Ordnance Survey (2026) OS Open Names. Open Government Licence v3.
+
+Steven, H.M. and Carlisle, A. (1959) \textit{The Native Pinewoods of Scotland}. Edinburgh: Oliver and Boyd.
+
+Valencia, S. (2004) Diversidad del g\'enero \textit{Quercus} (Fagaceae) en M\'exico. \textit{Boletín de la Sociedad Botánica de México} 75: 33 to 53.
+
+\end{document}

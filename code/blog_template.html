@@ -1,0 +1,162 @@
+<!-- wp:paragraph -->
+<p><em>Is there a map of tree types across Britain, and the world, that you can simply explore? Not easily, so I made one: every wood in Great Britain by type, England's public forests by species and planting year, and 88 tree genera in the world's plant records.</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://tristan-hotham.github.io/tree-map/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23739845">Read the paper</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:paragraph -->
+<p>Someone asked me a simple question: is there a map of which trees grow where in the UK, and in the world, that you can just look at? The pieces exist, but they are scattered. The Forestry Commission maps every wood of half a hectare or more in Great Britain, the National Forest Inventory. Forestry England publishes the species and planting year of every compartment in England's public forests. GBIF, the global archive of biodiversity records, will tell you where any tree has been recorded. None of them, on its own, answers the question.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>So I put them on one map, with two views, Great Britain and the world, and a set of layers so you can always see where you are. Here is what it shows.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">One seventh of Britain is woodland</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_gb_woodland.png|Map of Great Britain on 1 km squares coloured by the main type of woodland: dark teal conifer blocks across the Scottish Highlands, Galloway, Kielder and Thetford, green broadleaved woodland spread across southern England and Wales, and tan felled areas in southern Scotland.|Woodland in Great Britain by type, National Forest Inventory 2024, on 1 km squares. Paler squares have less woodland.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The 2024 National Forest Inventory map has {{nfi.polygons|int}} polygons. The woodland ones cover {{gb.woodland_kha|int}} thousand hectares, {{gb.woodland_pct|f1}}% of Great Britain's land. That average hides three very different countries: {{nations.Scotland.woodland_pct|f1}}% of Scotland is woodland, {{nations.Wales.woodland_pct|f1}}% of Wales and {{nations.England.woodland_pct|f1}}% of England.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_nations.png|Stacked bar chart of woodland as a share of land in England, Scotland and Wales, split by type. Scotland's bar is longest and mostly conifer and felled land; England's is mostly broadleaved.|Woodland as a share of land, by type. Scotland's woods are mostly conifer; England's mostly broadleaved.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The mix differs even more than the amount. Of Scotland's broadleaf and conifer woodland, {{nations.Scotland.conifer_share_pct|int}}% is conifer. In England it is {{nations.England.conifer_share_pct|int}}%, and in Wales {{nations.Wales.conifer_share_pct|int}}%. About a fifth of all the woodland, {{gb.groups_pct_of_woodland.felled|int}}%, was mapped as felled or being prepared for replanting, most of it in Scotland. That is the plantation cycle: conifers are clear-felled and replanted, and young trees take a few years to show from the air.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Moray, Kielder and the bare islands</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_counties.png|Bar chart of the ten most and six least wooded counties. Moray, South Ayrshire, Argyll and Bute, and Dumfries and Galloway are all around 30%, mostly conifer; Surrey is the most wooded English county at 25%, mostly broadleaf; Shetland is lowest at 0.04%.|The most and least wooded counties and council areas: broadleaf in green, conifer in teal, other woodland in grey.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Moray is the most wooded county or council area in Britain, at {{counties.most.0.woodland_pct|f1}}%, with South Ayrshire, Argyll and Bute, and Dumfries and Galloway close behind. All four are mostly conifer. England's most wooded county is Surrey, at {{counties.by_nation.England.most.woodland_pct|f1}}%, and its woods are mainly broadleaved. At the bottom are the islands: Shetland has {{counties.least.0.woodland_pct|f2}}% woodland and Orkney {{counties.least.1.woodland_pct|f2}}%. In England, Cambridgeshire is barest at {{counties.by_nation.England.least.woodland_pct|f1}}%.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The great plantations jump out of the map. The single most wooded 10 km square in Britain is {{squares10.most_wooded.0.ref|raw}}, in Kielder Forest: {{squares10.most_wooded.0.woodland_pct|int}}% woodland, {{squares10.most_wooded.0.conifer_share_pct|int}}% of it conifer. Within 10 km of the heart of Kielder, {{named.kielder.woodland_pct|int}}% of the land is woodland. Galloway around Glentrool and the Breckland around Thetford have the other two biggest blocks of conifer.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">What the records say: pine by the Spey</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The Forest Inventory says what kind of wood is where, but not which trees. For that I used GBIF, which gathers records of plants from herbarium sheets, surveys and phone apps. Counting records would just map where botanists live, so I map each tree as a share of all plant records in each cell, and fade cells with few records.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_records_gb.png|Three small maps of Great Britain showing the share of plant records that are pines, beeches and oaks. Pines are darkest in the Scottish Highlands, beech in southern England, oak across England and Wales.|Pines, beeches and oaks as a share of all vascular plant records, GBIF, cells of about 10 by 6 km. Each map has its own scale.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The patterns are ones a naturalist would recognise. Pines take their biggest share of records in Strathspey and the northern Cairngorms, {{gbif_gb.genera.Pinus.top.0.share_pct|f1}}% of all plant records in one cell: the country of Abernethy and Rothiemurchus, the largest remnants of the native Caledonian pinewood. Juniper, a pinewood shrub, peaks in the next cell. Beech peaks beside Savernake Forest in Wiltshire.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But records are not trees. Willows are the most recorded tree genus in {{gbif_gb.dominant_cells.0.1|int}} of {{gbif_gb.cells_ok|int}} well recorded British cells, because there are many willow species and botanists record them carefully. Near Bala, spruce makes up {{gbif_gb.genera.Picea.top.0.share_pct|int}}% of all plant records, which looks like one big survey rather than a forest unlike any other.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">What was planted when</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Forestry England's {{fe.subcompartments|int}} compartments give the species and the year the current trees were planted. Of the area with a species, {{fe.conifer_pct|int}}% is conifer. Sitka spruce alone is {{fe.top_species.0.2|int}}%, then Corsican pine and Scots pine; oak is the biggest broadleaf, at {{fe.top_species.3.2|int}}%.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_planting.png|Column chart of hectares of England's public forests by decade the current trees were planted, 1900s to 2020s, conifer and broadleaf. Conifers dominate from the 1960s, peaking in the 1990s; broadleaves are a larger share in the 1950s and since 2000.|England's public forests by the decade the trees standing today were planted.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>This is not the history of planting, because a compartment that is felled and replanted takes the new date. So the trees standing today were mostly planted after 1950, and conifer planting peaks in the {{fe.conifer_peak_decade|raw}}s, the second rotation of the post-war plantations. What does show is a change in choice: broadleaves are {{fe.broadleaf_pct_1950s|int}}% of the surviving 1950s planting, {{fe.broadleaf_pct_1990s|int}}% of the 1990s and {{fe.broadleaf_pct_2000s|int}}% of the 2000s.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">The world: acacias, figs and eucalypts</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>For the world I fetched GBIF's grids for {{world.genera_n|int}} tree genera, from oaks and pines to baobabs and mangroves. Ask which genus is most recorded in each place and a few big ones win almost everywhere: figs, willows and oaks. So the map asks a fairer question: which genus is most typical of each place, recorded far more often there than across the world as a whole?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_world_typical.png|World map of the most typical recorded tree genus in each cell: gold acacias and grey-blue eucalypts across Australia, spruce and birch across Scandinavia, mixed oak, pine and juniper across the United States, scattered figs in the tropics, and large empty areas in Africa, Siberia and the Amazon.|The most typical tree genus in each cell with at least {{world.min_records|int}} plant records, from GBIF. Empty land has too few records.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Then the continents come alive. Oceania is acacias, bloodwoods and eucalypts; Africa figs, thorn acacias and bushwillows; South America the ice-cream bean trees of the genus Inga; Europe willows, spruces and birches; North America oaks, willows, pines and junipers. Eucalypts are the most recorded of these genera in {{world.genus_countries.Eucalyptus.0.1|int}}% of Australia, and oaks in {{world.genus_countries.Quercus.0.1|int}}% of Spain.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:pullquote -->
+<figure class="wp-block-pullquote"><blockquote><p>The world map is as much a map of botanists as of trees.</p></blockquote></figure>
+<!-- /wp:pullquote -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_effort.png|World map of all plant records per cell, dark brown over Europe and parts of North America and Australia, pale over central Africa, Siberia and the Amazon; below, a bar chart of records per 1,000 square kilometres by continent, from 16,081 in Europe to 289 in Africa.|Recording effort: GBIF vascular plant records per cell, and per 1,000 km² of land by continent.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Europe and North America hold {{world.europe_namerica_share_pct|int}}% of the world's plant records on land, but only {{world.europe_namerica_land_pct|int}}% of the land. The tropics are {{world.tropics_land_pct|int}}% of the land and hold {{world.tropics_records_pct|f1}}% of the records. In the heart of the Congo basin only {{world.gaps.Congo basin.ok_pct|int}}% of cells have enough records to show at all. The most forested places on Earth are the emptiest on this map.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How I did this</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I used the National Forest Inventory GB 2024 woodland map as polygon centroids with type and area, drawing each polygon as a disc of its own area on a 100 m grid; county and country totals use the exact areas. Forestry England's subcompartments give species and planting years for the public estate in England. GBIF occurrence density grids at about 0.09 degrees give records of {{world.genera_n|int}} tree genera and of all vascular plants; I map shares of plant records, not counts. The limits matter: the Inventory misses woods under half a hectare and covers Great Britain only, Forestry England is only the public estate, and GBIF counts records, not trees. The paper sets out every step.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://tristan-hotham.github.io/tree-map/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23739845">Read the paper</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://github.com/Tristan-Hotham/tree-map">Data and code</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Notes and sources</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Woodland: <a href="https://data-forestry.opendata.arcgis.com/">National Forest Inventory Woodland GB 2024 and Forestry England Subcompartments</a>, © Forestry Commission copyright, contains Ordnance Survey data © Crown copyright and database right 2025, Open Government Licence v3.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>Records: <a href="https://www.gbif.org">GBIF.org (28 October 2026) GBIF occurrence density maps</a>; records from many publishers under CC0, CC BY 4.0 and CC BY-NC 4.0; derived grids shared under CC BY 4.0.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>Boundaries: Office for National Statistics (Open Government Licence v3). Places: <a href="https://www.ordnancesurvey.co.uk/products/os-open-names">OS Open Names</a> and <a href="https://www.geonames.org">GeoNames</a> (CC BY 4.0). Countries: <a href="https://www.naturalearthdata.com">Natural Earth</a>.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>An earlier project on Britain's oldest trees: <a href="https://tristan-hotham.github.io/ancient-trees/">Ancient trees</a>.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
