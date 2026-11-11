@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite it as below."
+title: "What Grows Where: Mapping the Woodland of Great Britain and the Recorded Trees of the World"
+type: dataset
+authors:
+  - family-names: Hotham
+    given-names: Tristan
+    orcid: "https://orcid.org/0000-0003-4931-9349"
+    affiliation: "Independent researcher"
+doi: "10.5281/zenodo.23739845"
+url: "https://maps.tristanhotham.com/tree-map/"
+repository-code: "https://github.com/Tristan-Hotham/tree-map"
+license: CC-BY-4.0
+keywords:
+  - "woodland"
+  - "trees"
+  - "National Forest Inventory"
+  - "Forestry England"
+  - "GBIF"
+  - "occurrence records"
+  - "sampling bias"
+  - "Great Britain"
+  - "interactive map"
+  - "open data"
